@@ -1,13 +1,13 @@
-import streamlit as st
-import streamlit.components.v1 as stc
-import pandas as pd
+import streamlit as st 
+import streamlit.components.v1 as stc 
+import pandas as pd 
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # Function to load dataset
 def load_data(data):
     df = pd.read_csv(data)
-    return df
+    return df 
 
 # Function to vectorize text and compute cosine similarity matrix
 def vectorize_text_to_cosine_mat(data):
@@ -52,106 +52,103 @@ def search_term_if_not_found(term, df):
 def main():
     st.set_page_config(page_title="Course Recommendation App", page_icon="🎓")
 
-    # Initialize the session state for mode if not already set
-    if 'mode' not in st.session_state:
-        st.session_state.mode = 'light'
-
-    # Add FontAwesome for icons
-    st.markdown('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">', unsafe_allow_html=True)
-
-    # Add a button for light/dark mode with icons
+    # Add a toggle button for light/dark mode
     toggle_code = """
     <style>
-    .theme-toggle {{
+    .toggle-container {
         display: flex;
         align-items: center;
         margin-bottom: 20px;
-    }}
-    .theme-toggle button {{
-        background: {button_bg_color};
-        color: {button_text_color};
-        border: none;
-        border-radius: 5px;
-        padding: 10px 20px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s;
-    }}
-    .theme-toggle button:hover {{
-        background-color: {button_hover_bg_color};
-    }}
-    .icon {{
-        font-size: 20px;
-    }}
-    .icon.sun {{
+    }
+    .toggle-label {
+        font-size: 18px;
         margin-right: 10px;
-    }}
-    .icon.moon {{
-        margin-left: 10px;
-    }}
+        color: {text_color};
+    }
+    .toggle-button {
+        position: relative;
+        width: 60px;
+        height: 30px;
+    }
+    .toggle-button input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: {slider_bg_color};
+        transition: .4s;
+        border-radius: 30px;
+    }
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 22px;
+        width: 22px;
+        border-radius: 50%;
+        left: 4px;
+        bottom: 4px;
+        background-color: {handle_color};
+        transition: .4s;
+    }
+    input:checked + .slider {
+        background-color: {slider_checked_bg_color};
+    }
+    input:checked + .slider:before {
+        transform: translateX(30px);
+    }
     </style>
-    <div class="theme-toggle">
-        <button onclick="toggleMode()">
-            <i class="fas fa-sun icon sun"></i>
-            <i class="fas fa-moon icon moon"></i>
-        </button>
+    <div class="toggle-container">
+        <label class="toggle-label">Mode</label>
+        <label class="toggle-button">
+            <input type="checkbox" id="modeToggle" onchange="toggleMode()">
+            <span class="slider"></span>
+        </label>
     </div>
     <script>
-    function toggleMode() {{
+    function toggleMode() {
         const body = document.body;
-        const currentMode = body.getAttribute('data-theme');
-        if (currentMode === 'dark') {{
-            body.removeAttribute('data-theme');
-            window.localStorage.setItem('theme', 'light');
-        }} else {{
+        if (document.getElementById('modeToggle').checked) {
             body.setAttribute('data-theme', 'dark');
-            window.localStorage.setItem('theme', 'dark');
-        }}
-    }}
-    document.addEventListener('DOMContentLoaded', (event) => {{
-        const storedTheme = window.localStorage.getItem('theme');
-        if (storedTheme) {{
-            if (storedTheme === 'dark') {{
-                document.body.setAttribute('data-theme', 'dark');
-            }} else {{
-                document.body.removeAttribute('data-theme');
-            }}
-        }}
-    }});
+        } else {
+            body.removeAttribute('data-theme');
+        }
+    }
     </script>
     """
-
-    # Set the color values based on the current theme
-    mode = st.session_state.mode
-    if mode == "light":
-        bg_color = "#ffffff"
-        text_color = "#000000"
-        link_color = "#0073e6"
-        shadow_color = "#ccc"
-        button_bg_color = "#f0f0f0"
-        button_text_color = "#000000"
-        button_hover_bg_color = "#e0e0e0"
-        icon_color = "#000000"
-    else:
-        bg_color = "#0E1117"
-        text_color = "#ffffff"
-        link_color = "#00ace6"
-        shadow_color = "#333"
-        button_bg_color = "#333"
-        button_text_color = "#ffffff"
-        button_hover_bg_color = "#555"
-        icon_color = "#ffffff"
-
+    
     st.markdown(toggle_code.format(
-        button_bg_color=button_bg_color,
-        button_text_color=button_text_color,
-        button_hover_bg_color=button_hover_bg_color,
-        icon_color=icon_color
+        text_color="#000000" if st.session_state.get('mode') == 'dark' else "#ffffff",
+        slider_bg_color="#ccc",
+        handle_color="#fff",
+        slider_checked_bg_color="#0073e6"
     ), unsafe_allow_html=True)
 
     st.title("🎓 Course Recommendation App")
 
     # Apply dynamic styles based on the theme
+    mode = 'dark' if st.session_state.get('mode') == 'dark' else 'light'
+    if mode == "light":
+        bg_color = "#ffffff"
+        text_color = "#000000"
+        link_color = "#0073e6"
+        shadow_color = "#ccc"
+        input_bg_color = "#ffffff"
+        input_text_color = "#000000"
+    else:
+        bg_color = "#0E1117"
+        text_color = "#ffffff"
+        link_color = "#00ace6"
+        shadow_color = "#333"
+        input_bg_color = "#333333"
+        input_text_color = "#ffffff"
+
     st.markdown(
         f"""
         <style>
@@ -164,12 +161,12 @@ def main():
             color: {text_color};
         }}
         .stButton>button {{
-            background-color: {button_bg_color};
-            color: {button_text_color};
+            background-color: {input_bg_color};
+            color: {input_text_color};
         }}
         .stTextInput>div>div>input {{
-            background-color: {bg_color};
-            color: {text_color};
+            background-color: {input_bg_color};
+            color: {input_text_color};
         }}
         .stDataFrame {{
             background-color: {bg_color};
@@ -207,26 +204,32 @@ def main():
             if search_term:
                 try:
                     results = get_recommendation(search_term, cosine_sim_mat, df, num_of_rec)
+                    st.markdown("### 🎯 Recommendations")
+                    with st.expander("Results as JSON"):
+                        results_json = results.to_dict('index')
+                        st.json(results_json)
+
                     for _, row in results.iterrows():
-                        st.markdown(RESULT_TEMPLATE.format(
-                            row['course_title'],
-                            row['similarity_score'],
-                            row['url'],
-                            row['price'],
-                            row['num_subscribers'],
-                            text_color=text_color,
-                            link_color=link_color,
-                            shadow_color=shadow_color,
-                            bg_color=bg_color
-                        ), unsafe_allow_html=True)
+                        rec_title = row['course_title']
+                        rec_score = row['similarity_score']
+                        rec_url = row['url']
+                        rec_price = row['price']
+                        rec_num_sub = row['num_subscribers']
+                        stc.html(RESULT_TEMPLATE.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub,
+                                                        shadow_color=shadow_color, bg_color=bg_color,
+                                                        text_color=text_color, link_color=link_color), height=250)
+
                 except KeyError:
-                    st.warning("Course not found. Try a different search term.")
-                    st.info("Suggested Options:")
+                    # Search for similar courses only if exact match is not found
                     result_df = search_term_if_not_found(search_term, df)
-                    st.dataframe(result_df)
-        else:
-            st.subheader("📖 About")
-            st.text("Built with Streamlit & Pandas")
+                    if not result_df.empty:
+                        st.info("Suggested Options:")
+                        st.dataframe(result_df)
+                    else:
+                        st.warning("Course not found. Please try a different search term.")
+    else:
+        st.subheader("ℹ️ About")
+        st.markdown("This app is built using Streamlit and Pandas to demonstrate a basic course recommendation system.")
 
 if __name__ == '__main__':
     main()

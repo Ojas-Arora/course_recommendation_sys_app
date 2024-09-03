@@ -51,90 +51,14 @@ def search_term_if_not_found(term, df):
 # Main function for Streamlit app
 def main():
     st.set_page_config(page_title="Course Recommendation App", page_icon="🎓")
-
-    # Add a toggle button for light/dark mode
-    toggle_code = """
-    <style>
-    .toggle-container {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-    .toggle-label {
-        font-size: 18px;
-        margin-right: 10px;
-        color: {text_color};
-    }
-    .toggle-button {
-        position: relative;
-        width: 60px;
-        height: 30px;
-    }
-    .toggle-button input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: {slider_bg_color};
-        transition: .4s;
-        border-radius: 30px;
-    }
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 22px;
-        width: 22px;
-        border-radius: 50%;
-        left: 4px;
-        bottom: 4px;
-        background-color: {handle_color};
-        transition: .4s;
-    }
-    input:checked + .slider {
-        background-color: {slider_checked_bg_color};
-    }
-    input:checked + .slider:before {
-        transform: translateX(30px);
-    }
-    </style>
-    <div class="toggle-container">
-        <label class="toggle-label">Mode</label>
-        <label class="toggle-button">
-            <input type="checkbox" id="modeToggle" onchange="toggleMode()">
-            <span class="slider"></span>
-        </label>
-    </div>
-    <script>
-    function toggleMode() {
-        const body = document.body;
-        if (document.getElementById('modeToggle').checked) {
-            body.setAttribute('data-theme', 'dark');
-        } else {
-            body.removeAttribute('data-theme');
-        }
-    }
-    </script>
-    """
-    
-    st.markdown(toggle_code.format(
-        text_color="#000000" if st.session_state.get('mode') == 'dark' else "#ffffff",
-        slider_bg_color="#ccc",
-        handle_color="#fff",
-        slider_checked_bg_color="#0073e6"
-    ), unsafe_allow_html=True)
-
     st.title("🎓 Course Recommendation App")
+    st.markdown("Welcome to the **Course Recommendation App**! Find courses tailored to your interests.")
+    
+    # Toggle for light/dark mode
+    mode = st.sidebar.radio("Select Mode", ["Light", "Dark"])
 
-    # Apply dynamic styles based on the theme
-    mode = 'dark' if st.session_state.get('mode') == 'dark' else 'light'
-    if mode == "light":
+    # Apply dynamic styles
+    if mode == "Light":
         bg_color = "#ffffff"
         text_color = "#000000"
         link_color = "#0073e6"
@@ -149,14 +73,11 @@ def main():
         input_bg_color = "#333333"
         input_text_color = "#ffffff"
 
+    # Apply CSS style changes
     st.markdown(
         f"""
         <style>
-        body[data-theme="dark"] {{
-            background-color: {bg_color};
-            color: {text_color};
-        }}
-        body[data-theme="light"] {{
+        body {{
             background-color: {bg_color};
             color: {text_color};
         }}

@@ -1,10 +1,9 @@
-# Import necessary libraries
 import streamlit as st
-import streamlit.components.v1 as stc
 import pandas as pd
 import plotly.express as px
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import streamlit.components.v1 as stc
 
 # Function to load dataset
 def load_data(data):
@@ -31,6 +30,30 @@ def get_recommendation(title, cosine_sim_mat, df, num_of_rec=10):
     final_recommended_courses = result_df[['course_title', 'similarity_score', 'url', 'price', 'num_subscribers']]
     return final_recommended_courses
 
+# Function to generate graphs
+def generate_graphs(df):
+    if 'price' not in df.columns or 'num_subscribers' not in df.columns or 'category' not in df.columns:
+        st.error("The required columns ('price', 'num_subscribers', 'category') are missing in the dataset.")
+        return None, None, None, None
+    
+    # Distribution of Course Prices
+    price_histogram = px.histogram(df, x='price', nbins=20, title='Distribution of Course Prices')
+    
+    # Number of Subscribers by Course
+    subscribers_bar_chart = px.bar(df, x='course_title', y='num_subscribers', title='Number of Subscribers by Course', height=400)
+
+    # Course Count by Category
+    category_counts = df['category'].value_counts().reset_index()
+    category_counts.columns = ['Category', 'Course Count']
+    category_pie_chart = px.pie(category_counts, names='Category', values='Course Count', title='Course Count by Category')
+
+    # Average Course Price by Category
+    avg_price_by_category = df.groupby('category')['price'].mean().reset_index()
+    avg_price_by_category.columns = ['Category', 'Average Price']
+    avg_price_bar_chart = px.bar(avg_price_by_category, x='Category', y='Average Price', title='Average Course Price by Category')
+
+    return price_histogram, subscribers_bar_chart, category_pie_chart, avg_price_bar_chart
+
 # HTML template for displaying results with enhanced styling and icons
 RESULT_TEMP = """
 <div style="width:90%;height:100%;margin:1px;padding:5px;position:relative;border-radius:10px;border-bottom-right-radius: 60px;
@@ -50,91 +73,33 @@ def search_term_if_not_found(term, df):
     result_df = df[df['course_title'].str.contains(term, case=False)]
     return result_df
 
-# Function to generate relevant graphs
-def generate_graphs(df):
-    # Distribution of Course Prices
-    price_histogram = px.histogram(df, x='price', nbins=20, title='Distribution of Course Prices')
-    
-    # Number of Subscribers by Course
-    subscribers_bar_chart = px.bar(df, x='course_title', y='num_subscribers', title='Number of Subscribers by Course', height=400)
-
-    # Course Count by Category
-    category_counts = df['category'].value_counts().reset_index()
-    category_counts.columns = ['Category', 'Course Count']
-    category_pie_chart = px.pie(category_counts, names='Category', values='Course Count', title='Course Count by Category')
-
-    # Average Course Price by Category
-    avg_price_by_category = df.groupby('category')['price'].mean().reset_index()
-    avg_price_by_category.columns = ['Category', 'Average Price']
-    avg_price_bar_chart = px.bar(avg_price_by_category, x='Category', y='Average Price', title='Average Course Price by Category')
-
-    return price_histogram, subscribers_bar_chart, category_pie_chart, avg_price_bar_chart
-
 # Main function for Streamlit app
 def main():
-    # Set page config at the start
     st.set_page_config(page_title="Course Recommendation App", page_icon="🎓")
-
-    # Inject custom CSS
-    st.markdown("""
-    <style>
-    /* Custom styling for sidebar */
-    .css-1d391kg {
-        background-color: #0073e6;
-        color: white;
-        border-radius: 10px;
-        padding: 10px;
-    }
-    /* Ensure all menu items are in a single vertical line */
-    .css-1d391kg .css-1v0s1h3, .css-1d391kg .css-1n1n7f2 {
-        display: flex;
-        flex-direction: column;
-        gap: 10px; /* Adjust the gap between items if needed */
-    }
-    /* Styling for the menu items */
-    .css-1n1n7f2 {
-        padding: 10px;
-        border-radius: 10px;
-        color: white;
-    }
-    .css-1d391kg .stButton {
-        display: block;
-        width: 100%;
-    }
-    /* Custom styling for the content */
-    .css-1f3v6nr {
-        color: #333;
-    }
-    .css-1r6slbq {
-        color: #0073e6;
-    }
-    /* Styling for the header */
-    .css-1d391kg h1 {
-        color: #fff;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
     st.title("🎓 Course Recommendation App")
     st.markdown("Welcome to the **Course Recommendation App**! Find courses tailored to your interests.")
 
-    menu = ["🏠 Home", "🔍 Recommend", "📊 Graphs", "ℹ️ About"]
-    choice = st.sidebar.selectbox("Menu", menu, index=0)
-    
     # Load dataset
     df = load_data("data/udemy_course_data.csv")
-    
-    if choice == "🏠 Home":
+
+    # Display column names to debug
+    st.write("Columns in the dataset:")
+    st.write(df.columns)
+
+    menu = ["Home", "Recommend", "Graphs", "About"]
+    choice = st.sidebar.selectbox("Menu", menu, index=0)
+
+    if choice == "Home":
         st.subheader("🏠 Home")
         st.markdown("Browse the first few courses from our dataset:")
         st.dataframe(df.head(10))
-    
-    elif choice == "🔍 Recommend":
+
+    elif choice == "Recommend":
         st.subheader("🔍 Recommend Courses")
         cosine_sim_mat = vectorize_text_to_cosine_mat(df['course_title'])
         search_term = st.text_input("Search for a course by title")
         num_of_rec = st.sidebar.slider("Number of Recommendations", 4, 30, 7)
-        
+
         if st.button("Recommend"):
             if search_term:
                 try:
@@ -143,7 +108,7 @@ def main():
                     with st.expander("Results as JSON"):
                         results_json = results.to_dict('index')
                         st.json(results_json)
-                    
+
                     for _, row in results.iterrows():
                         rec_title = row['course_title']
                         rec_score = row['similarity_score']
@@ -151,7 +116,7 @@ def main():
                         rec_price = row['price']
                         rec_num_sub = row['num_subscribers']
                         stc.html(RESULT_TEMP.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub), height=250)
-                
+
                 except KeyError:
                     # Search for similar courses only if exact match is not found
                     result_df = search_term_if_not_found(search_term, df)
@@ -161,13 +126,14 @@ def main():
                     else:
                         st.warning("Course not found. Please try a different search term.")
     
-    elif choice == "📊 Graphs":
+    elif choice == "Graphs":
         st.subheader("📊 Graphs")
         price_histogram, subscribers_bar_chart, category_pie_chart, avg_price_bar_chart = generate_graphs(df)
-        st.plotly_chart(price_histogram)
-        st.plotly_chart(subscribers_bar_chart)
-        st.plotly_chart(category_pie_chart)
-        st.plotly_chart(avg_price_bar_chart)
+        if price_histogram:
+            st.plotly_chart(price_histogram)
+            st.plotly_chart(subscribers_bar_chart)
+            st.plotly_chart(category_pie_chart)
+            st.plotly_chart(avg_price_bar_chart)
     
     else:
         st.subheader("ℹ️ About")

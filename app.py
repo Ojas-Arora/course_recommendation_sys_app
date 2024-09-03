@@ -86,7 +86,7 @@ def main():
     st.title("🎓 Course Recommendation App")
     st.markdown("Welcome to the **Course Recommendation App**! Find courses tailored to your interests.")
     
-    menu = ["🏠 Home", "🔍 Recommend", " ℹ️  About"]
+    menu = ["🏠 Home", "🔍 Recommend", "📘 About"]
     choice = st.sidebar.selectbox("Menu", menu, index=0)
     
     # Load dataset
@@ -130,7 +130,7 @@ def main():
                         st.warning("Course not found. Please try a different search term.")
     
     else:
-        st.subheader("ℹ️ About")
+        st.subheader("📘 About")
         st.markdown("This app is built using Streamlit and Pandas to demonstrate a basic course recommendation system.")
 
 if __name__ == '__main__':

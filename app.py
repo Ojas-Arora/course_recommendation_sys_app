@@ -52,30 +52,34 @@ def search_term_if_not_found(term, df):
 def main():
     st.set_page_config(page_title="Course Recommendation App", page_icon="🎓")
 
+    # Initialize the session state for mode if not already set
+    if 'mode' not in st.session_state:
+        st.session_state.mode = 'light'
+
     # Add a toggle button for light/dark mode
     toggle_code = """
     <style>
-    .toggle-container {
+    .toggle-container {{
         display: flex;
         align-items: center;
         margin-bottom: 20px;
-    }
-    .toggle-label {
+    }}
+    .toggle-label {{
         font-size: 18px;
         margin-right: 10px;
         color: {text_color};
-    }
-    .toggle-button {
+    }}
+    .toggle-button {{
         position: relative;
         width: 60px;
         height: 30px;
-    }
-    .toggle-button input {
+    }}
+    .toggle-button input {{
         opacity: 0;
         width: 0;
         height: 0;
-    }
-    .slider {
+    }}
+    .slider {{
         position: absolute;
         cursor: pointer;
         top: 0;
@@ -85,8 +89,8 @@ def main():
         background-color: {slider_bg_color};
         transition: .4s;
         border-radius: 30px;
-    }
-    .slider:before {
+    }}
+    .slider:before {{
         position: absolute;
         content: "";
         height: 22px;
@@ -96,59 +100,75 @@ def main():
         bottom: 4px;
         background-color: {handle_color};
         transition: .4s;
-    }
-    input:checked + .slider {
+    }}
+    input:checked + .slider {{
         background-color: {slider_checked_bg_color};
-    }
-    input:checked + .slider:before {
+    }}
+    input:checked + .slider:before {{
         transform: translateX(30px);
-    }
+    }}
     </style>
     <div class="toggle-container">
         <label class="toggle-label">Mode</label>
         <label class="toggle-button">
-            <input type="checkbox" id="modeToggle" onchange="toggleMode()">
+            <input type="checkbox" id="modeToggle" onchange="toggleMode()" {checked}>
             <span class="slider"></span>
         </label>
     </div>
     <script>
-    function toggleMode() {
+    function toggleMode() {{
         const body = document.body;
-        if (document.getElementById('modeToggle').checked) {
+        const toggle = document.getElementById('modeToggle');
+        if (toggle.checked) {{
             body.setAttribute('data-theme', 'dark');
-        } else {
+            window.localStorage.setItem('theme', 'dark');
+        }} else {{
             body.removeAttribute('data-theme');
-        }
-    }
+            window.localStorage.setItem('theme', 'light');
+        }}
+    }}
+    document.addEventListener('DOMContentLoaded', (event) => {{
+        const storedTheme = window.localStorage.getItem('theme');
+        if (storedTheme) {{
+            document.getElementById('modeToggle').checked = (storedTheme === 'dark');
+            toggleMode();
+        }}
+    }});
     </script>
     """
-    
-    st.markdown(toggle_code.format(
-        text_color="#000000" if st.session_state.get('mode') == 'dark' else "#ffffff",
-        slider_bg_color="#ccc",
-        handle_color="#fff",
-        slider_checked_bg_color="#0073e6"
-    ), unsafe_allow_html=True)
 
-    st.title("🎓 Course Recommendation App")
-
-    # Apply dynamic styles based on the theme
-    mode = 'dark' if st.session_state.get('mode') == 'dark' else 'light'
+    # Set the color values based on the current theme
+    mode = st.session_state.mode
     if mode == "light":
         bg_color = "#ffffff"
         text_color = "#000000"
         link_color = "#0073e6"
         shadow_color = "#ccc"
-        input_bg_color = "#ffffff"
-        input_text_color = "#000000"
+        slider_bg_color = "#ccc"
+        handle_color = "#fff"
+        slider_checked_bg_color = "#0073e6"
+        checked = ''
     else:
         bg_color = "#0E1117"
         text_color = "#ffffff"
         link_color = "#00ace6"
         shadow_color = "#333"
-        input_bg_color = "#333333"
-        input_text_color = "#ffffff"
+        slider_bg_color = "#555"
+        handle_color = "#000"
+        slider_checked_bg_color = "#00ace6"
+        checked = 'checked'
 
+    st.markdown(toggle_code.format(
+        text_color=text_color,
+        slider_bg_color=slider_bg_color,
+        handle_color=handle_color,
+        slider_checked_bg_color=slider_checked_bg_color,
+        checked=checked
+    ), unsafe_allow_html=True)
+
+    st.title("🎓 Course Recommendation App")
+
+    # Apply dynamic styles based on the theme
     st.markdown(
         f"""
         <style>
@@ -161,12 +181,12 @@ def main():
             color: {text_color};
         }}
         .stButton>button {{
-            background-color: {input_bg_color};
-            color: {input_text_color};
+            background-color: {bg_color};
+            color: {text_color};
         }}
         .stTextInput>div>div>input {{
-            background-color: {input_bg_color};
-            color: {input_text_color};
+            background-color: {bg_color};
+            color: {text_color};
         }}
         .stDataFrame {{
             background-color: {bg_color};
@@ -216,20 +236,18 @@ def main():
                         rec_price = row['price']
                         rec_num_sub = row['num_subscribers']
                         stc.html(RESULT_TEMPLATE.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub,
-                                                        shadow_color=shadow_color, bg_color=bg_color,
-                                                        text_color=text_color, link_color=link_color), height=250)
-
+                                                        shadow_color=shadow_color,
+                                                        bg_color=bg_color,
+                                                        text_color=text_color,
+                                                        link_color=link_color), height=350)
                 except KeyError:
-                    # Search for similar courses only if exact match is not found
+                    st.warning("Course not found. Try a different search term.")
+                    st.info("Suggested Options:")
                     result_df = search_term_if_not_found(search_term, df)
-                    if not result_df.empty:
-                        st.info("Suggested Options:")
-                        st.dataframe(result_df)
-                    else:
-                        st.warning("Course not found. Please try a different search term.")
+                    st.dataframe(result_df)
     else:
-        st.subheader("ℹ️ About")
-        st.markdown("This app is built using Streamlit and Pandas to demonstrate a basic course recommendation system.")
+        st.subheader("📖 About")
+        st.text("Built with Streamlit & Pandas")
 
 if __name__ == '__main__':
     main()

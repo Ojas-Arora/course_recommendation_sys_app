@@ -1,13 +1,13 @@
-import streamlit as st 
-import streamlit.components.v1 as stc 
-import pandas as pd 
+import streamlit as st
+import streamlit.components.v1 as stc
+import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # Function to load dataset
 def load_data(data):
     df = pd.read_csv(data)
-    return df 
+    return df
 
 # Function to vectorize text and compute cosine similarity matrix
 def vectorize_text_to_cosine_mat(data):
@@ -56,18 +56,16 @@ def main():
     if 'mode' not in st.session_state:
         st.session_state.mode = 'light'
 
-    # Add a toggle button for light/dark mode
+    # Add FontAwesome for icons
+    st.markdown('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">', unsafe_allow_html=True)
+
+    # Add a toggle button for light/dark mode with icons
     toggle_code = """
     <style>
     .toggle-container {{
         display: flex;
         align-items: center;
         margin-bottom: 20px;
-    }}
-    .toggle-label {{
-        font-size: 18px;
-        margin-right: 10px;
-        color: {text_color};
     }}
     .toggle-button {{
         position: relative;
@@ -107,12 +105,29 @@ def main():
     input:checked + .slider:before {{
         transform: translateX(30px);
     }}
+    .icon {{
+        font-size: 20px;
+        color: {icon_color};
+    }}
+    .icon.sun {{
+        position: absolute;
+        left: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+    }}
+    .icon.moon {{
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+    }}
     </style>
     <div class="toggle-container">
-        <label class="toggle-label">Mode</label>
         <label class="toggle-button">
             <input type="checkbox" id="modeToggle" onchange="toggleMode()" {checked}>
             <span class="slider"></span>
+            <i class="fas fa-sun icon sun"></i>
+            <i class="fas fa-moon icon moon"></i>
         </label>
     </div>
     <script>
@@ -147,6 +162,7 @@ def main():
         slider_bg_color = "#ccc"
         handle_color = "#fff"
         slider_checked_bg_color = "#0073e6"
+        icon_color = "#000000"
         checked = ''
     else:
         bg_color = "#0E1117"
@@ -156,13 +172,14 @@ def main():
         slider_bg_color = "#555"
         handle_color = "#000"
         slider_checked_bg_color = "#00ace6"
+        icon_color = "#ffffff"
         checked = 'checked'
 
     st.markdown(toggle_code.format(
-        text_color=text_color,
         slider_bg_color=slider_bg_color,
         handle_color=handle_color,
         slider_checked_bg_color=slider_checked_bg_color,
+        icon_color=icon_color,
         checked=checked
     ), unsafe_allow_html=True)
 
@@ -224,30 +241,26 @@ def main():
             if search_term:
                 try:
                     results = get_recommendation(search_term, cosine_sim_mat, df, num_of_rec)
-                    st.markdown("### 🎯 Recommendations")
-                    with st.expander("Results as JSON"):
-                        results_json = results.to_dict('index')
-                        st.json(results_json)
-
                     for _, row in results.iterrows():
-                        rec_title = row['course_title']
-                        rec_score = row['similarity_score']
-                        rec_url = row['url']
-                        rec_price = row['price']
-                        rec_num_sub = row['num_subscribers']
-                        stc.html(RESULT_TEMPLATE.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub,
-                                                        shadow_color=shadow_color,
-                                                        bg_color=bg_color,
-                                                        text_color=text_color,
-                                                        link_color=link_color), height=350)
+                        st.markdown(RESULT_TEMPLATE.format(
+                            row['course_title'],
+                            row['similarity_score'],
+                            row['url'],
+                            row['price'],
+                            row['num_subscribers'],
+                            text_color=text_color,
+                            link_color=link_color,
+                            shadow_color=shadow_color,
+                            bg_color=bg_color
+                        ), unsafe_allow_html=True)
                 except KeyError:
                     st.warning("Course not found. Try a different search term.")
                     st.info("Suggested Options:")
                     result_df = search_term_if_not_found(search_term, df)
                     st.dataframe(result_df)
-    else:
-        st.subheader("📖 About")
-        st.text("Built with Streamlit & Pandas")
+        else:
+            st.subheader("📖 About")
+            st.text("Built with Streamlit & Pandas")
 
 if __name__ == '__main__':
     main()

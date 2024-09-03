@@ -1,4 +1,3 @@
-# Import necessary libraries
 import streamlit as st 
 import streamlit.components.v1 as stc 
 import pandas as pd 
@@ -31,27 +30,15 @@ def get_recommendation(title, cosine_sim_mat, df, num_of_rec=10):
     return final_recommended_courses
 
 # HTML template for displaying results with light and dark mode styles
-RESULT_TEMP_LIGHT = """
+RESULT_TEMPLATE = """
 <div style="width:90%;height:100%;margin:1px;padding:5px;position:relative;border-radius:10px;border-bottom-right-radius: 60px;
-box-shadow:0 0 15px 5px #ccc; background-color: #f0f0f0;
+box-shadow:0 0 15px 5px {shadow_color}; background-color: {bg_color};
 border-left: 5px solid #6c6c6c; margin-bottom: 20px;">
-<h4 style="color:#333;">{}</h4>
-<p style="color:#0073e6;"><span style="color:#333;">📈 Similarity Score:</span> {}</p>
-<p style="color:#0073e6;"><span style="color:#333;">🔗</span> <a href="{}" target="_blank">Course Link</a></p>
-<p style="color:#0073e6;"><span style="color:#333;">💲 Price:</span> {}</p>
-<p style="color:#0073e6;"><span style="color:#333;">🧑‍🎓 Students Enrolled:</span> {}</p>
-</div>
-"""
-
-RESULT_TEMP_DARK = """
-<div style="width:90%;height:100%;margin:1px;padding:5px;position:relative;border-radius:10px;border-bottom-right-radius: 60px;
-box-shadow:0 0 15px 5px #333; background-color: #333;
-border-left: 5px solid #6c6c6c; margin-bottom: 20px;">
-<h4 style="color:#fff;">{}</h4>
-<p style="color:#00ace6;"><span style="color:#fff;">📈 Similarity Score:</span> {}</p>
-<p style="color:#00ace6;"><span style="color:#fff;">🔗</span> <a href="{}" target="_blank" style="color:#00ace6;">Course Link</a></p>
-<p style="color:#00ace6;"><span style="color:#fff;">💲 Price:</span> {}</p>
-<p style="color:#00ace6;"><span style="color:#fff;">🧑‍🎓 Students Enrolled:</span> {}</p>
+<h4 style="color:{text_color};">{}</h4>
+<p style="color:{link_color};"><span style="color:{text_color};">📈 Similarity Score:</span> {}</p>
+<p style="color:{link_color};"><span style="color:{text_color};">🔗</span> <a href="{}" target="_blank" style="color:{link_color};">Course Link</a></p>
+<p style="color:{link_color};"><span style="color:{text_color};">💲 Price:</span> {}</p>
+<p style="color:{link_color};"><span style="color:{text_color};">🧑‍🎓 Students Enrolled:</span> {}</p>
 </div>
 """
 
@@ -72,46 +59,51 @@ def main():
 
     # Apply dynamic styles
     if mode == "Light":
-        st.markdown(
-            """
-            <style>
-            body {
-                background-color: #ffffff;
-                color: #000000;
-            }
-            .stButton>button {
-                background-color: #e0e0e0;
-                color: #000000;
-            }
-            .stTextInput>div>div>input {
-                background-color: #ffffff;
-                color: #000000;
-            }
-            </style>
-            """, unsafe_allow_html=True
-        )
-        result_template = RESULT_TEMP_LIGHT
+        bg_color = "#ffffff"
+        text_color = "#000000"
+        link_color = "#0073e6"
+        shadow_color = "#ccc"
+        input_bg_color = "#ffffff"
+        input_text_color = "#000000"
     else:
-        st.markdown(
-            """
-            <style>
-            body {
-                background-color: #0E1117;
-                color: #ffffff;
-            }
-            .stButton>button {
-                background-color: #333333;
-                color: #ffffff;
-            }
-            .stTextInput>div>div>input {
-                background-color: #333333;
-                color: #ffffff;
-            }
-            </style>
-            """, unsafe_allow_html=True
-        )
-        result_template = RESULT_TEMP_DARK
-    
+        bg_color = "#0E1117"
+        text_color = "#ffffff"
+        link_color = "#00ace6"
+        shadow_color = "#333"
+        input_bg_color = "#333333"
+        input_text_color = "#ffffff"
+
+    # Apply CSS style changes
+    st.markdown(
+        f"""
+        <style>
+        body {{
+            background-color: {bg_color};
+            color: {text_color};
+        }}
+        .stButton>button {{
+            background-color: {input_bg_color};
+            color: {input_text_color};
+        }}
+        .stTextInput>div>div>input {{
+            background-color: {input_bg_color};
+            color: {input_text_color};
+        }}
+        .stDataFrame {{
+            background-color: {bg_color};
+            color: {text_color};
+        }}
+        .css-1d391kg {{
+            color: {text_color};
+        }}
+        .css-1lcbmhc {{
+            background-color: {bg_color};
+            color: {text_color};
+        }}
+        </style>
+        """, unsafe_allow_html=True
+    )
+
     menu = ["Home", "Recommend", "About"]
     choice = st.sidebar.selectbox("Menu", menu, index=0)
     
@@ -144,7 +136,9 @@ def main():
                         rec_url = row['url']
                         rec_price = row['price']
                         rec_num_sub = row['num_subscribers']
-                        stc.html(result_template.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub), height=250)
+                        stc.html(RESULT_TEMPLATE.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub,
+                                                        shadow_color=shadow_color, bg_color=bg_color,
+                                                        text_color=text_color, link_color=link_color), height=250)
 
                 except KeyError:
                     # Search for similar courses only if exact match is not found

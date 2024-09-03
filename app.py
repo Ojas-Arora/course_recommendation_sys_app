@@ -64,17 +64,10 @@ def main():
         border-radius: 10px;
         padding: 10px;
     }
-    /* Ensure all menu items are in a single vertical line */
-    .css-1d391kg .css-1v0s1h3, .css-1d391kg .css-1n1n7f2 {
-        display: flex;
-        flex-direction: column;
-        gap: 10px; /* Adjust the gap between items if needed */
-    }
-    /* Styling for the menu items */
+    /* Custom styling for the menu items */
     .css-1n1n7f2 {
         padding: 10px;
         border-radius: 10px;
-        color: white;
     }
     /* Custom styling for the content */
     .css-1f3v6nr {
@@ -93,7 +86,7 @@ def main():
     st.title("🎓 Course Recommendation App")
     st.markdown("Welcome to the **Course Recommendation App**! Find courses tailored to your interests.")
     
-    menu = ["🏠 Home", "🔍 Recommend", "   ℹ️ About"]
+    menu = ["🏠 Home", "🔍 Recommend", "ℹ️ About"]
     choice = st.sidebar.selectbox("Menu", menu, index=0)
     
     # Load dataset

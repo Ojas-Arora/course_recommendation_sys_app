@@ -147,7 +147,6 @@ def main():
     elif choice == "📘 About":
         st.subheader("📘 About")
         st.markdown("""
-        ### About This App
         This **Course Recommendation App** helps you discover the best courses tailored to your needs and interests.
         
         - **🔍 Search for Courses:** Use the search functionality to find courses similar to what you are interested in.

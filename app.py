@@ -30,8 +30,8 @@ def get_recommendation(title, cosine_sim_mat, df, num_of_rec=10):
     final_recommended_courses = result_df[['course_title', 'similarity_score', 'url', 'price', 'num_subscribers']]
     return final_recommended_courses
 
-# HTML template for displaying results with light and dark mode styles
-RESULT_TEMP_LIGHT = """
+# HTML template for displaying results with enhanced styling and icons
+RESULT_TEMP = """
 <div style="width:90%;height:100%;margin:1px;padding:5px;position:relative;border-radius:10px;border-bottom-right-radius: 60px;
 box-shadow:0 0 15px 5px #ccc; background-color: #f0f0f0;
 border-left: 5px solid #6c6c6c; margin-bottom: 20px;">
@@ -40,18 +40,6 @@ border-left: 5px solid #6c6c6c; margin-bottom: 20px;">
 <p style="color:#0073e6;"><span style="color:#333;">🔗</span> <a href="{}" target="_blank">Course Link</a></p>
 <p style="color:#0073e6;"><span style="color:#333;">💲 Price:</span> {}</p>
 <p style="color:#0073e6;"><span style="color:#333;">🧑‍🎓 Students Enrolled:</span> {}</p>
-</div>
-"""
-
-RESULT_TEMP_DARK = """
-<div style="width:90%;height:100%;margin:1px;padding:5px;position:relative;border-radius:10px;border-bottom-right-radius: 60px;
-box-shadow:0 0 15px 5px #333; background-color: #333;
-border-left: 5px solid #6c6c6c; margin-bottom: 20px;">
-<h4 style="color:#fff;">{}</h4>
-<p style="color:#00ace6;"><span style="color:#fff;">📈 Similarity Score:</span> {}</p>
-<p style="color:#00ace6;"><span style="color:#fff;">🔗</span> <a href="{}" target="_blank" style="color:#00ace6;">Course Link</a></p>
-<p style="color:#00ace6;"><span style="color:#fff;">💲 Price:</span> {}</p>
-<p style="color:#00ace6;"><span style="color:#fff;">🧑‍🎓 Students Enrolled:</span> {}</p>
 </div>
 """
 
@@ -66,35 +54,6 @@ def main():
     st.set_page_config(page_title="Course Recommendation App", page_icon="🎓")
     st.title("🎓 Course Recommendation App")
     st.markdown("Welcome to the **Course Recommendation App**! Find courses tailored to your interests.")
-    
-    # Toggle for light/dark mode
-    mode = st.sidebar.radio("Select Mode", ["Light", "Dark"])
-
-    # Set style based on mode
-    if mode == "Light":
-        result_template = RESULT_TEMP_LIGHT
-        st.markdown(
-            """
-            <style>
-            body {
-                background-color: #ffffff;
-                color: #000000;
-            }
-            </style>
-            """, unsafe_allow_html=True
-        )
-    else:
-        result_template = RESULT_TEMP_DARK
-        st.markdown(
-            """
-            <style>
-            body {
-                background-color: #0E1117;
-                color: #ffffff;
-            }
-            </style>
-            """, unsafe_allow_html=True
-        )
     
     menu = ["Home", "Recommend", "About"]
     choice = st.sidebar.selectbox("Menu", menu, index=0)
@@ -128,7 +87,7 @@ def main():
                         rec_url = row['url']
                         rec_price = row['price']
                         rec_num_sub = row['num_subscribers']
-                        stc.html(result_template.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub), height=250)
+                        stc.html(RESULT_TEMP.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub), height=250)
 
                 except KeyError:
                     # Search for similar courses only if exact match is not found

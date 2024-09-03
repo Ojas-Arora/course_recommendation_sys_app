@@ -4,17 +4,6 @@ import streamlit.components.v1 as stc
 import pandas as pd 
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-import plotly.express as px
-import json
-from streamlit_lottie import st_lottie
-
-# Load Lottie animation function
-def load_lottiefile(filepath: str):
-    with open(filepath, "r") as f:
-        return json.load(f)
-
-# Load animations (you can replace these with any Lottie JSON files you have)
-recommendation_animation = load_lottiefile("animations/recommendation_animation.json")
 
 # Function to load dataset
 def load_data(data):
@@ -29,7 +18,7 @@ def vectorize_text_to_cosine_mat(data):
     return cosine_sim_mat
 
 # Recommendation system function with caching
-@st.cache_data
+@st.cache
 def get_recommendation(title, cosine_sim_mat, df, num_of_rec=10):
     course_indices = pd.Series(df.index, index=df['course_title']).drop_duplicates()
     idx = course_indices[title]
@@ -55,45 +44,33 @@ box-shadow:0 0 15px 5px #ccc; background-color: #a8f0c6;
 """
 
 # Function to search term if not found
-@st.cache_data
+@st.cache
 def search_term_if_not_found(term, df):
     result_df = df[df['course_title'].str.contains(term, case=False)]
     return result_df
 
-# Function to display bar chart
-def plot_course_data(df):
-    fig = px.bar(df.head(10), x='course_title', y='num_subscribers', color='price', 
-                 labels={'num_subscribers': 'Subscribers', 'course_title': 'Course Title'}, height=400)
-    st.plotly_chart(fig)
-
 # Main function for Streamlit app
 def main():
-    st.set_page_config(page_title="Course Recommendation App", layout='wide')
-    st.title("📚 Course Recommendation App")
-    
+    st.title("Course Recommendation App")
     menu = ["Home", "Recommend", "About"]
     choice = st.sidebar.selectbox("Menu", menu)
 
     df = load_data("data/udemy_course_data.csv")
 
     if choice == "Home":
-        st.subheader("🏠 Home")
-        st.markdown("### Top 10 Courses by Subscribers")
-        st_lottie(recommendation_animation, height=150)
-        plot_course_data(df)
+        st.subheader("Home")
+        st.dataframe(df.head(10))
 
     elif choice == "Recommend":
-        st.subheader("🔍 Recommend Courses")
-        st_lottie(recommendation_animation, height=150)
+        st.subheader("Recommend Courses")
         cosine_sim_mat = vectorize_text_to_cosine_mat(df['course_title'])
-        search_term = st.text_input("Search for a course by title")
-        num_of_rec = st.sidebar.number_input("Number of Recommendations", 4, 30, 7)
-        
+        search_term = st.text_input("Search")
+        num_of_rec = st.sidebar.number_input("Number", 4, 30, 7)
         if st.button("Recommend"):
             if search_term:
                 try:
                     results = get_recommendation(search_term, cosine_sim_mat, df, num_of_rec)
-                    with st.expander("See Results in JSON format"):
+                    with st.expander("Results as JSON"):
                         results_json = results.to_dict('index')
                         st.write(results_json)
 
@@ -110,9 +87,8 @@ def main():
                     result_df = search_term_if_not_found(search_term, df)
                     st.dataframe(result_df)
     else:
-        st.subheader("📖 About")
+        st.subheader("About")
         st.text("Built with Streamlit & Pandas")
-        st_lottie(recommendation_animation, height=150)
 
 if __name__ == '__main__':
     main()

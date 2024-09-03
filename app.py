@@ -64,10 +64,17 @@ def main():
         border-radius: 10px;
         padding: 10px;
     }
-    /* Custom styling for the menu items */
+    /* Ensure all menu items are in a single vertical line */
+    .css-1d391kg .css-1v0s1h3, .css-1d391kg .css-1n1n7f2 {
+        display: flex;
+        flex-direction: column;
+        gap: 10px; /* Adjust the gap between items if needed */
+    }
+    /* Styling for the menu items */
     .css-1n1n7f2 {
         padding: 10px;
         border-radius: 10px;
+        color: white;
     }
     /* Custom styling for the content */
     .css-1f3v6nr {

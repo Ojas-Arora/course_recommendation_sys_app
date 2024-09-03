@@ -88,11 +88,15 @@ def main():
                         rec_price = row['price']
                         rec_num_sub = row['num_subscribers']
                         stc.html(RESULT_TEMP.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub), height=250)
+
                 except KeyError:
-                    st.warning("Course not found. Please try a different search term.")
-                    st.info("Suggested Options:")
+                    # Search for similar courses only if exact match is not found
                     result_df = search_term_if_not_found(search_term, df)
-                    st.dataframe(result_df)
+                    if not result_df.empty:
+                        st.info("Suggested Options:")
+                        st.dataframe(result_df)
+                    else:
+                        st.warning("Course not found. Please try a different search term.")
     else:
         st.subheader("ℹ️ About")
         st.markdown("This app is built using Streamlit and Pandas to demonstrate a basic course recommendation system.")

@@ -68,7 +68,7 @@ def main():
     }
     /* Background image for the whole page */
     .css-1f3v6nr {
-        background-image: url('https://wallpapers.com/images/hd/abstract-blueish-white-color-nrvpjoky2673bptv.jpg');
+        background-image: url('https://img.freepik.com/free-vector/education-technology-futuristic-background-vector-gradient-blue-digital-remix_53876-114092.jpg');
         background-size: cover;
         background-attachment: fixed;
         background-position: center;

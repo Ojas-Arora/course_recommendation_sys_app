@@ -1,4 +1,3 @@
-# Import necessary libraries
 import streamlit as st
 import streamlit.components.v1 as stc
 import pandas as pd
@@ -131,7 +130,24 @@ def main():
     
     else:
         st.subheader("📘 About")
-        st.markdown("This app is built using Streamlit and Pandas to demonstrate a basic course recommendation system.")
+        st.markdown("""
+        <div style="background-color:#f9f9f9; padding:15px; border-radius:10px; margin-bottom:20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <h2 style="color:#0073e6;">About This App</h2>
+            <p style="color:#333; font-size:16px;">
+                Welcome to the <strong>Course Recommendation App</strong>! This app uses advanced machine learning techniques 
+                to suggest courses tailored to your preferences. Whether you're looking to expand your skills or explore new topics, 
+                we've got you covered. 
+            </p>
+            <ul style="color:#333; font-size:16px;">
+                <li>💡 <strong>Intelligent Recommendations</strong>: Get personalized course suggestions based on your search.</li>
+                <li>📊 <strong>Data-Driven Insights</strong>: Our recommendations are powered by state-of-the-art algorithms.</li>
+                <li>🚀 <strong>Easy to Use</strong>: Simply enter a course title and get a list of related courses instantly!</li>
+            </ul>
+            <p style="color:#333; font-size:16px;">
+                We hope this app helps you find the perfect course to boost your knowledge and skills. Happy learning!
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
 if __name__ == '__main__':
     main()

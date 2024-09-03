@@ -1,3 +1,4 @@
+# Import necessary libraries
 import streamlit as st 
 import streamlit.components.v1 as stc 
 import pandas as pd 
@@ -50,46 +51,22 @@ def search_term_if_not_found(term, df):
 
 # Main function for Streamlit app
 def main():
-    # Inject custom CSS
-    st.markdown("""
-    <style>
-    .css-1aumxhk {
-        background-color: #f0f0f0;
-    }
-    .css-1d391kg {
-        background-color: #0073e6;
-        color: white;
-        border-radius: 10px;
-    }
-    .css-1n1n7f2 {
-        padding: 10px;
-        border-radius: 10px;
-    }
-    .css-1f3v6nr {
-        color: #333;
-    }
-    .css-1r6slbq {
-        color: #0073e6;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
     st.set_page_config(page_title="Course Recommendation App", page_icon="🎓")
     st.title("🎓 Course Recommendation App")
     st.markdown("Welcome to the **Course Recommendation App**! Find courses tailored to your interests.")
     
-    menu = ["🏠 Home", "🔍 Recommend", "ℹ️ About"]
+    menu = ["Home", "Recommend", "About"]
     choice = st.sidebar.selectbox("Menu", menu, index=0)
     
     # Load dataset
     df = load_data("data/udemy_course_data.csv")
 
-    if choice == "🏠 Home":
+    if choice == "Home":
         st.subheader("🏠 Home")
         st.markdown("Browse the first few courses from our dataset:")
         st.dataframe(df.head(10))
 
-    elif choice == "🔍 Recommend":
+    elif choice == "Recommend":
         st.subheader("🔍 Recommend Courses")
         cosine_sim_mat = vectorize_text_to_cosine_mat(df['course_title'])
         search_term = st.text_input("Search for a course by title")

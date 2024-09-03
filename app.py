@@ -35,10 +35,10 @@ RESULT_TEMP = """
 <div style="width:100%;height:100%;margin:5px;padding:10px;position:relative;border-radius:5px;
 box-shadow:0 0 10px 2px #ccc; background-color: #ffffff; border-left: 5px solid #0073e6; margin-bottom: 20px;">
 <h4 style="color:#0073e6;">{}</h4>
-<p style="color:#0073e6;"><span style="color:#333;">📈 Similarity Score:</span> {}</p>
+<p style="color:#0073e6;"><span style="color:#333;">🔍 Similarity Score:</span> {}</p>
 <p style="color:#0073e6;"><span style="color:#333;">🔗</span> <a href="{}" target="_blank">Course Link</a></p>
-<p style="color:#0073e6;"><span style="color:#333;">💲 Price:</span> {}</p>
-<p style="color:#0073e6;"><span style="color:#333;">🧑‍🎓 Students Enrolled:</span> {}</p>
+<p style="color:#0073e6;"><span style="color:#333;">💰 Price:</span> {}</p>
+<p style="color:#0073e6;"><span style="color:#333;">👥 Students Enrolled:</span> {}</p>
 </div>
 """
 
@@ -60,32 +60,9 @@ def main():
     # Set page config at the start
     st.set_page_config(page_title="Course Recommendation App", page_icon="🎓")
 
-    # Inject custom CSS to hide default icons and add custom ones
+    # Inject custom CSS
     st.markdown("""
     <style>
-    /* Hide default Streamlit sidebar arrows */
-    [data-baseweb="select"] > div {
-        display: none;
-    }
-    .st-af { /* Class for the expand/collapse arrow */
-        display: none;
-    }
-
-    /* Custom icon for the toggle button */
-    [data-testid="stSidebar"] button[aria-expanded="true"]:before {
-        content: '📘'; /* Replace with desired icon */
-        margin-right: 8px;
-        color: #0073e6;
-        font-size: 1.2em;
-    }
-
-    [data-testid="stSidebar"] button[aria-expanded="false"]:before {
-        content: '📘'; /* Replace with desired icon */
-        margin-right: 8px;
-        color: #0073e6;
-        font-size: 1.2em;
-    }
-
     /* Custom styling for sidebar */
     .css-1d391kg {
         background-color: #0073e6;

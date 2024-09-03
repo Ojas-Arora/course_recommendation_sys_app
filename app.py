@@ -64,7 +64,7 @@ def main():
     st.markdown("""
     <style>
     .main {
-        background-image: url('./Designer.jpeg');
+        background-image: url('https://img.freepik.com/free-vector/education-technology-futuristic-background-vector-gradient-blue-digital-remix_53876-114092.jpg');
     }
     /* Background image for the whole page */
     .css-1f3v6nr {

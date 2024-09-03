@@ -93,7 +93,7 @@ def main():
     st.title("🎓 Course Recommendation App")
     st.markdown("Welcome to the **Course Recommendation App**! Find courses tailored to your interests.")
     
-    menu = ["🏠 Home", "🔍 Recommend", "ℹ️ About"]
+    menu = ["🏠 Home", "🔍 Recommend", "   ℹ️ About"]
     choice = st.sidebar.selectbox("Menu", menu, index=0)
     
     # Load dataset

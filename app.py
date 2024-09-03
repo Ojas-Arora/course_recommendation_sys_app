@@ -64,7 +64,7 @@ def main():
     st.markdown("""
     <style>
     .main {
-        background-image: url('https://github.com/Ojas-Arora/course_recommendation_sys_app/blob/main/Designer.jpeg');
+        background-image: url('https://www.shutterstock.com/image-vector/learn-online-book-digital-futuristic-600nw-2182663111.jpg');
     }
     /* Background image for the whole page */
     .css-1f3v6nr {

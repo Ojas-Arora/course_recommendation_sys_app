@@ -1,3 +1,4 @@
+# Import necessary libraries
 import streamlit as st
 import streamlit.components.v1 as stc
 import pandas as pd
@@ -85,8 +86,20 @@ def main():
     st.title("🎓 Course Recommendation App")
     st.markdown("Welcome to the **Course Recommendation App**! Find courses tailored to your interests.")
     
+    # Sidebar Menu
     menu = ["🏠 Home", "🔍 Recommend", "📘 About"]
     choice = st.sidebar.selectbox("Menu", menu, index=0)
+
+    # Additional Options Below the Menu
+    st.markdown("### Additional Options")
+    if st.button("🎓 Top Rated Courses"):
+        st.write("Displaying top-rated courses... (to be implemented)")
+    
+    if st.button("📅 Upcoming Courses"):
+        st.write("Displaying upcoming courses... (to be implemented)")
+
+    if st.button("🔥 Trending Courses"):
+        st.write("Displaying trending courses... (to be implemented)")
     
     # Load dataset
     df = load_data("data/udemy_course_data.csv")
@@ -131,22 +144,15 @@ def main():
     else:
         st.subheader("📘 About")
         st.markdown("""
-        <div style="background-color:#f9f9f9; padding:15px; border-radius:10px; margin-bottom:20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-            <h2 style="color:#0073e6;">About This App</h2>
-            <p style="color:#333; font-size:16px;">
-                Welcome to the <strong>Course Recommendation App</strong>! This app uses advanced machine learning techniques 
-                to suggest courses tailored to your preferences. Whether you're looking to expand your skills or explore new topics, 
-                we've got you covered. 
-            </p>
-            <ul style="color:#333; font-size:16px;">
-                <li>💡 <strong>Intelligent Recommendations</strong>: Get personalized course suggestions based on your search.</li>
-                <li>📊 <strong>Data-Driven Insights</strong>: Our recommendations are powered by state-of-the-art algorithms.</li>
-                <li>🚀 <strong>Easy to Use</strong>: Simply enter a course title and get a list of related courses instantly!</li>
-            </ul>
-            <p style="color:#333; font-size:16px;">
-                We hope this app helps you find the perfect course to boost your knowledge and skills. Happy learning!
-            </p>
-        </div>
+        ### About This App
+        This **Course Recommendation App** helps you discover the best courses tailored to your needs and interests.
+        
+        - **🔍 Search for Courses:** Use the search functionality to find courses similar to what you are interested in.
+        - **📅 Upcoming Courses:** Stay updated with the latest and upcoming courses.
+        - **🔥 Trending Courses:** Discover trending courses that are popular among learners.
+        - **🎓 Top Rated Courses:** Check out the highest-rated courses based on user reviews and ratings.
+        
+        Built using **Streamlit** and **Pandas**, this app is a demonstration of a basic recommendation system.
         """, unsafe_allow_html=True)
 
 if __name__ == '__main__':

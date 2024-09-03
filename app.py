@@ -50,22 +50,25 @@ def search_term_if_not_found(term, df):
     result_df = df[df['course_title'].str.contains(term, case=False)]
     return result_df
 
-# Function to generate sample graphs
-def generate_graphs():
-    # Sample data for graphs
-    data = {
-        'Category': ['A', 'B', 'C', 'D'],
-        'Value': [10, 20, 15, 30]
-    }
-    df = pd.DataFrame(data)
+# Function to generate relevant graphs
+def generate_graphs(df):
+    # Distribution of Course Prices
+    price_histogram = px.histogram(df, x='price', nbins=20, title='Distribution of Course Prices')
     
-    # Bar chart
-    bar_chart = px.bar(df, x='Category', y='Value', title='Sample Bar Chart')
+    # Number of Subscribers by Course
+    subscribers_bar_chart = px.bar(df, x='course_title', y='num_subscribers', title='Number of Subscribers by Course', height=400)
 
-    # Pie chart
-    pie_chart = px.pie(df, names='Category', values='Value', title='Sample Pie Chart')
+    # Course Count by Category
+    category_counts = df['category'].value_counts().reset_index()
+    category_counts.columns = ['Category', 'Course Count']
+    category_pie_chart = px.pie(category_counts, names='Category', values='Course Count', title='Course Count by Category')
 
-    return bar_chart, pie_chart
+    # Average Course Price by Category
+    avg_price_by_category = df.groupby('category')['price'].mean().reset_index()
+    avg_price_by_category.columns = ['Category', 'Average Price']
+    avg_price_bar_chart = px.bar(avg_price_by_category, x='Category', y='Average Price', title='Average Course Price by Category')
+
+    return price_histogram, subscribers_bar_chart, category_pie_chart, avg_price_bar_chart
 
 # Main function for Streamlit app
 def main():
@@ -160,9 +163,11 @@ def main():
     
     elif choice == "📊 Graphs":
         st.subheader("📊 Graphs")
-        bar_chart, pie_chart = generate_graphs()
-        st.plotly_chart(bar_chart)
-        st.plotly_chart(pie_chart)
+        price_histogram, subscribers_bar_chart, category_pie_chart, avg_price_bar_chart = generate_graphs(df)
+        st.plotly_chart(price_histogram)
+        st.plotly_chart(subscribers_bar_chart)
+        st.plotly_chart(category_pie_chart)
+        st.plotly_chart(avg_price_bar_chart)
     
     else:
         st.subheader("ℹ️ About")

@@ -36,7 +36,7 @@ RESULT_TEMP = """
 box-shadow:0 0 10px 2px darkturquoise; background-color: #ffffff; border-left: 5px solid darkturquoise; margin-bottom: 20px;">
 <h4 style="color:darkturquoise;">{}</h4>
 <p style="color:darkturquoise;"><span style="color:#333;">🔍 Similarity Score:</span> {}</p>
-<p style="color:darkturquoise;"><span style="color:darkturquoise;">🔗</span> <a href="{}" target="_blank">Course Link</a></p>
+<p style="color:darkturquoise;"><span style="color:#333;">🔗</span> <a href="{}" target="_blank">Course Link</a></p>
 <p style="color:darkturquoise;"><span style="color:#333;">💰 Price:</span> {}</p>
 <p style="color:darkturquoise;"><span style="color:#333;">👥 Students Enrolled:</span> {}</p>
 </div>
@@ -65,7 +65,7 @@ def main():
     <style>
     /* Custom styling for sidebar */
     .css-1d391kg {
-        background-color: #0073e6;
+        background-color: darkturquoise;
         color: white;
         border-radius: 10px;
         padding: 10px;

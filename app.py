@@ -32,10 +32,9 @@ def get_recommendation(title, cosine_sim_mat, df, num_of_rec=10):
 
 # HTML template for displaying results with enhanced styling and icons
 RESULT_TEMP = """
-<div style="width:90%;height:100%;margin:1px;padding:5px;position:relative;border-radius:10px;border-bottom-right-radius: 60px;
-box-shadow:0 0 15px 5px #ccc; background-color: #f0f0f0;
-border-left: 5px solid #6c6c6c; margin-bottom: 20px;">
-<h4 style="color:#333;">{}</h4>
+<div style="width:100%;height:100%;margin:5px;padding:10px;position:relative;border-radius:5px;
+box-shadow:0 0 10px 2px #ccc; background-color: #ffffff; border-left: 5px solid #0073e6; margin-bottom: 20px;">
+<h4 style="color:#0073e6;">{}</h4>
 <p style="color:#0073e6;"><span style="color:#333;">📈 Similarity Score:</span> {}</p>
 <p style="color:#0073e6;"><span style="color:#333;">🔗</span> <a href="{}" target="_blank">Course Link</a></p>
 <p style="color:#0073e6;"><span style="color:#333;">💲 Price:</span> {}</p>
@@ -46,7 +45,8 @@ border-left: 5px solid #6c6c6c; margin-bottom: 20px;">
 # Function to get top-rated courses
 @st.cache_data
 def get_top_rated_courses(df, num_of_courses=10):
-    top_rated_df = df.sort_values(by='num_subscribers', ascending=False).head(num_of_courses)
+    top_rated_df = df[df['price'] > 0]  # Filter out courses with price 0
+    top_rated_df = top_rated_df.sort_values(by='num_subscribers', ascending=False).head(num_of_courses)
     return top_rated_df[['course_title', 'url', 'price', 'num_subscribers']]
 
 # Function to search term if not found
@@ -96,8 +96,13 @@ def main():
     menu = ["🏠 Home", "🔍 Recommend", "📘 About"]
     choice = st.sidebar.selectbox("Menu", menu, index=0)
     
-    # Top Rated Courses button right below the menu
-    top_rated_button_clicked = st.sidebar.button("🎓 Top Rated Courses")
+    # State management for toggling
+    if 'show_top_rated' not in st.session_state:
+        st.session_state['show_top_rated'] = False
+    
+    # Top Rated Courses button right below the menu with toggle functionality
+    if st.sidebar.button("🎓 Top Rated Courses"):
+        st.session_state['show_top_rated'] = not st.session_state['show_top_rated']
 
     # Load dataset
     df = load_data("data/udemy_course_data.csv")
@@ -151,8 +156,8 @@ def main():
         Built using **Streamlit** and **Pandas**, this app is a demonstration of a basic recommendation system.
         """, unsafe_allow_html=True)
     
-    # Display Top Rated Courses if button is clicked
-    if top_rated_button_clicked:
+    # Display Top Rated Courses if button is clicked and toggled on
+    if st.session_state['show_top_rated']:
         st.subheader("🎓 Top Rated Courses")
         top_courses = get_top_rated_courses(df)
         st.markdown("### 📊 Top Courses Based on Number of Subscribers")

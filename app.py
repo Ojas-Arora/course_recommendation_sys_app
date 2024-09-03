@@ -63,6 +63,9 @@ def main():
     # Inject custom CSS
     st.markdown("""
     <style>
+    .main {
+        background-image: url('https://wallpapers.com/images/hd/abstract-blueish-white-color-nrvpjoky2673bptv.jpg');
+    }
     /* Background image for the whole page */
     .css-1f3v6nr {
         background-image: url('https://wallpapers.com/images/hd/abstract-blueish-white-color-nrvpjoky2673bptv.jpg');

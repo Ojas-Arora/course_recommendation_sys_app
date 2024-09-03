@@ -65,7 +65,7 @@ def main():
     <style>
     /* Custom styling for sidebar */
     .css-1d391kg {
-        background-color: darkturquoise;
+        background-color: #0073e6;
         color: white;
         border-radius: 10px;
         padding: 10px;
@@ -77,14 +77,27 @@ def main():
     }
     /* Custom styling for the content */
     .css-1f3v6nr {
-        color: darkturquoise;
+        color: #333;
     }
     .css-1r6slbq {
-        color: darkturquoise;
+        color: #0073e6;
     }
     /* Styling for the header */
     .css-1d391kg h1 {
-        color: darkturquoise;
+        color: #fff;
+    }
+    /* Change button and box active color to darkturquoise */
+    button:active, .stButton>button:focus {
+        background-color: darkturquoise !important;
+        color: white !important;
+    }
+    .css-1aumxhk:hover {
+        background-color: darkturquoise !important;
+        color: white !important;
+    }
+    .st-expander-header:focus {
+        background-color: darkturquoise !important;
+        color: white !important;
     }
     </style>
     """, unsafe_allow_html=True)

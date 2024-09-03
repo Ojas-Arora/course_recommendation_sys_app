@@ -77,14 +77,14 @@ def main():
     }
     /* Custom styling for the content */
     .css-1f3v6nr {
-        color: #333;
+        color: darkturquoise;
     }
     .css-1r6slbq {
-        color: #0073e6;
+        color: darkturquoise;
     }
     /* Styling for the header */
     .css-1d391kg h1 {
-        color: #fff;
+        color: darkturquoise;
     }
     </style>
     """, unsafe_allow_html=True)

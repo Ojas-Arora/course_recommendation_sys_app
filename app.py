@@ -64,7 +64,7 @@ def main():
     st.markdown("""
     <style>
     .main {
-        background-image: url('https://img.freepik.com/free-vector/education-technology-futuristic-background-vector-gradient-blue-digital-remix_53876-114092.jpg');
+        background-image: url('https://media.istockphoto.com/id/1379686014/vector/online-courses-concept.jpg?s=612x612&w=0&k=20&c=p9HrYi_klaVq6N6RiUIpfbyCMZg7mvaJkb1E5uo1CEk=');
     }
     /* Background image for the whole page */
     .css-1f3v6nr {

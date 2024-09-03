@@ -43,6 +43,12 @@ border-left: 5px solid #6c6c6c; margin-bottom: 20px;">
 </div>
 """
 
+# Function to get top-rated courses
+@st.cache_data
+def get_top_rated_courses(df, num_of_courses=10):
+    top_rated_df = df.sort_values(by='num_subscribers', ascending=False).head(num_of_courses)
+    return top_rated_df[['course_title', 'url', 'price', 'num_subscribers']]
+
 # Function to search term if not found
 @st.cache_data
 def search_term_if_not_found(term, df):
@@ -89,18 +95,10 @@ def main():
     # Sidebar Menu
     menu = ["🏠 Home", "🔍 Recommend", "📘 About"]
     choice = st.sidebar.selectbox("Menu", menu, index=0)
-
-    # Additional Options Below the Menu
-    st.markdown("### Additional Options")
-    if st.button("🎓 Top Rated Courses"):
-        st.write("Displaying top-rated courses... (to be implemented)")
     
-    if st.button("📅 Upcoming Courses"):
-        st.write("Displaying upcoming courses... (to be implemented)")
+    # Top Rated Courses button right below the menu
+    top_rated_button_clicked = st.sidebar.button("🎓 Top Rated Courses")
 
-    if st.button("🔥 Trending Courses"):
-        st.write("Displaying trending courses... (to be implemented)")
-    
     # Load dataset
     df = load_data("data/udemy_course_data.csv")
     
@@ -141,19 +139,29 @@ def main():
                     else:
                         st.warning("Course not found. Please try a different search term.")
     
-    else:
+    elif choice == "📘 About":
         st.subheader("📘 About")
         st.markdown("""
         ### About This App
         This **Course Recommendation App** helps you discover the best courses tailored to your needs and interests.
         
         - **🔍 Search for Courses:** Use the search functionality to find courses similar to what you are interested in.
-        - **📅 Upcoming Courses:** Stay updated with the latest and upcoming courses.
-        - **🔥 Trending Courses:** Discover trending courses that are popular among learners.
         - **🎓 Top Rated Courses:** Check out the highest-rated courses based on user reviews and ratings.
         
         Built using **Streamlit** and **Pandas**, this app is a demonstration of a basic recommendation system.
         """, unsafe_allow_html=True)
+    
+    # Display Top Rated Courses if button is clicked
+    if top_rated_button_clicked:
+        st.subheader("🎓 Top Rated Courses")
+        top_courses = get_top_rated_courses(df)
+        st.markdown("### 📊 Top Courses Based on Number of Subscribers")
+        for _, row in top_courses.iterrows():
+            course_title = row['course_title']
+            course_url = row['url']
+            course_price = row['price']
+            num_subscribers = row['num_subscribers']
+            stc.html(RESULT_TEMP.format(course_title, "", course_url, course_price, num_subscribers), height=250)
 
 if __name__ == '__main__':
     main()

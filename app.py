@@ -33,12 +33,12 @@ def get_recommendation(title, cosine_sim_mat, df, num_of_rec=10):
 # HTML template for displaying results with enhanced styling and icons
 RESULT_TEMP = """
 <div style="width:100%;height:100%;margin:5px;padding:10px;position:relative;border-radius:5px;
-box-shadow:0 0 10px 2px #ccc; background-color: #ffffff; border-left: 5px solid #0073e6; margin-bottom: 20px;">
-<h4 style="color:#0073e6;">{}</h4>
-<p style="color:#0073e6;"><span style="color:#333;">🔍 Similarity Score:</span> {}</p>
-<p style="color:#0073e6;"><span style="color:#333;">🔗</span> <a href="{}" target="_blank">Course Link</a></p>
-<p style="color:#0073e6;"><span style="color:#333;">💰 Price:</span> {}</p>
-<p style="color:#0073e6;"><span style="color:#333;">👥 Students Enrolled:</span> {}</p>
+box-shadow:0 0 10px 2px #ccc; background-color: #ffffff; border-left: 5px solid darkturquoise; margin-bottom: 20px;">
+<h4 style="color:darkturquoise;">{}</h4>
+<p style="color:darkturquoise;"><span style="color:#333;">🔍 Similarity Score:</span> {}</p>
+<p style="color:darkturquoise;"><span style="color:#333;">🔗</span> <a href="{}" target="_blank">Course Link</a></p>
+<p style="color:darkturquoise;"><span style="color:#333;">💰 Price:</span> {}</p>
+<p style="color:darkturquoise;"><span style="color:#333;">👥 Students Enrolled:</span> {}</p>
 </div>
 """
 
@@ -65,7 +65,7 @@ def main():
     <style>
     /* Custom styling for sidebar */
     .css-1d391kg {
-        background-color: #0073e6;
+        background-color: darkturquoise;
         color: white;
         border-radius: 10px;
         padding: 10px;
@@ -80,7 +80,7 @@ def main():
         color: #333;
     }
     .css-1r6slbq {
-        color: #0073e6;
+        color: darkturquoise;
     }
     /* Styling for the header */
     .css-1d391kg h1 {

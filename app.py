@@ -59,94 +59,63 @@ def main():
     # Add FontAwesome for icons
     st.markdown('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">', unsafe_allow_html=True)
 
-    # Add a toggle button for light/dark mode with icons
+    # Add a button for light/dark mode with icons
     toggle_code = """
     <style>
-    .toggle-container {{
+    .theme-toggle {{
         display: flex;
         align-items: center;
         margin-bottom: 20px;
     }}
-    .toggle-button {{
-        position: relative;
-        width: 60px;
-        height: 30px;
-    }}
-    .toggle-button input {{
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }}
-    .slider {{
-        position: absolute;
+    .theme-toggle button {{
+        background: {button_bg_color};
+        color: {button_text_color};
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
         cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: {slider_bg_color};
-        transition: .4s;
-        border-radius: 30px;
+        font-size: 16px;
+        transition: background-color 0.3s;
     }}
-    .slider:before {{
-        position: absolute;
-        content: "";
-        height: 22px;
-        width: 22px;
-        border-radius: 50%;
-        left: 4px;
-        bottom: 4px;
-        background-color: {handle_color};
-        transition: .4s;
-    }}
-    input:checked + .slider {{
-        background-color: {slider_checked_bg_color};
-    }}
-    input:checked + .slider:before {{
-        transform: translateX(30px);
+    .theme-toggle button:hover {{
+        background-color: {button_hover_bg_color};
     }}
     .icon {{
         font-size: 20px;
-        color: {icon_color};
     }}
     .icon.sun {{
-        position: absolute;
-        left: 8px;
-        top: 50%;
-        transform: translateY(-50%);
+        margin-right: 10px;
     }}
     .icon.moon {{
-        position: absolute;
-        right: 8px;
-        top: 50%;
-        transform: translateY(-50%);
+        margin-left: 10px;
     }}
     </style>
-    <div class="toggle-container">
-        <label class="toggle-button">
-            <input type="checkbox" id="modeToggle" onchange="toggleMode()" {checked}>
-            <span class="slider"></span>
+    <div class="theme-toggle">
+        <button onclick="toggleMode()">
             <i class="fas fa-sun icon sun"></i>
             <i class="fas fa-moon icon moon"></i>
-        </label>
+        </button>
     </div>
     <script>
     function toggleMode() {{
         const body = document.body;
-        const toggle = document.getElementById('modeToggle');
-        if (toggle.checked) {{
-            body.setAttribute('data-theme', 'dark');
-            window.localStorage.setItem('theme', 'dark');
-        }} else {{
+        const currentMode = body.getAttribute('data-theme');
+        if (currentMode === 'dark') {{
             body.removeAttribute('data-theme');
             window.localStorage.setItem('theme', 'light');
+        }} else {{
+            body.setAttribute('data-theme', 'dark');
+            window.localStorage.setItem('theme', 'dark');
         }}
     }}
     document.addEventListener('DOMContentLoaded', (event) => {{
         const storedTheme = window.localStorage.getItem('theme');
         if (storedTheme) {{
-            document.getElementById('modeToggle').checked = (storedTheme === 'dark');
-            toggleMode();
+            if (storedTheme === 'dark') {{
+                document.body.setAttribute('data-theme', 'dark');
+            }} else {{
+                document.body.removeAttribute('data-theme');
+            }}
         }}
     }});
     </script>
@@ -159,28 +128,25 @@ def main():
         text_color = "#000000"
         link_color = "#0073e6"
         shadow_color = "#ccc"
-        slider_bg_color = "#ccc"
-        handle_color = "#fff"
-        slider_checked_bg_color = "#0073e6"
+        button_bg_color = "#f0f0f0"
+        button_text_color = "#000000"
+        button_hover_bg_color = "#e0e0e0"
         icon_color = "#000000"
-        checked = ''
     else:
         bg_color = "#0E1117"
         text_color = "#ffffff"
         link_color = "#00ace6"
         shadow_color = "#333"
-        slider_bg_color = "#555"
-        handle_color = "#000"
-        slider_checked_bg_color = "#00ace6"
+        button_bg_color = "#333"
+        button_text_color = "#ffffff"
+        button_hover_bg_color = "#555"
         icon_color = "#ffffff"
-        checked = 'checked'
 
     st.markdown(toggle_code.format(
-        slider_bg_color=slider_bg_color,
-        handle_color=handle_color,
-        slider_checked_bg_color=slider_checked_bg_color,
-        icon_color=icon_color,
-        checked=checked
+        button_bg_color=button_bg_color,
+        button_text_color=button_text_color,
+        button_hover_bg_color=button_hover_bg_color,
+        icon_color=icon_color
     ), unsafe_allow_html=True)
 
     st.title("🎓 Course Recommendation App")
@@ -198,8 +164,8 @@ def main():
             color: {text_color};
         }}
         .stButton>button {{
-            background-color: {bg_color};
-            color: {text_color};
+            background-color: {button_bg_color};
+            color: {button_text_color};
         }}
         .stTextInput>div>div>input {{
             background-color: {bg_color};

@@ -70,9 +70,8 @@ def main():
     # Toggle for light/dark mode
     mode = st.sidebar.radio("Select Mode", ["Light", "Dark"])
 
-    # Set style based on mode
+    # Apply dynamic styles
     if mode == "Light":
-        result_template = RESULT_TEMP_LIGHT
         st.markdown(
             """
             <style>
@@ -80,11 +79,19 @@ def main():
                 background-color: #ffffff;
                 color: #000000;
             }
+            .stButton>button {
+                background-color: #e0e0e0;
+                color: #000000;
+            }
+            .stTextInput>div>div>input {
+                background-color: #ffffff;
+                color: #000000;
+            }
             </style>
             """, unsafe_allow_html=True
         )
+        result_template = RESULT_TEMP_LIGHT
     else:
-        result_template = RESULT_TEMP_DARK
         st.markdown(
             """
             <style>
@@ -92,9 +99,18 @@ def main():
                 background-color: #0E1117;
                 color: #ffffff;
             }
+            .stButton>button {
+                background-color: #333333;
+                color: #ffffff;
+            }
+            .stTextInput>div>div>input {
+                background-color: #333333;
+                color: #ffffff;
+            }
             </style>
             """, unsafe_allow_html=True
         )
+        result_template = RESULT_TEMP_DARK
     
     menu = ["Home", "Recommend", "About"]
     choice = st.sidebar.selectbox("Menu", menu, index=0)

@@ -35,10 +35,10 @@ RESULT_TEMP = """
 <div style="width:100%;height:100%;margin:5px;padding:10px;position:relative;border-radius:5px;
 box-shadow:0 0 10px 2px #ccc; background-color: #ffffff; border-left: 5px solid darkturquoise; margin-bottom: 20px;">
 <h4 style="color:darkturquoise;">{}</h4>
-<p style="color:darkturquoise;"><span style="color:#333;">🔍 Similarity Score:</span> {}</p>
-<p style="color:darkturquoise;"><span style="color:#333;">🔗</span> <a href="{}" target="_blank">Course Link</a></p>
-<p style="color:darkturquoise;"><span style="color:#333;">💰 Price:</span> {}</p>
-<p style="color:darkturquoise;"><span style="color:#333;">👥 Students Enrolled:</span> {}</p>
+<p style="color:white;"><span style="color:#333;">🔍 Similarity Score:</span> {}</p>
+<p style="color:white;"><span style="color:#333;">🔗</span> <a href="{}" target="_blank">Course Link</a></p>
+<p style="color:white;"><span style="color:#333;">💰 Price:</span> {}</p>
+<p style="color:white;"><span style="color:#333;">👥 Students Enrolled:</span> {}</p>
 </div>
 """
 

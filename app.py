@@ -2,6 +2,7 @@
 import streamlit as st
 import streamlit.components.v1 as stc
 import pandas as pd
+import plotly.express as px
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -49,6 +50,23 @@ def search_term_if_not_found(term, df):
     result_df = df[df['course_title'].str.contains(term, case=False)]
     return result_df
 
+# Function to generate sample graphs
+def generate_graphs():
+    # Sample data for graphs
+    data = {
+        'Category': ['A', 'B', 'C', 'D'],
+        'Value': [10, 20, 15, 30]
+    }
+    df = pd.DataFrame(data)
+    
+    # Bar chart
+    bar_chart = px.bar(df, x='Category', y='Value', title='Sample Bar Chart')
+
+    # Pie chart
+    pie_chart = px.pie(df, names='Category', values='Value', title='Sample Pie Chart')
+
+    return bar_chart, pie_chart
+
 # Main function for Streamlit app
 def main():
     # Set page config at the start
@@ -76,6 +94,10 @@ def main():
         border-radius: 10px;
         color: white;
     }
+    .css-1d391kg .stButton {
+        display: block;
+        width: 100%;
+    }
     /* Custom styling for the content */
     .css-1f3v6nr {
         color: #333;
@@ -89,11 +111,11 @@ def main():
     }
     </style>
     """, unsafe_allow_html=True)
-    
+
     st.title("🎓 Course Recommendation App")
     st.markdown("Welcome to the **Course Recommendation App**! Find courses tailored to your interests.")
-    
-    menu = ["🏠 Home", "🔍 Recommend", "ℹ️ About"]
+
+    menu = ["🏠 Home", "🔍 Recommend", "📊 Graphs", "ℹ️ About"]
     choice = st.sidebar.selectbox("Menu", menu, index=0)
     
     # Load dataset
@@ -135,6 +157,12 @@ def main():
                         st.dataframe(result_df)
                     else:
                         st.warning("Course not found. Please try a different search term.")
+    
+    elif choice == "📊 Graphs":
+        st.subheader("📊 Graphs")
+        bar_chart, pie_chart = generate_graphs()
+        st.plotly_chart(bar_chart)
+        st.plotly_chart(pie_chart)
     
     else:
         st.subheader("ℹ️ About")

@@ -64,7 +64,7 @@ def main():
     st.markdown("""
     <style>
     .main {
-        background-image: url('https://wallpapers.com/images/hd/abstract-blueish-white-color-nrvpjoky2673bptv.jpg');
+        background-image: url('https://github.com/Ojas-Arora/course_recommendation_sys_app/blob/main/Designer.jpeg');
     }
     /* Background image for the whole page */
     .css-1f3v6nr {

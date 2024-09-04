@@ -155,7 +155,10 @@ def main():
     elif choice == "🔍 Recommend":
         st.subheader("🔍 Recommend Courses")
         cosine_sim_mat = vectorize_text_to_cosine_mat(df['course_title'])
-        search_term = st.text_input("Enter Course Title: Discover courses that match your interests.")
+        search_term = st.text_input("""### 🔍 **Enter Course Title**
+
+🧠 **Discover courses that align with your interests**. Type in a course title to get personalized recommendations tailored just for you.
+""")
         
         if st.button("Recommend"):
             st.session_state['show_recommendations'] = not st.session_state['show_recommendations']

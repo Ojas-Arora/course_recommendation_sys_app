@@ -141,13 +141,13 @@ def main():
         st.subheader("🏠 Home")
         st.markdown( """ ### 🌟 **Explore Top Courses**
 
-Discover a **curated selection** of top courses from our extensive collection. With our handpicked recommendations, you can:
+🎓 Discover a **curated selection** of top courses from our extensive collection. With our handpicked recommendations, you can:
 
 - **📚 Explore Quality Courses**: Access a variety of high-quality courses tailored to different interests and skill levels.
 - **🌟 Find Top Picks**: Dive into the most popular and highly-rated courses available.
 - **🚀 Start Learning Today**: Begin your educational journey with courses that are designed to enhance your skills and knowledge.
 
-Don’t miss out on the opportunity to learn from the best. Start exploring now and take the next step in your learning adventure! 🌐
+🔢Don’t miss out on the opportunity to learn from the best. Start exploring now and take the next step in your learning adventure! 🌐
 """)
     
         st.dataframe(df.head(10))

@@ -218,6 +218,8 @@ Explore detailed statistics and trends on course popularity, pricing, and studen
 - **📈 Make Informed Choices**: Use popularity trends to select courses that are in demand.
 - **💵 Optimize Spending**: Evaluate pricing trends to budget effectively for your learning.
 - **📚 Enhance Learning Path**: Leverage student enrollment data to choose courses with high engagement and effectiveness.
+
+                    
 Use this data to make informed decisions about your learning path. Whether you're looking for the most popular courses or seeking the best deals, our statistics provide valuable insights to guide your choices.
 
 🔍 Dive into the data and enhance your educational journey with the knowledge you need to succeed!

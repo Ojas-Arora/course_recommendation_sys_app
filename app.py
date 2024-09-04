@@ -17,17 +17,24 @@ def vectorize_text_to_cosine_mat(data):
     return cosine_sim_mat
 
 @st.cache_data
-def get_recommendation(title, cosine_sim_mat, df, num_of_rec=10):
+def get_recommendation(title, cosine_sim_mat, df, rec_type='Most Popular'):
     course_indices = pd.Series(df.index, index=df['course_title']).drop_duplicates()
     idx = course_indices[title]
     sim_scores = list(enumerate(cosine_sim_mat[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    selected_course_indices = [i[0] for i in sim_scores[1:num_of_rec+1]]
-    result_df = df.iloc[selected_course_indices].head(num_of_rec)  # Ensure this line limits the number of courses to num_of_rec
-    result_df['similarity_score'] = [i[1] for i in sim_scores[1:num_of_rec+1]]
+    
+    # Adjust recommendation based on the selected type
+    if rec_type == 'Most Popular':
+        selected_course_indices = [i[0] for i in sim_scores[1:11]]  # Top 10 similar courses
+    elif rec_type == 'Newest':
+        selected_course_indices = df.sort_values(by='date_added', ascending=False).head(10).index.tolist()
+    elif rec_type == 'Highest Rated':
+        selected_course_indices = df.sort_values(by='rating', ascending=False).head(10).index.tolist()
+    
+    result_df = df.iloc[selected_course_indices].head(10)  # Ensure this line limits the number of courses to 10
+    result_df['similarity_score'] = [i[1] for i in sim_scores[1:11]]
     final_recommended_courses = result_df[['course_title', 'similarity_score', 'url', 'price', 'num_subscribers']]
     return final_recommended_courses
-
 
 # HTML template for displaying results with enhanced styling and icons
 RESULT_TEMP = """
@@ -149,12 +156,12 @@ def main():
         st.subheader("🔍 Recommend Courses")
         cosine_sim_mat = vectorize_text_to_cosine_mat(df['course_title'])
         search_term = st.text_input("Enter Course Title: Discover courses that match your interests.")
-        num_of_rec = st.sidebar.slider("Number of Recommendations", 4, 30, 7)
+        rec_type = st.sidebar.selectbox("Select Recommendation Type", ["Most Popular", "Newest", "Highest Rated"])
         
         if st.button("Recommend"):
             if search_term:
                 try:
-                    results = get_recommendation(search_term, cosine_sim_mat, df, num_of_rec)
+                    results = get_recommendation(search_term, cosine_sim_mat, df, rec_type)
                     st.markdown("### 🎯 Recommendations")
                     with st.expander("Results as JSON"):
                         results_json = results.to_dict('index')
@@ -180,25 +187,20 @@ def main():
     elif choice == "📘 About":
         st.subheader("📘 About")
         st.markdown("""
-        This **Course Recommendation App** helps you discover the best courses tailored to your needs and interests.
-        
-        - **🔍 Search for Courses:** Use the search functionality to find courses similar to what you are interested in.
-        - **🎓 Top Rated Courses:** Check out the highest-rated courses based on user reviews and ratings.
-        
-        Built using **Streamlit** and **Pandas**, this app is a demonstration of a basic recommendation system.
-        """, unsafe_allow_html=True)
+        This app uses advanced machine learning algorithms to recommend courses based on your search preferences. 
+        We leverage cosine similarity to find courses similar to your input and provide top suggestions based on popularity, 
+        newest additions, or highest ratings.
+        """)
     
-    # Display Top Rated Courses if button is clicked and toggled on
     if st.session_state['show_top_rated']:
-        st.subheader("🎓 Top Rated Courses")
-        top_courses = get_top_rated_courses(df)
-        st.markdown("### 📊 Top Courses Based on Number of Subscribers")
-        for _, row in top_courses.iterrows():
+        st.subheader("🌟 Top Rated Courses")
+        top_rated_courses = get_top_rated_courses(df)
+        for _, row in top_rated_courses.iterrows():
             course_title = row['course_title']
             course_url = row['url']
             course_price = row['price']
-            num_subscribers = row['num_subscribers']
-            stc.html(RESULT_TEMP.format(course_title, "", course_url, course_price, num_subscribers), height=250, class_="recommendation-card")
+            course_subscribers = row['num_subscribers']
+            st.markdown(f"**{course_title}**\n[Course Link]({course_url})\nPrice: {course_price}\nSubscribers: {course_subscribers}\n")
 
 if __name__ == '__main__':
     main()

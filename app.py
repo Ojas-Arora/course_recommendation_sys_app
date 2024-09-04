@@ -132,6 +132,7 @@ def main():
     if choice == "🏠 Home":
         st.subheader("🏠 Home")
         st.markdown(" Explore a curated selection of top courses from our extensive collection. Dive in and start learning today!")
+        st.dataframe(df.head(10))
     
     elif choice == "🔍 Recommend":
         st.subheader("🔍 Recommend Courses")

@@ -64,7 +64,7 @@ def main():
     st.markdown("""
     <style>
     .main {
-        background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL9oBbvx9dTAe8fb4kI6cxtcl-2AvCsPbTzg&s');
+        background-image: url('');
     }
     /* Background image for the whole page */
     .css-1f3v6nr {

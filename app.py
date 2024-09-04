@@ -97,15 +97,15 @@ def main():
     }
     /* Change button and box active color to darkturquoise */
     button:active, .stButton>button:focus {
-        background-color: #E0FFFF !important;
+        background-color: #009688 !important;
         color: white !important;
     }
     .css-1aumxhk:hover {
-        background-color: #E0FFFF !important;
+        background-color: #009688 !important;
         color: white !important;
     }
     .st-expander-header:focus {
-        background-color: #E0FFFF !important;
+        background-color: #009688 !important;
         color: white !important;
     }
     </style>

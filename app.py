@@ -113,15 +113,19 @@ def main():
     }
     </style>
     """, unsafe_allow_html=True)
-    
-    st.title("🎓 Course Recommendation App")
-    st.markdown("Welcome to the **Ultimate Course Finder**! Discover the perfect courses tailored to your passions and goals.")
-    
+
     # Sidebar Menu with Enhanced Icons and Features
     st.sidebar.title("🔍 Navigation")
     menu = ["🏠 Home", "🔍 Recommend", "📘 About", "📈 Statistics"]
     choice = st.sidebar.selectbox("Menu", menu, index=0)
 
+    # Quick Stats in Sidebar
+    st.sidebar.header("📊 Quick Stats")
+    st.sidebar.metric("Total Courses", "500+")
+
+    # Load dataset
+    df = load_data("data/udemy_course_data.csv")
+    
     # State management for toggling recommendations visibility
     if 'show_recommendations' not in st.session_state:
         st.session_state['show_recommendations'] = False
@@ -133,9 +137,6 @@ def main():
     if st.sidebar.button("🎓 Top Rated Courses"):
         st.session_state['show_top_rated'] = not st.session_state['show_top_rated']
 
-    # Load dataset
-    df = load_data("data/udemy_course_data.csv")
-    
     if choice == "🏠 Home":
         st.subheader("🏠 Home")
         st.markdown("Explore a curated selection of top courses from our extensive collection. Dive in and start learning today!")
@@ -204,5 +205,5 @@ def main():
             rec_num_sub = row['num_subscribers']
             st.sidebar.markdown(f"**{rec_title}**\n💰 Price: {rec_price} | 👥 Students: {rec_num_sub}\n[Link]({rec_url})")
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

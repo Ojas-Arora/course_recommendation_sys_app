@@ -201,11 +201,6 @@ def main():
         2. **Vectorize Text**: It converts course titles into numerical vectors.
         3. **Compute Similarity**: It calculates the cosine similarity between course titles.
         4. **Provide Recommendations**: Based on your search, it provides a list of recommended courses.
-
-        **Contact Us:**  
-        If you have any questions or need support, feel free to reach out to us at [support@courserecapp.com](mailto:support@courserecapp.com).
-
-        Enjoy exploring the world of knowledge with our app! 🌟
         """)
     
     elif choice == "📈 Statistics":

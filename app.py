@@ -251,11 +251,11 @@ Explore detailed statistics and trends on course popularity, pricing, and studen
         top_rated_df = get_top_rated_courses(df)
         st.sidebar.markdown("### 🎓 Top Rated Courses")
         for _, row in top_rated_df.iterrows():
-             rec_title = row['course_title']
-    rec_url = row['url']
-    rec_price = row['price']
-    rec_num_sub = row['num_subscribers']
-    st.markdown(f"**{rec_title}**\n💰 Price: {rec_price} | 👥 Students: {rec_num_sub}\n[Link]({rec_url})")
+            rec_title = row['course_title']
+            rec_url = row['url']
+            rec_price = row['price']
+            rec_num_sub = row['num_subscribers']
+            st.sidebar.markdown(f"**{rec_title}**\n💰 Price: {rec_price} | 👥 Students: {rec_num_sub}\n[Link]({rec_url})")
 
 if __name__ == '__main__':
     main()

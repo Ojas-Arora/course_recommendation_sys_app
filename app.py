@@ -1,4 +1,3 @@
-# Import necessary libraries
 import streamlit as st
 import streamlit.components.v1 as stc
 import pandas as pd
@@ -27,7 +26,7 @@ def get_recommendation(title, cosine_sim_mat, df, num_of_rec=10):
     selected_course_indices = [i[0] for i in sim_scores[1:num_of_rec+1]]
     result_df = df.iloc[selected_course_indices]
     result_df['similarity_score'] = [i[1] for i in sim_scores[1:num_of_rec+1]]
-    final_recommended_courses = result_df[['course_title', 'similarity_score', 'url', 'price', 'num_subscribers']]
+    final_recommended_courses = result_df[['course_title', 'similarity_score', 'url', 'price', 'num_subscribers']].head(num_of_rec)
     return final_recommended_courses
 
 # HTML template for displaying results with enhanced styling and icons

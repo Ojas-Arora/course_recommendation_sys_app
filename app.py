@@ -208,13 +208,16 @@ This app is designed to help you discover the best courses that match your learn
         st.markdown("""
 Explore detailed statistics and trends on course popularity, pricing, and student enrollment. 📊
 
-### **What You'll Find:**  
+### 🔍**What You'll Find:**  
 
 - **📈 Course Popularity:** Discover which courses are trending based on student reviews and enrollment numbers.
 - **💰 Pricing Insights:** Analyze pricing patterns to find courses that offer the best value for your investment.
 - **👥 Student Enrollment:** Understand enrollment trends to gauge course demand and popularity.
 
-### **How This Helps You:**  
+### 🛠️**How This Helps You:**  
+- **📈 Make Informed Choices**: Use popularity trends to select courses that are in demand.
+- **💵 Optimize Spending**: Evaluate pricing trends to budget effectively for your learning.
+- **📚 Enhance Learning Path**: Leverage student enrollment data to choose courses with high engagement and effectiveness.
 Use this data to make informed decisions about your learning path. Whether you're looking for the most popular courses or seeking the best deals, our statistics provide valuable insights to guide your choices.
 
 🔍 Dive into the data and enhance your educational journey with the knowledge you need to succeed!

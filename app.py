@@ -98,7 +98,7 @@ def main():
     /* Change button and box active color to darkturquoise */
     button:active, .stButton>button:focus {
         background-color: #009688 !important;
-        color: white !important;
+        color: white !portant;
     }
     .css-1aumxhk:hover {
         background-color: #009688 !important;
@@ -107,6 +107,9 @@ def main():
     .st-expander-header:focus {
         background-color: #009688 !important;
         color: white !important;
+    }
+    .stAlert {
+        background-color: #009688 !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -147,7 +150,7 @@ def main():
                     st.markdown("### 🎯 Recommendations")
                     with st.expander("Results as JSON"):
                         results_json = results.to_dict('index')
-                        st.json(results_json)
+                        st.json(results_json, color="#009688")
                     
                     for _, row in results.iterrows():
                         rec_title = row['course_title']

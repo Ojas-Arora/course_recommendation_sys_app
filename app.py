@@ -54,12 +54,6 @@ def search_term_if_not_found(term, df):
     result_df = df[df['course_title'].str.contains(term, case=False)]
     return result_df
 
-# Function to filter courses by category
-@st.cache_data
-def filter_courses_by_category(df, category):
-    filtered_df = df[df['subject'] == category]
-    return filtered_df
-
 # Main function for Streamlit app
 def main():
     # Set page config at the start
@@ -125,14 +119,35 @@ def main():
     
     # Sidebar Menu with Enhanced Icons and Features
     st.sidebar.title("🔍 Navigation")
-    menu = ["🏠 Home", "🔍 Recommend", "📘 About", "📈 Statistics"]
+    menu = ["🏠 Home", "🔍 Recommend", "📘 About", "📈 Statistics", "🌙 Dark Mode"]
     choice = st.sidebar.selectbox("Menu", menu, index=0)
+
+    # Dark Mode Toggle
+    dark_mode = st.sidebar.checkbox("🌙 Enable Dark Mode")
+    if dark_mode:
+        st.markdown("""
+        <style>
+        body {
+            background-color: #2E2E2E;
+            color: white;
+        }
+        .css-1f3v6nr {
+            background-color: #2E2E2E;
+        }
+        </style>
+        """, unsafe_allow_html=True)
     
     # Additional Sidebar Features
-    st.sidebar.header("📊 Filter by Category")
+    st.sidebar.header("📊 Quick Stats")
+    num_courses = st.sidebar.metric("Total Courses", "500+")
     top_categories = ["Development", "Business", "Finance", "Design", "Marketing"]
-    selected_category = st.sidebar.selectbox("📚 Top Categories", top_categories)
+    st.sidebar.selectbox("📚 Top Categories", top_categories)
 
+    st.sidebar.header("🧑‍💻 Social Links")
+    st.sidebar.markdown("📷 [Instagram](https://www.instagram.com)")
+    st.sidebar.markdown("🔗 [LinkedIn](https://www.linkedin.com)")
+    st.sidebar.markdown("🐦 [Twitter](https://twitter.com)")
+    
     # State management for toggling recommendations visibility
     if 'show_recommendations' not in st.session_state:
         st.session_state['show_recommendations'] = False
@@ -150,12 +165,7 @@ def main():
     if choice == "🏠 Home":
         st.subheader("🏠 Home")
         st.markdown("Explore a curated selection of top courses from our extensive collection. Dive in and start learning today!")
-        
-        if selected_category:
-            df_filtered = filter_courses_by_category(df, selected_category)
-            st.dataframe(df_filtered.head(10))
-        else:
-            st.dataframe(df.head(10))
+        st.dataframe(df.head(10))
     
     elif choice == "🔍 Recommend":
         st.subheader("🔍 Recommend Courses")

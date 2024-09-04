@@ -63,7 +63,7 @@ def main():
     st.markdown("""
     <style>
     .main {
-        background-image: url('');
+        background-color: darkturquoise;
     }
     /* Background image for the whole page */
     .css-1f3v6nr {

@@ -41,16 +41,11 @@ box-shadow:0 0 10px 2px #009688; background-color: #ffffff; border-left: 5px sol
 </div>
 """
 
-# Function to get top-rated courses with specific prices
+# Function to get top-rated courses
 @st.cache_data
 def get_top_rated_courses(df, num_of_courses=10):
     top_rated_df = df[df['price'] > 0]  # Filter out courses with price 0
     top_rated_df = top_rated_df.sort_values(by='num_subscribers', ascending=False).head(num_of_courses)
-    
-    # Manually set the prices for the top 10 courses
-    prices = [549, 799, 799, 649, 649, 549, 649, 649, 649, 549]
-    top_rated_df['price'] = prices
-    
     return top_rated_df[['course_title', 'url', 'price', 'num_subscribers']]
 
 # Function to search term if not found
@@ -151,20 +146,15 @@ def main():
         
         st.dataframe(df.head(10))
         
-        # Button for viewing Top Rated Courses
-        if st.button("View Top Rated Courses"):
-            st.session_state['show_top_rated'] = True
-            
-        # Show Top Rated Courses on the main page if button is clicked
-        if st.session_state.get('show_top_rated', False):
-            st.subheader("🎓 Top Rated Courses")
-            top_rated_df = get_top_rated_courses(df)
-            for _, row in top_rated_df.iterrows():
-                rec_title = row['course_title']
-                rec_url = row['url']
-                rec_price = row['price']
-                rec_num_sub = row['num_subscribers']
-                st.markdown(f"**{rec_title}**\n💰 Price: {rec_price} | 👥 Students: {rec_num_sub}\n[Link]({rec_url})")
+        # Show Top Rated Courses on the main page
+        st.subheader("🎓 Top Rated Courses")
+        top_rated_df = get_top_rated_courses(df)
+        for _, row in top_rated_df.iterrows():
+            rec_title = row['course_title']
+            rec_url = row['url']
+            rec_price = row['price']
+            rec_num_sub = row['num_subscribers']
+            st.markdown(f"**{rec_title}**\n💰 Price: {rec_price} | 👥 Students: {rec_num_sub}\n[Link]({rec_url})")
     
     elif choice == "🔍 Recommend":
         st.subheader("🔍 Recommend Courses")
@@ -198,37 +188,47 @@ def main():
                 except KeyError:
                     # Search for similar courses only if exact match is not found
                     result_df = search_term_if_not_found(search_term, df)
-                    st.warning(f"""### Oops! "{search_term}" Not Found.
-But wait, don't worry! We've found **{len(result_df)}** similar courses that might interest you.
-""")
-                    st.dataframe(result_df)
-            else:
-                st.warning("Please enter a course title.")
+                    if not result_df.empty:
+                        st.info("Suggested Options:")
+                        st.dataframe(result_df)
+                    else:
+                        st.warning("Course not found. Please try a different search term.")
     
     elif choice == "📘 About":
-        st.subheader("📘 About")
-        st.write("""
-        ## Welcome to Course Recommendation App! 🎓
+        st.subheader("📘 About This App")
+        st.markdown("""
+Welcome to the **Course Recommendation App**! 🚀
 
-        This application allows you to explore top-rated courses and receive personalized recommendations based on the course title you enter.
+### 🎯**Objective:**  
+This app is designed to help you discover the best courses that match your learning interests. With an extensive collection of courses, our goal is to provide personalized recommendations to guide your educational journey.
 
-        - **🔍 Recommendations**: Discover courses similar to the ones you're interested in.
-        - **📊 Statistics**: Get quick stats about the available courses.
-        - **📘 About**: Learn more about this application.
+### 🔍 **Features:**  
+- **Course Recommendations:** Get tailored course suggestions based on your interests.
+- **Top Rated Courses:** Explore the most popular and highly-rated courses.
+- **User-Friendly Interface:** Enjoy a seamless experience with easy navigation and search functionality.
 
-        ### 🛠️ **Built With**
-        - **Streamlit**: For creating a fast and interactive web app.
-        - **Scikit-learn**: Used for vectorizing text and calculating cosine similarity.
-        - **Pandas**: For handling the data and filtering courses.
+### 📊 **How It Works:**  
+1. **Enter Course Title:** Type a course title to receive personalized recommendations.
+2. **Discover Top Courses:** Browse through top-rated courses to find the best picks.
+3. **Start Learning:** Follow the provided links to start learning with the recommended courses.
 
-        Thank you for using this app, and happy learning! 🌟
-        """)
-    
-    elif choice == "📈 Statistics":
-        st.subheader("📈 Course Statistics")
-        st.write("""
-This section can include various statistics about the courses available on the platform.
+Feel free to explore and make the most of this app to enhance your learning experience! 🌟
 """)
 
-if __name__ == '__main__':
+    elif choice == "📈 Statistics":
+        st.subheader("📈 Statistics and Analytics")
+        st.markdown("""
+### 📈 **Course Statistics**
+Here, you can find various statistics and analytics related to our courses. Analyze trends, popular subjects, and more.
+
+#### 📊 **Example Stats:**
+- Total number of courses.
+- Average rating and price.
+- Most popular categories and instructors.
+
+Stay tuned for more detailed statistics and insights!
+""")
+
+# Run the Streamlit app
+if __name__ == "__main__":
     main()

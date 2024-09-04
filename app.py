@@ -46,6 +46,11 @@ box-shadow:0 0 10px 2px #009688; background-color: #ffffff; border-left: 5px sol
 def get_top_rated_courses(df, num_of_courses=10):
     top_rated_df = df[df['price'] > 0]  # Filter out courses with price 0
     top_rated_df = top_rated_df.sort_values(by='num_subscribers', ascending=False).head(num_of_courses)
+    
+    # Manually set the prices for the top 10 courses
+    prices = [549, 799, 799, 649, 649, 549, 649, 649, 649, 549]
+    top_rated_df['price'] = prices
+    
     return top_rated_df[['course_title', 'url', 'price', 'num_subscribers']]
 
 # Function to search term if not found
@@ -246,11 +251,11 @@ Explore detailed statistics and trends on course popularity, pricing, and studen
         top_rated_df = get_top_rated_courses(df)
         st.sidebar.markdown("### 🎓 Top Rated Courses")
         for _, row in top_rated_df.iterrows():
-            rec_title = row['course_title']
-            rec_url = row['url']
-            rec_price = row['price']
-            rec_num_sub = row['num_subscribers']
-            st.sidebar.markdown(f"**{rec_title}**\n💰 Price: {rec_price} | 👥 Students: {rec_num_sub}\n[Link]({rec_url})")
+             rec_title = row['course_title']
+    rec_url = row['url']
+    rec_price = row['price']
+    rec_num_sub = row['num_subscribers']
+    st.markdown(f"**{rec_title}**\n💰 Price: {rec_price} | 👥 Students: {rec_num_sub}\n[Link]({rec_url})")
 
 if __name__ == '__main__':
     main()

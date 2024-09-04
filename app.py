@@ -117,7 +117,7 @@ def main():
     # Sidebar Menu with Enhanced Icons and Features
     st.sidebar.title("🔍 Navigation")
     menu = ["🏠 Home", "🔍 Recommend", "📘 About", "📈 Statistics"]
-    choice = st.sidebar.selectbox("Menu", menu, index=0)
+    choice = st.sidebar.selectbox(" 📚 Menu", menu, index=0)
 
     # Quick Stats in Sidebar
     st.sidebar.header("📊 Quick Stats")

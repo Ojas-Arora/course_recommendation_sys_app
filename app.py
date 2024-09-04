@@ -31,13 +31,14 @@ def get_recommendation(title, cosine_sim_mat, df, num_of_rec=10):
 
 # HTML template for displaying results with enhanced styling and icons
 RESULT_TEMP = """
-<div style="width:100%;height:100%;margin:5px;padding:10px;position:relative;border-radius:5px;
-box-shadow:0 0 10px 2px darkturquoise; background-color: #ffffff; border-left: 5px solid darkturquoise; margin-bottom: 20px;">
-<h4 style="color:darkturquoise;">{}</h4>
-<p style="color:darkturquoise;"><span style="color:#333;">🔍 Similarity Score:</span> {}</p>
-<p style="color:darkturquoise;"><span style="color:#333;">🔗</span> <a href="{}" target="_blank">Course Link</a></p>
-<p style="color:darkturquoise;"><span style="color:#333;">💰 Price:</span> {}</p>
-<p style="color:darkturquoise;"><span style="color:#333;">👥 Students Enrolled:</span> {}</p>
+<div style="width:100%;height:100%;margin:5px;padding:10px;position:relative;border-radius:10px;
+box-shadow:0 0 15px rgba(0, 150, 136, 0.3); background-color: #ffffff; border-left: 5px solid #009688; margin-bottom: 20px;
+transition: transform 0.3s ease, box-shadow 0.3s ease;">
+<h4 style="color:#009688; margin: 0;">{}</h4>
+<p style="color:#333; margin: 5px 0;"><span style="color:#009688;">🔍 Similarity Score:</span> {}</p>
+<p style="color:#333; margin: 5px 0;"><span style="color:#009688;">🔗</span> <a href="{}" target="_blank">Course Link</a></p>
+<p style="color:#333; margin: 5px 0;"><span style="color:#009688;">💰 Price:</span> {}</p>
+<p style="color:#333; margin: 5px 0;"><span style="color:#009688;">👥 Students Enrolled:</span> {}</p>
 </div>
 """
 
@@ -63,7 +64,7 @@ def main():
     st.markdown("""
     <style>
     .main {
-        background-color: darkturquoise;
+        background-color: #e0f2f1;
     }
     /* Background image for the whole page */
     .css-1f3v6nr {
@@ -74,7 +75,7 @@ def main():
     }
     /* Custom styling for sidebar */
     .css-1d391kg {
-        background-color: #009688;
+        background-color: #00796b;
         color: white;
         border-radius: 10px;
         padding: 10px;
@@ -97,16 +98,21 @@ def main():
     }
     /* Change button and box active color to darkturquoise */
     button:active, .stButton>button:focus {
-        background-color: #009688 !important;
+        background-color: #00796b !important;
         color: white !important;
     }
     .css-1aumxhk:hover {
-        background-color: #009688 !important;
+        background-color: #00796b !important;
         color: white !important;
     }
     .st-expander-header:focus {
-        background-color: #009688 !important;
+        background-color: #00796b !important;
         color: white !important;
+    }
+    /* Animation for recommendation cards */
+    .recommendation-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(0, 150, 136, 0.5);
     }
     </style>
     """, unsafe_allow_html=True)
@@ -155,7 +161,7 @@ def main():
                         rec_url = row['url']
                         rec_price = row['price']
                         rec_num_sub = row['num_subscribers']
-                        stc.html(RESULT_TEMP.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub), height=250)
+                        stc.html(RESULT_TEMP.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub), height=250, class_="recommendation-card")
                 
                 except KeyError:
                     # Search for similar courses only if exact match is not found
@@ -187,7 +193,7 @@ def main():
             course_url = row['url']
             course_price = row['price']
             num_subscribers = row['num_subscribers']
-            stc.html(RESULT_TEMP.format(course_title, "", course_url, course_price, num_subscribers), height=250)
+            stc.html(RESULT_TEMP.format(course_title, "", course_url, course_price, num_subscribers), height=250, class_="recommendation-card")
 
 if __name__ == '__main__':
     main()

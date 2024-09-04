@@ -121,7 +121,7 @@ def main():
 
     # Quick Stats in Sidebar
     st.sidebar.header("📊 Quick Stats")
-    st.sidebar.metric("Total Courses", "500+")
+    st.sidebar.metric(" 🌟 Total Courses", "500+")
 
     # Load dataset
     df = load_data("data/udemy_course_data.csv")

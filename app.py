@@ -151,15 +151,20 @@ def main():
         
         st.dataframe(df.head(10))
         
-        # Show Top Rated Courses on the main page
-        st.subheader("🎓 Top Rated Courses")
-        top_rated_df = get_top_rated_courses(df)
-        for _, row in top_rated_df.iterrows():
-            rec_title = row['course_title']
-            rec_url = row['url']
-            rec_price = row['price']
-            rec_num_sub = row['num_subscribers']
-            st.markdown(f"**{rec_title}**\n💰 Price: {rec_price} | 👥 Students: {rec_num_sub}\n[Link]({rec_url})")
+        # Button for viewing Top Rated Courses
+        if st.button("View Top Rated Courses"):
+            st.session_state['show_top_rated'] = True
+            
+        # Show Top Rated Courses on the main page if button is clicked
+        if st.session_state.get('show_top_rated', False):
+            st.subheader("🎓 Top Rated Courses")
+            top_rated_df = get_top_rated_courses(df)
+            for _, row in top_rated_df.iterrows():
+                rec_title = row['course_title']
+                rec_url = row['url']
+                rec_price = row['price']
+                rec_num_sub = row['num_subscribers']
+                st.markdown(f"**{rec_title}**\n💰 Price: {rec_price} | 👥 Students: {rec_num_sub}\n[Link]({rec_url})")
     
     elif choice == "🔍 Recommend":
         st.subheader("🔍 Recommend Courses")
@@ -193,30 +198,31 @@ def main():
                 except KeyError:
                     # Search for similar courses only if exact match is not found
                     result_df = search_term_if_not_found(search_term, df)
-                    if not result_df.empty:
-                        st.info("Suggested Options:")
-                        st.dataframe(result_df)
-                    else:
-                        st.warning("Course not found. Please try a different search term.")
+                    st.warning(f"""### Oops! "{search_term}" Not Found.
+But wait, don't worry! We've found **{len(result_df)}** similar courses that might interest you.
+""")
+                    st.dataframe(result_df)
+            else:
+                st.warning("Please enter a course title.")
     
     elif choice == "📘 About":
-        st.subheader("📘 About This App")
-        st.markdown("""
-Welcome to the **Course Recommendation App**! 🎓
+        st.subheader("📘 About")
+        st.write("""
+        ## Welcome to Course Recommendation App! 🎓
 
-This application allows you to explore top-rated courses and receive personalized recommendations based on the course title you enter.
+        This application allows you to explore top-rated courses and receive personalized recommendations based on the course title you enter.
 
-- **🔍 Recommendations**: Discover courses similar to the ones you're interested in.
-- **📊 Statistics**: Get quick stats about the available courses.
-- **📘 About**: Learn more about this application.
+        - **🔍 Recommendations**: Discover courses similar to the ones you're interested in.
+        - **📊 Statistics**: Get quick stats about the available courses.
+        - **📘 About**: Learn more about this application.
 
-### 🛠️ **Built With**
-- **Streamlit**: For creating a fast and interactive web app.
-- **Scikit-learn**: Used for vectorizing text and calculating cosine similarity.
-- **Pandas**: For handling the data and filtering courses.
+        ### 🛠️ **Built With**
+        - **Streamlit**: For creating a fast and interactive web app.
+        - **Scikit-learn**: Used for vectorizing text and calculating cosine similarity.
+        - **Pandas**: For handling the data and filtering courses.
 
-Thank you for using this app, and happy learning! 🌟
-""")
+        Thank you for using this app, and happy learning! 🌟
+        """)
     
     elif choice == "📈 Statistics":
         st.subheader("📈 Course Statistics")

@@ -137,15 +137,18 @@ def main():
     if st.sidebar.button("🎓 Top Rated Courses"):
         st.session_state['show_top_rated'] = not st.session_state['show_top_rated']
 
+    # Page Content
     if choice == "🏠 Home":
         st.subheader("🏠 Home")
-        st.markdown("Explore a curated selection of top courses from our extensive collection. Dive in and start learning today!")
+        st.markdown("""
+        Welcome to the **Course Recommendation App**! Explore a curated selection of top courses from our extensive collection. Dive in and start learning today!
+        """)
         st.dataframe(df.head(10))
     
     elif choice == "🔍 Recommend":
         st.subheader("🔍 Recommend Courses")
         cosine_sim_mat = vectorize_text_to_cosine_mat(df['course_title'])
-        search_term = st.text_input("Enter Course Title: Discover courses that match your interests.")
+        search_term = st.text_input("Enter Course Title:", placeholder="Search for a course")
         
         if st.button("Recommend"):
             st.session_state['show_recommendations'] = not st.session_state['show_recommendations']
@@ -180,16 +183,14 @@ def main():
     elif choice == "📘 About":
         st.subheader("📘 About")
         st.markdown("""
-        This **Course Recommendation App** helps you discover courses that align with your learning goals.
-        Built with cutting-edge machine learning techniques, the app provides personalized recommendations
-        to enhance your educational journey.
+        Welcome to the **Course Recommendation App**! This application helps you discover courses that align with your learning goals.
+        Built with cutting-edge machine learning techniques, it provides personalized recommendations to enhance your educational journey.
         """)
     
     elif choice == "📈 Statistics":
         st.subheader("📈 Statistics")
         st.markdown("""
-        Explore detailed statistics and trends on course popularity, pricing, and student enrollment.
-        Use this data to make informed decisions about your learning path.
+        Explore detailed statistics and trends on course popularity, pricing, and student enrollment. Use this data to make informed decisions about your learning path.
         """)
         top_rated_df = get_top_rated_courses(df)
         st.dataframe(top_rated_df)
@@ -203,7 +204,7 @@ def main():
             rec_url = row['url']
             rec_price = row['price']
             rec_num_sub = row['num_subscribers']
-            st.sidebar.markdown(f"**{rec_title}**\n💰 Price: {rec_price} | 👥 Students: {rec_num_sub}\n[Link]({rec_url})")
+            st.sidebar.markdown(f"**{rec_title}** - {rec_price} 💵\n📚 {rec_num_sub} Enrolled\n[Course Link]({rec_url})")
 
 if __name__ == '__main__':
     main()

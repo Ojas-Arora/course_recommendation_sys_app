@@ -5,9 +5,14 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # Function to load dataset
+@st.cache_data
 def load_data(data):
-    df = pd.read_csv(data)
-    return df
+    try:
+        df = pd.read_csv(data)
+        return df
+    except Exception as e:
+        st.error(f"Error loading data: {e}")
+        return pd.DataFrame()  # Return an empty DataFrame on error
 
 # Function to vectorize text and compute cosine similarity matrix
 def vectorize_text_to_cosine_mat(data):
@@ -20,7 +25,9 @@ def vectorize_text_to_cosine_mat(data):
 @st.cache_data
 def get_recommendation(title, cosine_sim_mat, df, num_of_rec=10):
     course_indices = pd.Series(df.index, index=df['course_title']).drop_duplicates()
-    idx = course_indices[title]
+    idx = course_indices.get(title, None)
+    if idx is None:
+        return pd.DataFrame()  # Return an empty DataFrame if title not found
     sim_scores = list(enumerate(cosine_sim_mat[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     selected_course_indices = [i[0] for i in sim_scores[1:num_of_rec+1]]
@@ -57,7 +64,10 @@ def search_term_if_not_found(term, df):
 # Function to filter courses by category
 @st.cache_data
 def filter_courses_by_category(df, category):
-    filtered_df = df[df['subject'] == category]
+    if category:
+        filtered_df = df[df['subject'] == category]
+    else:
+        filtered_df = df
     return filtered_df
 
 # Main function for Streamlit app
@@ -147,13 +157,20 @@ def main():
     # Load dataset
     df = load_data("data/udemy_course_data.csv")
     
+    if df.empty:
+        st.error("No data to display. Please check the dataset path and ensure the file is available.")
+        return
+    
     if choice == "🏠 Home":
         st.subheader("🏠 Home")
         st.markdown("Explore a curated selection of top courses from our extensive collection. Dive in and start learning today!")
         
         if selected_category:
             df_filtered = filter_courses_by_category(df, selected_category)
-            st.dataframe(df_filtered.head(10))
+            if not df_filtered.empty:
+                st.dataframe(df_filtered.head(10))
+            else:
+                st.warning("No courses available for the selected category.")
         else:
             st.dataframe(df.head(10))
     
@@ -175,50 +192,45 @@ def main():
                         results_json = results.to_dict('index')
                         st.json(results_json)  # Removed color argument
                     
-                    for _, row in results.iterrows():
-                        rec_title = row['course_title']
-                        rec_score = row['similarity_score']
-                        rec_url = row['url']
-                        rec_price = row['price']
-                        rec_num_sub = row['num_subscribers']
-                        stc.html(RESULT_TEMP.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub), height=250)
+                    if not results.empty:
+                        for _, row in results.iterrows():
+                            rec_title = row['course_title']
+                            rec_score = row['similarity_score']
+                            rec_url = row['url']
+                            rec_price = row['price']
+                            rec_num_sub = row['num_subscribers']
+                            stc.html(RESULT_TEMP.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub), height=250)
+                    else:
+                        st.warning("No recommendations available for the provided course title.")
                 
                 except KeyError:
                     # Search for similar courses only if exact match is not found
                     result_df = search_term_if_not_found(search_term, df)
                     if not result_df.empty:
                         st.info("Suggested Options:")
-                        st.dataframe(result_df)
+                        st.dataframe(result_df[['course_title', 'price', 'num_subscribers']])
                     else:
-                        st.warning("Course not found. Please try a different search term.")
+                        st.error("Course title not found. Please try a different search term.")
+            else:
+                st.warning("Please enter a course title to get recommendations.")
     
     elif choice == "📘 About":
-        st.subheader("📘 About")
-        st.markdown("""
-        This **Course Recommendation App** helps you discover courses that align with your learning goals.
-        Built with cutting-edge machine learning techniques, the app provides personalized recommendations
-        to enhance your educational journey.
-        """)
+        st.subheader("📘 About Us")
+        st.markdown("Learn more about our mission and how we curate the best courses to help you succeed!")
     
     elif choice == "📈 Statistics":
-        st.subheader("📈 Statistics")
-        st.markdown("""
-        Explore detailed statistics and trends on course popularity, pricing, and student enrollment.
-        Use this data to make informed decisions about your learning path.
-        """)
-        top_rated_df = get_top_rated_courses(df)
-        st.dataframe(top_rated_df)
-    
-    # Toggle for Top Rated Courses in Sidebar
-    if st.session_state['show_top_rated']:
-        top_rated_df = get_top_rated_courses(df)
-        st.sidebar.markdown("### 🎓 Top Rated Courses")
-        for _, row in top_rated_df.iterrows():
-            rec_title = row['course_title']
-            rec_url = row['url']
-            rec_price = row['price']
-            rec_num_sub = row['num_subscribers']
-            st.sidebar.markdown(f"**{rec_title}**\n💰 Price: {rec_price} | 👥 Students: {rec_num_sub}\n[Link]({rec_url})")
+        st.subheader("📈 Course Statistics")
+        st.markdown("Explore various statistics about our courses and users.")
+        
+        if st.session_state['show_top_rated']:
+            top_rated_df = get_top_rated_courses(df)
+            st.markdown("### 🎓 Top Rated Courses")
+            for _, row in top_rated_df.iterrows():
+                rec_title = row['course_title']
+                rec_url = row['url']
+                rec_price = row['price']
+                rec_num_sub = row['num_subscribers']
+                st.markdown(f"**{rec_title}**\n💰 Price: {rec_price} | 👥 Students: {rec_num_sub}\n[Link]({rec_url})")
 
 if __name__ == '__main__':
     main()

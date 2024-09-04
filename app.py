@@ -180,8 +180,6 @@ def main():
     elif choice == "📘 About":
         st.subheader("📘 About This App")
         st.markdown("""
-## 📘 About This App
-
 Welcome to the **Course Recommendation App**! 🚀
 
 ### **Objective:**  

@@ -31,7 +31,7 @@ def get_recommendation(title, cosine_sim_mat, df, num_of_rec=10):
 
 # HTML template for displaying results with enhanced styling and icons
 RESULT_TEMP = """
-<div style="width:100%;height:100%;margin:5px;padding:10px;position:relative;border-radius:5px;
+<div style="width:100%;height:100%;margin:5px;padding:10px;position:relative;border-radius:10px;
 box-shadow:0 0 10px 2px darkturquoise; background-color: #ffffff; border-left: 5px solid darkturquoise; margin-bottom: 20px;">
 <h4 style="color:darkturquoise;">{}</h4>
 <p style="color:darkturquoise;"><span style="color:#333;">🔍 Similarity Score:</span> {}</p>
@@ -131,18 +131,18 @@ def main():
     
     if choice == "🏠 Home":
         st.subheader("🏠 Home")
-        st.markdown(" Explore a curated selection of top courses from our extensive collection. Dive in and start learning today!")
+        st.markdown("Explore a curated selection of top courses from our extensive collection. Dive in and start learning today!")
         st.dataframe(df.head(10))
     
     elif choice == "🔍 Recommend":
         st.subheader("🔍 Recommend Courses")
         cosine_sim_mat = vectorize_text_to_cosine_mat(df['course_title'])
         search_term = st.text_input("Enter Course Title: Discover courses that match your interests.")
-        num_of_rec = st.sidebar.slider("Number of Recommendations", 4, 30, 7)
         
         if st.button("Recommend"):
             if search_term:
                 try:
+                    num_of_rec = 10  # Default number of recommendations
                     results = get_recommendation(search_term, cosine_sim_mat, df, num_of_rec)
                     st.markdown("### 🎯 Recommendations")
                     with st.expander("Results as JSON"):

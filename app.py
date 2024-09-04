@@ -24,9 +24,9 @@ def get_recommendation(title, cosine_sim_mat, df, num_of_rec=10):
     sim_scores = list(enumerate(cosine_sim_mat[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     selected_course_indices = [i[0] for i in sim_scores[1:num_of_rec+1]]
-    result_df = df.iloc[selected_course_indices]
+    result_df = df.iloc[selected_course_indices].head(num_of_rec)  # Ensure this line limits the number of courses to num_of_rec
     result_df['similarity_score'] = [i[1] for i in sim_scores[1:num_of_rec+1]]
-    final_recommended_courses = result_df[['course_title', 'similarity_score', 'url', 'price', 'num_subscribers']].head(num_of_rec)
+    final_recommended_courses = result_df[['course_title', 'similarity_score', 'url', 'price', 'num_subscribers']]
     return final_recommended_courses
 
 # HTML template for displaying results with enhanced styling and icons
@@ -119,6 +119,15 @@ def main():
     .recommendation-card {
         cursor: pointer;
     }
+    /* Animation for RFM value segment */
+    .rfm-segment {
+        animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.05); opacity: 0.8; }
+        100% { transform: scale(1); opacity: 1; }
+    }
     </style>
     """, unsafe_allow_html=True)
     
@@ -126,7 +135,7 @@ def main():
     st.markdown("Welcome to the **Ultimate Course Finder**! Discover the perfect courses tailored to your passions and goals.")
     
     # Sidebar Menu
-    menu = ["🏠 Home", "🔍 Recommend", "📘 About"]
+    menu = ["🏠 Home", "🔍 Recommend", "📘 About", "📊 RFM Analysis"]
     choice = st.sidebar.selectbox("Menu", menu, index=0)
     
     # State management for toggling
@@ -142,7 +151,7 @@ def main():
     
     if choice == "🏠 Home":
         st.subheader("🏠 Home")
-        st.markdown(" Explore a curated selection of top courses from our extensive collection. Dive in and start learning today!")
+        st.markdown("Explore a curated selection of top courses from our extensive collection. Dive in and start learning today!")
         st.dataframe(df.head(10))
     
     elif choice == "🔍 Recommend":
@@ -185,20 +194,33 @@ def main():
         - **🔍 Search for Courses:** Use the search functionality to find courses similar to what you are interested in.
         - **🎓 Top Rated Courses:** Check out the highest-rated courses based on user reviews and ratings.
         
-        Built using **Streamlit** and **Pandas**, this app is a demonstration of a basic recommendation system.
-        """, unsafe_allow_html=True)
+        Built using **Streamlit** and **Python** with love 💙
+        """)
     
-    # Display Top Rated Courses if button is clicked and toggled on
+    elif choice == "📊 RFM Analysis":
+        st.subheader("📊 RFM Analysis")
+        st.markdown("""
+        **RFM Analysis** is a customer segmentation technique used in marketing to identify the most valuable customers by analyzing their purchasing behavior. 
+        
+        - **Recency:** How recently a customer made a purchase.
+        - **Frequency:** How often a customer makes a purchase.
+        - **Monetary:** How much a customer spends on purchases.
+        
+        This feature is coming soon! Stay tuned! 🔔
+        """)
+
+    # Display Top Rated Courses if toggled
     if st.session_state['show_top_rated']:
         st.subheader("🎓 Top Rated Courses")
-        top_courses = get_top_rated_courses(df)
-        st.markdown("### 📊 Top Courses Based on Number of Subscribers")
+        num_of_top_courses = st.slider("Number of Top Courses", 5, 20, 10)
+        top_courses = get_top_rated_courses(df, num_of_top_courses)
+        
         for _, row in top_courses.iterrows():
-            course_title = row['course_title']
-            course_url = row['url']
-            course_price = row['price']
-            num_subscribers = row['num_subscribers']
-            stc.html(RESULT_TEMP.format(course_title, "", course_url, course_price, num_subscribers), height=250, class_="recommendation-card")
+            top_title = row['course_title']
+            top_url = row['url']
+            top_price = row['price']
+            top_num_sub = row['num_subscribers']
+            stc.html(RESULT_TEMP.format(top_title, "N/A", top_url, top_price, top_num_sub), height=250)
 
 if __name__ == '__main__':
     main()

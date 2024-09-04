@@ -36,7 +36,7 @@ box-shadow:0 0 15px rgba(0, 150, 136, 0.3); background-color: #ffffff; border-le
 transition: transform 0.3s ease, box-shadow 0.3s ease;">
 <h4 style="color:#009688; margin: 0;">{}</h4>
 <p style="color:#333; margin: 5px 0;"><span style="color:#009688;">🔍 Similarity Score:</span> {}</p>
-<p style="color:#333; margin: 5px 0;"><span style="color:#009688;">🔗</span> <a href="{}" target="_blank">Course Link</a></p>
+<p style="color:#333; margin: 5px 0;"><span style="color:#009688;">🔗</span> <a href="{}" target="_blank" style="color:#009688;">Course Link</a></p>
 <p style="color:#333; margin: 5px 0;"><span style="color:#009688;">💰 Price:</span> {}</p>
 <p style="color:#333; margin: 5px 0;"><span style="color:#009688;">👥 Students Enrolled:</span> {}</p>
 </div>
@@ -113,6 +113,11 @@ def main():
     .recommendation-card:hover {
         transform: scale(1.05);
         box-shadow: 0 0 20px rgba(0, 150, 136, 0.5);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    /* Custom hover effect */
+    .recommendation-card {
+        cursor: pointer;
     }
     </style>
     """, unsafe_allow_html=True)

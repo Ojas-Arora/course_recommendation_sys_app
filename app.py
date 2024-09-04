@@ -121,11 +121,14 @@ def main():
     menu = ["🏠 Home", "🔍 Recommend", "📘 About"]
     choice = st.sidebar.selectbox("Menu", menu, index=0)
     
-    # State management for toggling
+    # State management for toggling recommendations visibility
+    if 'show_recommendations' not in st.session_state:
+        st.session_state['show_recommendations'] = False
+
+    # Top Rated Courses button right below the menu with toggle functionality
     if 'show_top_rated' not in st.session_state:
         st.session_state['show_top_rated'] = False
     
-    # Top Rated Courses button right below the menu with toggle functionality
     if st.sidebar.button("🎓 Top Rated Courses"):
         st.session_state['show_top_rated'] = not st.session_state['show_top_rated']
 
@@ -143,6 +146,9 @@ def main():
         search_term = st.text_input("Enter Course Title: Discover courses that match your interests.")
         
         if st.button("Recommend"):
+            st.session_state['show_recommendations'] = not st.session_state['show_recommendations']
+        
+        if st.session_state['show_recommendations']:
             if search_term:
                 try:
                     num_of_rec = 10  # Default number of recommendations

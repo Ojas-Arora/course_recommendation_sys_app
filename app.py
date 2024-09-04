@@ -178,11 +178,34 @@ def main():
                         st.warning("Course not found. Please try a different search term.")
     
     elif choice == "📘 About":
-        st.subheader("📘 About")
+        st.subheader("📘 About This App")
         st.markdown("""
-        This **Course Recommendation App** helps you discover courses that align with your learning goals.
-        Built with cutting-edge machine learning techniques, the app provides personalized recommendations
-        to enhance your educational journey.
+        Welcome to the **Course Recommendation App**! 🚀
+
+        **Objective:**  
+        This app is designed to help you discover the best courses that match your learning interests. With an extensive collection of courses, our goal is to provide personalized recommendations to guide your educational journey.
+
+        **Features:**  
+        - **Course Recommendations**: Get personalized course suggestions based on the title you provide. Our system uses advanced text vectorization and similarity measures to find the most relevant courses for you.
+        - **Top Rated Courses**: Explore the most popular courses based on student enrollment and price. We showcase top-rated options to help you make informed decisions.
+        - **Detailed Statistics**: Access in-depth statistics about course popularity, pricing, and student engagement to better understand market trends.
+
+        **Technology Stack:**  
+        - **Backend**: Python with Streamlit for the web framework.
+        - **Text Vectorization**: `CountVectorizer` from Scikit-learn to convert course titles into numerical data.
+        - **Similarity Computation**: `cosine_similarity` from Scikit-learn to find similarity between courses.
+        - **Data Handling**: Pandas for data manipulation and analysis.
+
+        **How It Works:**  
+        1. **Upload Data**: The app reads course data from a CSV file.
+        2. **Vectorize Text**: It converts course titles into numerical vectors.
+        3. **Compute Similarity**: It calculates the cosine similarity between course titles.
+        4. **Provide Recommendations**: Based on your search, it provides a list of recommended courses.
+
+        **Contact Us:**  
+        If you have any questions or need support, feel free to reach out to us at [support@courserecapp.com](mailto:support@courserecapp.com).
+
+        Enjoy exploring the world of knowledge with our app! 🌟
         """)
     
     elif choice == "📈 Statistics":

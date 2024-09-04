@@ -16,7 +16,6 @@ def vectorize_text_to_cosine_mat(data):
     cosine_sim_mat = cosine_similarity(cv_mat)
     return cosine_sim_mat
 
-# Recommendation system function with caching
 @st.cache_data
 def get_recommendation(title, cosine_sim_mat, df, num_of_rec=10):
     course_indices = pd.Series(df.index, index=df['course_title']).drop_duplicates()
@@ -24,10 +23,11 @@ def get_recommendation(title, cosine_sim_mat, df, num_of_rec=10):
     sim_scores = list(enumerate(cosine_sim_mat[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     selected_course_indices = [i[0] for i in sim_scores[1:num_of_rec+1]]
-    result_df = df.iloc[selected_course_indices]
+    result_df = df.iloc[selected_course_indices].head(num_of_rec)  # Ensure this line limits the number of courses to num_of_rec
     result_df['similarity_score'] = [i[1] for i in sim_scores[1:num_of_rec+1]]
-    final_recommended_courses = result_df[['course_title', 'similarity_score', 'url', 'price', 'num_subscribers']].head(num_of_rec)
+    final_recommended_courses = result_df[['course_title', 'similarity_score', 'url', 'price', 'num_subscribers']]
     return final_recommended_courses
+
 
 # HTML template for displaying results with enhanced styling and icons
 RESULT_TEMP = """

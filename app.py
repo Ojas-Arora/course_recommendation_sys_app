@@ -117,9 +117,36 @@ def main():
     st.title("🎓 Course Recommendation App")
     st.markdown("Welcome to the **Ultimate Course Finder**! Discover the perfect courses tailored to your passions and goals.")
     
-    # Sidebar Menu
-    menu = ["🏠 Home", "🔍 Recommend", "📘 About"]
+    # Sidebar Menu with Enhanced Icons and Features
+    st.sidebar.title("🔍 Navigation")
+    menu = ["🏠 Home", "🔍 Recommend", "📘 About", "📈 Statistics", "🌙 Dark Mode"]
     choice = st.sidebar.selectbox("Menu", menu, index=0)
+
+    # Dark Mode Toggle
+    dark_mode = st.sidebar.checkbox("🌙 Enable Dark Mode")
+    if dark_mode:
+        st.markdown("""
+        <style>
+        body {
+            background-color: #2E2E2E;
+            color: white;
+        }
+        .css-1f3v6nr {
+            background-color: #2E2E2E;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+    
+    # Additional Sidebar Features
+    st.sidebar.header("📊 Quick Stats")
+    num_courses = st.sidebar.metric("Total Courses", "500+")
+    top_categories = ["Development", "Business", "Finance", "Design", "Marketing"]
+    st.sidebar.selectbox("📚 Top Categories", top_categories)
+
+    st.sidebar.header("🧑‍💻 Social Links")
+    st.sidebar.markdown("📷 [Instagram](https://www.instagram.com)")
+    st.sidebar.markdown("🔗 [LinkedIn](https://www.linkedin.com)")
+    st.sidebar.markdown("🐦 [Twitter](https://twitter.com)")
     
     # State management for toggling recommendations visibility
     if 'show_recommendations' not in st.session_state:
@@ -178,25 +205,30 @@ def main():
     elif choice == "📘 About":
         st.subheader("📘 About")
         st.markdown("""
-        This **Course Recommendation App** helps you discover the best courses tailored to your needs and interests.
-        
-        - **🔍 Search for Courses:** Use the search functionality to find courses similar to what you are interested in.
-        - **🎓 Top Rated Courses:** Check out the highest-rated courses based on user reviews and ratings.
-        
-        Built using **Streamlit** and **Pandas**, this app is a demonstration of a basic recommendation system.
-        """, unsafe_allow_html=True)
+        This **Course Recommendation App** helps you discover courses that align with your learning goals.
+        Built with cutting-edge machine learning techniques, the app provides personalized recommendations
+        to enhance your educational journey.
+        """)
     
-    # Display Top Rated Courses if button is clicked and toggled on
+    elif choice == "📈 Statistics":
+        st.subheader("📈 Statistics")
+        st.markdown("""
+        Explore detailed statistics and trends on course popularity, pricing, and student enrollment.
+        Use this data to make informed decisions about your learning path.
+        """)
+        top_rated_df = get_top_rated_courses(df)
+        st.dataframe(top_rated_df)
+    
+    # Toggle for Top Rated Courses in Sidebar
     if st.session_state['show_top_rated']:
-        st.subheader("🎓 Top Rated Courses")
-        top_courses = get_top_rated_courses(df)
-        st.markdown("### 📊 Top Courses Based on Number of Subscribers")
-        for _, row in top_courses.iterrows():
-            course_title = row['course_title']
-            course_url = row['url']
-            course_price = row['price']
-            num_subscribers = row['num_subscribers']
-            stc.html(RESULT_TEMP.format(course_title, "", course_url, course_price, num_subscribers), height=250)
+        top_rated_df = get_top_rated_courses(df)
+        st.sidebar.markdown("### 🎓 Top Rated Courses")
+        for _, row in top_rated_df.iterrows():
+            rec_title = row['course_title']
+            rec_url = row['url']
+            rec_price = row['price']
+            rec_num_sub = row['num_subscribers']
+            st.sidebar.markdown(f"**{rec_title}**\n💰 Price: {rec_price} | 👥 Students: {rec_num_sub}\n[Link]({rec_url})")
 
 if __name__ == '__main__':
     main()

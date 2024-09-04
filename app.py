@@ -130,7 +130,13 @@ def main():
     if 'show_recommendations' not in st.session_state:
         st.session_state['show_recommendations'] = False
 
-    # Home Page
+    # Top Rated Courses button right below the menu with toggle functionality
+    if 'show_top_rated' not in st.session_state:
+        st.session_state['show_top_rated'] = False
+    
+    if st.sidebar.button("🎓 Top Rated Courses"):
+        st.session_state['show_top_rated'] = not st.session_state['show_top_rated']
+
     if choice == "🏠 Home":
         st.subheader("🏠 Home")
         st.markdown( """ ### 🌟 **Explore Top Courses**
@@ -143,10 +149,9 @@ def main():
 
 🔢Don’t miss out on the opportunity to learn from the best. Start exploring now and take the next step in your learning adventure! 🌐
 """)
-        
+    
         st.dataframe(df.head(10))
     
-    # Recommend Page
     elif choice == "🔍 Recommend":
         st.subheader("🔍 Recommend Courses")
         cosine_sim_mat = vectorize_text_to_cosine_mat(df['course_title'])
@@ -185,7 +190,6 @@ def main():
                     else:
                         st.warning("Course not found. Please try a different search term.")
     
-    # About Page
     elif choice == "📘 About":
         st.subheader("📘 About This App")
         st.markdown("""
@@ -212,7 +216,6 @@ This app is designed to help you discover the best courses that match your learn
 4. **🎯 Provide Recommendations**: Based on your search, it provides a list of recommended courses.
         """)
     
-    # Statistics Page
     elif choice == "📈 Statistics":
         st.subheader("📈 Statistics")
         st.markdown("""
@@ -233,11 +236,10 @@ Explore detailed statistics and trends on course popularity, pricing, and studen
 📥Use this data to make informed decisions about your learning path. Whether you're looking for the most popular courses or seeking the best deals, our statistics provide valuable insights to guide your choices.
 
 🔍 Dive into the data and enhance your educational journey with the knowledge you need to succeed!
+
         """)
         top_rated_df = get_top_rated_courses(df)
-        st.markdown("### 🎓 Top Rated Courses")
         st.dataframe(top_rated_df)
-
     
     # Toggle for Top Rated Courses in Sidebar
     if st.session_state['show_top_rated']:

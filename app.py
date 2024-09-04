@@ -74,7 +74,7 @@ def main():
     }
     /* Custom styling for sidebar */
     .css-1d391kg {
-        background-color: #0073e6;
+        
         color: white;
         border-radius: 10px;
         padding: 10px;
@@ -97,15 +97,15 @@ def main():
     }
     /* Change button and box active color to darkturquoise */
     button:active, .stButton>button:focus {
-        background-color: darkturquoise !important;
+        
         color: white !important;
     }
     .css-1aumxhk:hover {
-        background-color: darkturquoise !important;
+        
         color: white !important;
     }
     .st-expander-header:focus {
-        background-color: darkturquoise !important;
+        
         color: white !important;
     }
     </style>

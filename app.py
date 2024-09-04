@@ -112,7 +112,7 @@ def main():
     """, unsafe_allow_html=True)
     
     st.title("🎓 Course Recommendation App")
-    st.markdown("Welcome to the **Course Recommendation App**! Find courses tailored to your interests.")
+    st.markdown("Welcome to the **Ultimate Course Finder**! Discover the perfect courses tailored to your passions and goals.")
     
     # Sidebar Menu
     menu = ["🏠 Home", "🔍 Recommend", "📘 About"]
@@ -131,8 +131,7 @@ def main():
     
     if choice == "🏠 Home":
         st.subheader("🏠 Home")
-        st.markdown("Browse the first few courses from our dataset:")
-        st.dataframe(df.head(10))
+        st.markdown(" Explore a curated selection of top courses from our extensive collection. Dive in and start learning today!")
     
     elif choice == "🔍 Recommend":
         st.subheader("🔍 Recommend Courses")

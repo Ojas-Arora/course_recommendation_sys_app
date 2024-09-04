@@ -41,11 +41,16 @@ box-shadow:0 0 10px 2px #009688; background-color: #ffffff; border-left: 5px sol
 </div>
 """
 
-# Function to get top-rated courses
+# Function to get top-rated courses with specific prices
 @st.cache_data
 def get_top_rated_courses(df, num_of_courses=10):
     top_rated_df = df[df['price'] > 0]  # Filter out courses with price 0
     top_rated_df = top_rated_df.sort_values(by='num_subscribers', ascending=False).head(num_of_courses)
+    
+    # Manually set the prices for the top 10 courses
+    prices = [549, 799, 799, 649, 649, 549, 649, 649, 649, 549]
+    top_rated_df['price'] = prices
+    
     return top_rated_df[['course_title', 'url', 'price', 'num_subscribers']]
 
 # Function to search term if not found
@@ -197,38 +202,27 @@ def main():
     elif choice == "📘 About":
         st.subheader("📘 About This App")
         st.markdown("""
-Welcome to the **Course Recommendation App**! 🚀
+Welcome to the **Course Recommendation App**! 🎓
 
-### 🎯**Objective:**  
-This app is designed to help you discover the best courses that match your learning interests. With an extensive collection of courses, our goal is to provide personalized recommendations to guide your educational journey.
+This application allows you to explore top-rated courses and receive personalized recommendations based on the course title you enter.
 
-### 🔍 **Features:**  
-- **Course Recommendations:** Get tailored course suggestions based on your interests.
-- **Top Rated Courses:** Explore the most popular and highly-rated courses.
-- **User-Friendly Interface:** Enjoy a seamless experience with easy navigation and search functionality.
+- **🔍 Recommendations**: Discover courses similar to the ones you're interested in.
+- **📊 Statistics**: Get quick stats about the available courses.
+- **📘 About**: Learn more about this application.
 
-### 📊 **How It Works:**  
-1. **Enter Course Title:** Type a course title to receive personalized recommendations.
-2. **Discover Top Courses:** Browse through top-rated courses to find the best picks.
-3. **Start Learning:** Follow the provided links to start learning with the recommended courses.
+### 🛠️ **Built With**
+- **Streamlit**: For creating a fast and interactive web app.
+- **Scikit-learn**: Used for vectorizing text and calculating cosine similarity.
+- **Pandas**: For handling the data and filtering courses.
 
-Feel free to explore and make the most of this app to enhance your learning experience! 🌟
+Thank you for using this app, and happy learning! 🌟
 """)
-
+    
     elif choice == "📈 Statistics":
-        st.subheader("📈 Statistics and Analytics")
-        st.markdown("""
-### 📈 **Course Statistics**
-Here, you can find various statistics and analytics related to our courses. Analyze trends, popular subjects, and more.
-
-#### 📊 **Example Stats:**
-- Total number of courses.
-- Average rating and price.
-- Most popular categories and instructors.
-
-Stay tuned for more detailed statistics and insights!
+        st.subheader("📈 Course Statistics")
+        st.write("""
+This section can include various statistics about the courses available on the platform.
 """)
 
-# Run the Streamlit app
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

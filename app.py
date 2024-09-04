@@ -119,6 +119,15 @@ def main():
     .recommendation-card {
         cursor: pointer;
     }
+    /* Animation for RFM value segment */
+    .rfm-segment {
+        animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.05); opacity: 0.8; }
+        100% { transform: scale(1); opacity: 1; }
+    }
     </style>
     """, unsafe_allow_html=True)
     
@@ -126,7 +135,7 @@ def main():
     st.markdown("Welcome to the **Ultimate Course Finder**! Discover the perfect courses tailored to your passions and goals.")
     
     # Sidebar Menu
-    menu = ["🏠 Home", "🔍 Recommend", "📘 About"]
+    menu = ["🏠 Home", "🔍 Recommend", "📘 About", "📊 RFM Analysis"]
     choice = st.sidebar.selectbox("Menu", menu, index=0)
     
     # State management for toggling
@@ -142,7 +151,7 @@ def main():
     
     if choice == "🏠 Home":
         st.subheader("🏠 Home")
-        st.markdown(" Explore a curated selection of top courses from our extensive collection. Dive in and start learning today!")
+        st.markdown("Explore a curated selection of top courses from our extensive collection. Dive in and start learning today!")
         st.dataframe(df.head(10))
     
     elif choice == "🔍 Recommend":
@@ -188,17 +197,24 @@ def main():
         Built using **Streamlit** and **Pandas**, this app is a demonstration of a basic recommendation system.
         """, unsafe_allow_html=True)
     
-    # Display Top Rated Courses if button is clicked and toggled on
-    if st.session_state['show_top_rated']:
-        st.subheader("🎓 Top Rated Courses")
-        top_courses = get_top_rated_courses(df)
-        st.markdown("### 📊 Top Courses Based on Number of Subscribers")
-        for _, row in top_courses.iterrows():
-            course_title = row['course_title']
-            course_url = row['url']
-            course_price = row['price']
-            num_subscribers = row['num_subscribers']
-            stc.html(RESULT_TEMP.format(course_title, "", course_url, course_price, num_subscribers), height=250, class_="recommendation-card")
+    elif choice == "📊 RFM Analysis":
+        st.subheader("📊 RFM Analysis")
+        st.markdown("""
+        <div class='rfm-segment'>
+            <h3>RFM Value Segment Distribution</h3>
+            <p>Explore the distribution of RFM values across different segments.</p>
+        </div>
+        """, unsafe_allow_html=True)
 
-if __name__ == '__main__':
+        if st.session_state['show_top_rated']:
+            st.subheader("🎓 Top Rated Courses")
+            top_rated_courses = get_top_rated_courses(df)
+            for _, row in top_rated_courses.iterrows():
+                rec_title = row['course_title']
+                rec_url = row['url']
+                rec_price = row['price']
+                rec_num_sub = row['num_subscribers']
+                stc.html(RESULT_TEMP.format(rec_title, "", rec_url, rec_price, rec_num_sub), height=250, class_="recommendation-card")
+
+if __name__ == "__main__":
     main()

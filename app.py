@@ -19,15 +19,11 @@ def vectorize_text_to_cosine_mat(data):
 @st.cache_data
 def get_recommendation(title, cosine_sim_mat, df, rec_type='Most Popular'):
     course_indices = pd.Series(df.index, index=df['course_title']).drop_duplicates()
-    idx = course_indices.get(title, None)
-    
-    if idx is None:
-        st.warning("Course title not found in the dataset.")
-        return pd.DataFrame()  # Return empty DataFrame if course title not found
-    
+    idx = course_indices[title]
     sim_scores = list(enumerate(cosine_sim_mat[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     
+    # Adjust recommendation based on the selected type
     if rec_type == 'Most Popular':
         selected_course_indices = [i[0] for i in sim_scores[1:11]]  # Top 10 similar courses
     elif rec_type == 'Newest':
@@ -166,21 +162,18 @@ def main():
             if search_term:
                 try:
                     results = get_recommendation(search_term, cosine_sim_mat, df, rec_type)
-                    if not results.empty:
-                        st.markdown("### 🎯 Recommendations")
-                        with st.expander("Results as JSON"):
-                            results_json = results.to_dict('index')
-                            st.json(results_json)
-                        
-                        for _, row in results.iterrows():
-                            rec_title = row['course_title']
-                            rec_score = row['similarity_score']
-                            rec_url = row['url']
-                            rec_price = row['price']
-                            rec_num_sub = row['num_subscribers']
-                            stc.html(RESULT_TEMP.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub), height=250, class_="recommendation-card")
-                    else:
-                        st.warning("No recommendations found for the selected type.")
+                    st.markdown("### 🎯 Recommendations")
+                    with st.expander("Results as JSON"):
+                        results_json = results.to_dict('index')
+                        st.json(results_json)
+                    
+                    for _, row in results.iterrows():
+                        rec_title = row['course_title']
+                        rec_score = row['similarity_score']
+                        rec_url = row['url']
+                        rec_price = row['price']
+                        rec_num_sub = row['num_subscribers']
+                        stc.html(RESULT_TEMP.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub), height=250, class_="recommendation-card")
                 
                 except KeyError:
                     # Search for similar courses only if exact match is not found
@@ -192,7 +185,7 @@ def main():
                         st.warning("Course not found. Please try a different search term.")
     
     elif choice == "📘 About":
-        st.subheader("📘 About This App")
+        st.subheader("📘 About")
         st.markdown("""
         This app uses advanced machine learning algorithms to recommend courses based on your search preferences. 
         We leverage cosine similarity to find courses similar to your input and provide top suggestions based on popularity, 

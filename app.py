@@ -139,7 +139,17 @@ def main():
 
     if choice == "🏠 Home":
         st.subheader("🏠 Home")
-        st.markdown("Explore a curated selection of top courses from our extensive collection. Dive in and start learning today!")
+        st.markdown( """ ### 🌟 **Explore Top Courses**
+
+Discover a **curated selection** of top courses from our extensive collection. With our handpicked recommendations, you can:
+
+- **📚 Explore Quality Courses**: Access a variety of high-quality courses tailored to different interests and skill levels.
+- **🌟 Find Top Picks**: Dive into the most popular and highly-rated courses available.
+- **🚀 Start Learning Today**: Begin your educational journey with courses that are designed to enhance your skills and knowledge.
+
+Don’t miss out on the opportunity to learn from the best. Start exploring now and take the next step in your learning adventure! 🌐
+""")
+    
         st.dataframe(df.head(10))
     
     elif choice == "🔍 Recommend":
@@ -220,7 +230,7 @@ Explore detailed statistics and trends on course popularity, pricing, and studen
 - **📚 Enhance Learning Path**: Leverage student enrollment data to choose courses with high engagement and effectiveness.
 
                     
-Use this data to make informed decisions about your learning path. Whether you're looking for the most popular courses or seeking the best deals, our statistics provide valuable insights to guide your choices.
+📥Use this data to make informed decisions about your learning path. Whether you're looking for the most popular courses or seeking the best deals, our statistics provide valuable insights to guide your choices.
 
 🔍 Dive into the data and enhance your educational journey with the knowledge you need to succeed!
 

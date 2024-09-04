@@ -130,20 +130,12 @@ def main():
     if 'show_recommendations' not in st.session_state:
         st.session_state['show_recommendations'] = False
 
-    # State management for top-rated courses visibility
+    # Top Rated Courses button right below the menu with toggle functionality
     if 'show_top_rated' not in st.session_state:
         st.session_state['show_top_rated'] = False
-
-    # Display top-rated courses
-    if st.session_state['show_top_rated']:
-        st.subheader("🎓 Top Rated Courses")
-        top_rated_df = get_top_rated_courses(df)
-        for _, row in top_rated_df.iterrows():
-            rec_title = row['course_title']
-            rec_url = row['url']
-            rec_price = row['price']
-            rec_num_sub = row['num_subscribers']
-            stc.html(RESULT_TEMP.format(rec_title, '', rec_url, rec_price, rec_num_sub), height=250)
+    
+    if st.sidebar.button("🎓 Top Rated Courses"):
+        st.session_state['show_top_rated'] = not st.session_state['show_top_rated']
 
     if choice == "🏠 Home":
         st.subheader("🏠 Home")
@@ -190,21 +182,75 @@ def main():
                         stc.html(RESULT_TEMP.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub), height=250)
                 
                 except KeyError:
-                    # Search for a course if not found
-                    results = search_term_if_not_found(search_term, df)
-                    if not results.empty:
-                        st.write("No results found.")
+                    # Search for similar courses only if exact match is not found
+                    result_df = search_term_if_not_found(search_term, df)
+                    if not result_df.empty:
+                        st.info("Suggested Options:")
+                        st.dataframe(result_df)
                     else:
-                        st.write("No results found for your search.")
+                        st.warning("Course not found. Please try a different search term.")
     
     elif choice == "📘 About":
-        st.subheader("📘 About")
-        st.write("""This application provides a recommendation system for online courses using cosine similarity. 
-        You can search for courses and get recommendations based on the similarity of course titles. Additionally, you can view top-rated courses directly on the homepage.""")
+        st.subheader("📘 About This App")
+        st.markdown("""
+Welcome to the **Course Recommendation App**! 🚀
+
+### 🎯**Objective:**  
+This app is designed to help you discover the best courses that match your learning interests. With an extensive collection of courses, our goal is to provide personalized recommendations to guide your educational journey.
+
+### 🔍 **Features:**  
+- **📚 Course Recommendations**: Get personalized course suggestions based on the title you provide. Our system uses advanced text vectorization and similarity measures to find the most relevant courses for you.
+- **🌟 Top Rated Courses**: Explore the most popular courses based on student enrollment and price. We showcase top-rated options to help you make informed decisions.
+- **📊 Detailed Statistics**: Access in-depth statistics about course popularity, pricing, and student engagement to better understand market trends.
+
+### 🛠️**Technology Stack:**  
+- **🔧 Backend**: Python with Streamlit for the web framework.
+- **🔢 Text Vectorization**: `CountVectorizer` from Scikit-learn to convert course titles into numerical data.
+- **🔍 Similarity Computation**: `cosine_similarity` from Scikit-learn to find similarity between courses.
+- **📈 Data Handling**: Pandas for data manipulation and analysis.
+
+### ⚙️**How It Works:**  
+1. **📥 Upload Data**: The app reads course data from a CSV file.
+2. **🔄 Vectorize Text**: It converts course titles into numerical vectors.
+3. **📐 Compute Similarity**: It calculates the cosine similarity between course titles.
+4. **🎯 Provide Recommendations**: Based on your search, it provides a list of recommended courses.
+        """)
     
     elif choice == "📈 Statistics":
         st.subheader("📈 Statistics")
-        st.write("Here you can view statistics and analytics related to the courses.")
+        st.markdown("""
+Explore detailed statistics and trends on course popularity, pricing, and student enrollment. 📊
 
-if __name__ == "__main__":
+### 🔍**What You'll Find:**  
+
+- **📈 Course Popularity:** Discover which courses are trending based on student reviews and enrollment numbers.
+- **💰 Pricing Insights:** Analyze pricing patterns to find courses that offer the best value for your investment.
+- **👥 Student Enrollment:** Understand enrollment trends to gauge course demand and popularity.
+
+### 🛠️**How This Helps You:**  
+- **📈 Make Informed Choices**: Use popularity trends to select courses that are in demand.
+- **💵 Optimize Spending**: Evaluate pricing trends to budget effectively for your learning.
+- **📚 Enhance Learning Path**: Leverage student enrollment data to choose courses with high engagement and effectiveness.
+
+                    
+📥Use this data to make informed decisions about your learning path. Whether you're looking for the most popular courses or seeking the best deals, our statistics provide valuable insights to guide your choices.
+
+🔍 Dive into the data and enhance your educational journey with the knowledge you need to succeed!
+
+        """)
+        top_rated_df = get_top_rated_courses(df)
+        st.dataframe(top_rated_df)
+    
+    # Toggle for Top Rated Courses in Sidebar
+    if st.session_state['show_top_rated']:
+        top_rated_df = get_top_rated_courses(df)
+        st.sidebar.markdown("### 🎓 Top Rated Courses")
+        for _, row in top_rated_df.iterrows():
+            rec_title = row['course_title']
+            rec_url = row['url']
+            rec_price = row['price']
+            rec_num_sub = row['num_subscribers']
+            st.sidebar.markdown(f"**{rec_title}**\n💰 Price: {rec_price} | 👥 Students: {rec_num_sub}\n[Link]({rec_url})")
+
+if __name__ == '__main__':
     main()

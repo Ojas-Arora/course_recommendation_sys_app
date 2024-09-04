@@ -74,7 +74,7 @@ def main():
     }
     /* Custom styling for sidebar */
     .css-1d391kg {
-        background-color: #0073e6;
+        background-color: #009688;
         color: white;
         border-radius: 10px;
         padding: 10px;

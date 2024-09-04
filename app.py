@@ -150,7 +150,7 @@ def main():
                     st.markdown("### 🎯 Recommendations")
                     with st.expander("Results as JSON"):
                         results_json = results.to_dict('index')
-                        st.json(results_json, color="#009688")
+                        st.json(results_json)  # Removed color argument
                     
                     for _, row in results.iterrows():
                         rec_title = row['course_title']

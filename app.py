@@ -1,3 +1,4 @@
+# Import necessary libraries
 import streamlit as st
 import streamlit.components.v1 as stc
 import pandas as pd
@@ -19,15 +20,33 @@ def vectorize_text_to_cosine_mat(data):
 # Recommendation system function with caching
 @st.cache_data
 def get_recommendation(title, cosine_sim_mat, df, num_of_rec=10):
+    # Get the index of the course that matches the title
     course_indices = pd.Series(df.index, index=df['course_title']).drop_duplicates()
-    idx = course_indices[title]
-    sim_scores = list(enumerate(cosine_sim_mat[idx]))
-    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    selected_course_indices = [i[0] for i in sim_scores[1:num_of_rec+1]]
-    result_df = df.iloc[selected_course_indices]
-    result_df['similarity_score'] = [i[1] for i in sim_scores[1:num_of_rec+1]]
-    final_recommended_courses = result_df[['course_title', 'similarity_score', 'url', 'price', 'num_subscribers']].head(num_of_rec)
-    return final_recommended_courses
+    
+    if title in course_indices:
+        # Get the index of the given course title
+        idx = course_indices[title]
+        
+        # Get the pairwise similarity scores of all courses with that course
+        sim_scores = list(enumerate(cosine_sim_mat[idx]))
+        
+        # Sort the courses based on the similarity scores
+        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+        
+        # Get the indices of the num_of_rec most similar courses (excluding itself)
+        selected_course_indices = [i[0] for i in sim_scores[1:num_of_rec+1]]
+        
+        # Get the similarity scores for these courses
+        similarity_scores = [i[1] for i in sim_scores[1:num_of_rec+1]]
+        
+        # Get the recommended courses
+        recommended_courses = df.iloc[selected_course_indices].copy()
+        recommended_courses['similarity_score'] = similarity_scores
+        
+        return recommended_courses[['course_title', 'similarity_score', 'url', 'price', 'num_subscribers']]
+    else:
+        # If the title is not found, return an empty DataFrame
+        return pd.DataFrame(columns=['course_title', 'similarity_score', 'url', 'price', 'num_subscribers'])
 
 # HTML template for displaying results with enhanced styling and icons
 RESULT_TEMP = """
@@ -149,13 +168,14 @@ def main():
                         results_json = results.to_dict('index')
                         st.json(results_json)
                     
-                    for _, row in results.iterrows():
-                        rec_title = row['course_title']
-                        rec_score = row['similarity_score']
-                        rec_url = row['url']
-                        rec_price = row['price']
-                        rec_num_sub = row['num_subscribers']
-                        stc.html(RESULT_TEMP.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub), height=250)
+                    if not results.empty:
+                        for _, row in results.iterrows():
+                            rec_title = row['course_title']
+                            rec_score = row['similarity_score']
+                            rec_url = row['url']
+                            rec_price = row['price']
+                            rec_num_sub = row['num_subscribers']
+                            stc.html(RESULT_TEMP.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub), height=250)
                 
                 except KeyError:
                     # Search for similar courses only if exact match is not found
@@ -189,5 +209,6 @@ def main():
             num_subscribers = row['num_subscribers']
             stc.html(RESULT_TEMP.format(course_title, "", course_url, course_price, num_subscribers), height=250)
 
+# Run the app
 if __name__ == '__main__':
     main()

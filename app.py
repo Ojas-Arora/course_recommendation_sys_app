@@ -63,7 +63,7 @@ def main():
     st.markdown("""
     <style>
     .main {
-        background-image: url('https://wallpapers.com/images/hd/abstract-blueish-white-color-nrvpjoky2673bptv.jpg');
+        background-image: url('');
     }
     /* Background image for the whole page */
     .css-1f3v6nr {

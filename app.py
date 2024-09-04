@@ -98,7 +98,7 @@ def main():
     /* Change button and box active color to darkturquoise */
     button:active, .stButton>button:focus {
         background-color: #009688 !important;
-        color: white !portant;
+        color: white !important;
     }
     .css-1aumxhk:hover {
         background-color: #009688 !important;
@@ -119,35 +119,9 @@ def main():
     
     # Sidebar Menu with Enhanced Icons and Features
     st.sidebar.title("🔍 Navigation")
-    menu = ["🏠 Home", "🔍 Recommend", "📘 About", "📈 Statistics", "🌙 Dark Mode"]
+    menu = ["🏠 Home", "🔍 Recommend", "📘 About", "📈 Statistics"]
     choice = st.sidebar.selectbox("Menu", menu, index=0)
 
-    # Dark Mode Toggle
-    dark_mode = st.sidebar.checkbox("🌙 Enable Dark Mode")
-    if dark_mode:
-        st.markdown("""
-        <style>
-        body {
-            background-color: #2E2E2E;
-            color: white;
-        }
-        .css-1f3v6nr {
-            background-color: #2E2E2E;
-        }
-        </style>
-        """, unsafe_allow_html=True)
-    
-    # Additional Sidebar Features
-    st.sidebar.header("📊 Quick Stats")
-    num_courses = st.sidebar.metric("Total Courses", "500+")
-    top_categories = ["Development", "Business", "Finance", "Design", "Marketing"]
-    st.sidebar.selectbox("📚 Top Categories", top_categories)
-
-    st.sidebar.header("🧑‍💻 Social Links")
-    st.sidebar.markdown("📷 [Instagram](https://www.instagram.com)")
-    st.sidebar.markdown("🔗 [LinkedIn](https://www.linkedin.com)")
-    st.sidebar.markdown("🐦 [Twitter](https://twitter.com)")
-    
     # State management for toggling recommendations visibility
     if 'show_recommendations' not in st.session_state:
         st.session_state['show_recommendations'] = False
@@ -230,5 +204,5 @@ def main():
             rec_num_sub = row['num_subscribers']
             st.sidebar.markdown(f"**{rec_title}**\n💰 Price: {rec_price} | 👥 Students: {rec_num_sub}\n[Link]({rec_url})")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

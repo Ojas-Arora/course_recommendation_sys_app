@@ -259,6 +259,10 @@ def main():
     .custom-header {
         color: #191970;
     }
+    .h2 {
+        color: #191970;
+        animation: fadeIn 3s ease-in;
+    }               
     </style>
     <h2>Welcome to the <strong>Course Recommendation App🚀</h2>
 

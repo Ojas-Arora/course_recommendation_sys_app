@@ -224,14 +224,14 @@ def main():
             font-size: 18px; /* Adjust font size as needed */
         }
         </style>
-        <h3 class="custom-header">📐 **Enter Course Title**</h3>
+        <h3 class="custom-header">📐 Enter Course Title</h3>
         <p class="custom-description">🧠 **Discover courses that align with your interests**. Type in a course title to get personalized recommendations tailored just for you.</p>
     """, unsafe_allow_html=True)
     
     # Text input widget
     search_term = st.text_input(
         label="📐 Enter Course Title",
-        placeholder="🧠 **Discover courses that align with your interests**. Type in a course title to get personalized recommendations tailored just for you."
+        placeholder="🧠 Discover courses that align with your interests. Type in a course title to get personalized recommendations tailored just for you."
     )
     
     # Button to toggle recommendations

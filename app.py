@@ -90,6 +90,7 @@ def main():
     .css-1n1n7f2 {
         padding: 10px;
         border-radius: 10px;
+        color: #191970 !important;
     }
     /* Custom styling for the content */
     .css-1f3v6nr {

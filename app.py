@@ -171,6 +171,9 @@ def main():
     .css-1vhystk p, .css-1vhystk ul, .css-1vhystk li, .css-1vhystk h3 {
         color: #191970 !important;
     }
+    .choice{
+        color: #191970 !important;           
+    }
     </style>
     """, unsafe_allow_html=True)
         st.markdown( """ ### 🌟 **Explore Top Courses**

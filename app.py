@@ -215,6 +215,17 @@ def main():
         unsafe_allow_html=True
     )
         cosine_sim_mat = vectorize_text_to_cosine_mat(df['course_title'])
+        st.markdown("""
+    <style>
+    .stTextInput > div > input::placeholder {
+        color: #191970;
+        font-size: 16px;  /* Adjust font size if needed */
+    }
+    .stTextInput > div > input {
+        font-size: 16px;  /* Adjust font size to match placeholder */
+    }
+    </style>
+""", unsafe_allow_html=True)
         search_term = st.text_input("""### 📐 **Enter Course Title**
 
 🧠 **Discover courses that align with your interests**. Type in a course title to get personalized recommendations tailored just for you.

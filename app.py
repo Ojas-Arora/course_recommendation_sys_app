@@ -214,7 +214,7 @@ def main():
         '<h3 style="color:#191970;">🔍 Recommend Courses</h3>',
         unsafe_allow_html=True
     )
-    st.markdown("""
+        st.markdown("""
         <style>
         .custom-header {
             color: #191970;

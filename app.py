@@ -111,8 +111,7 @@ def main():
 
     /* Change button and box active color */
     button:active, .stButton>button:focus {
-        background-color: #009688 !important;
-        color: black !important;  /* Changed text color */
+        background-color: #009688 !important;  /* Changed text color */
         animation: fadeIn 2s ease-in; /* Added animation */
     }
 

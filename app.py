@@ -186,7 +186,7 @@ def main():
         st.markdown( """ 
         <div class='header'>
         <h2> 🌟 Explore Top Courses</h2>                        
-🎓 Discover a **curated selection** of top courses from our extensive collection. With our handpicked recommendations, you can:
+🎓 Discover a curated selection of top courses from our extensive collection. With our handpicked recommendations, you can:
 
 - **📚 Explore Quality Courses**: Access a variety of high-quality courses tailored to different interests and skill levels.
 - **🌟 Find Top Picks**: Dive into the most popular and highly-rated courses available.

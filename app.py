@@ -88,7 +88,7 @@ def main():
 
     /* Custom styling for sidebar */
     .css-1d391kg {
-        background-color: #009688;
+        background-color: #191970;
         color: #191970;  /* Changed text color to #191970 */
         animation: fadeIn 2s ease-in; /* Added animation */
     }
@@ -111,7 +111,7 @@ def main():
 
     /* Change button and box active color */
     button:active, .stButton>button:focus {
-        background-color: #009688 !important;  /* Changed text color */
+        background-color: #191970 !important;  /* Changed text color */
         animation: fadeIn 2s ease-in; /* Added animation */
     }
 

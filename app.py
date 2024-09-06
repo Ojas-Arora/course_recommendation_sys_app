@@ -116,7 +116,7 @@ def main():
     }
 
     .css-1aumxhk:hover {
-        background-color: #3b8c88 !important;
+        background-color: #191970 !important;
         color: #191970 !important;  /* Changed text color */
         animation: fadeIn 2s ease-in; /* Added animation */
     }
@@ -125,7 +125,7 @@ def main():
         animation: fadeIn 3s ease-in;
     }
     .st-expander-header:focus {
-        background-color: #3b8c88 !important;
+        background-color: #191970 !important;
         color: #191970 !important;  /* Changed text color */
         animation: fadeIn 2s ease-in; /* Added animation */
     }

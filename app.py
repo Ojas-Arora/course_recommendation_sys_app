@@ -77,7 +77,8 @@ def main():
         background-size: cover;
         background-attachment: fixed;
         background-position: center;
-        color: #191970;        
+        color: #191970;   
+        background-color: #191970 !important;     
     }
     /* Custom styling for sidebar */
     .css-1d391kg {
@@ -91,17 +92,21 @@ def main():
         padding: 10px;
         border-radius: 10px;
         color: #191970 !important;
+        background-color: #191970 !important;
     }
     /* Custom styling for the content */
     .css-1f3v6nr {
         color: #191970;
+        background-color: #191970 !important;
     }
     .css-1r6slbq {
         color: #191970;
+        background-color: #191970 !important;
     }
     /* Styling for the header */
     .css-1d391kg h1 {
         color: #191970;
+        background-color: #191970 !important;
     }
     /* Change button and box active color to darkturquoise */
     button:active, .stButton>button:focus {
@@ -122,6 +127,7 @@ def main():
     }
     st.sidebar{
         color: #191970 !important;
+        background-color: #191970 !important;
      }
     </style>
     """, unsafe_allow_html=True)
@@ -134,6 +140,7 @@ def main():
     <style>
     .css-1n1n7f2, .css-1n1n7f2 * {
         color: #191970 !important;
+        background-color: #191970 !important;                
     }
     </style>
     """, unsafe_allow_html=True)

@@ -66,67 +66,59 @@ def main():
 
     # Inject custom CSS
     st.markdown("""
-    <style>
-    .main {
-        background-color: rgb(250,235,215);
-        color: #191970;
-    }
-    /* Background image for the whole page */
-    .css-1f3v6nr {
-        background-position: center;
-        color: #191970;   
-        background-color: #191970 !important;     
-    }
-    /* Custom styling for sidebar */
-    .css-1d391kg {
-        background-color: #009688;
-        color: #191970;
-        border-radius: 10px;
-        padding: 10px;
-    }
-    /* Custom styling for the menu items */
-    .css-1n1n7f2 {
-        padding: 10px;
-        border-radius: 10px;
-        color: #191970 !important;
-        background-color: #191970 !important;
-    }
-    /* Custom styling for the content */
-    .css-1f3v6nr {
-        color: #191970;
-        background-color: #191970 !important;
-    }
-    .css-1r6slbq {
-        color: #191970;
-        background-color: #191970 !important;
-    }
-    /* Styling for the header */
-    .css-1d391kg h1 {
-        color: #191970;
-        background-color: #191970 !important;
-    }
-    /* Change button and box active color to darkturquoise */
-    button:active, .stButton>button:focus {
-        background-color: #009688 !important;
-        color: #191970 !important;
-    }
-    .css-1aumxhk:hover {
-        background-color: #3b8c88 !important;
-        color: #191970 !important;
-    }
-    .st-expander-header:focus {
-        background-color: #3b8c88 !important;
-        color: #191970 !important;
-    }
-    .stAlert {
-        background-color: #191970 !important;
-        color: #191970 !important;
-    }
-    st.sidebar{
-        color: #191970 !important;
-        background-color: #191970 !important;
-     }
-    </style>
+ <style>
+.main {
+    background-color: rgb(250,235,215);
+    color: #191970;  /* Changed text color to #191970 */
+}
+
+.css-1f3v6nr {
+    background-position: center;
+    color: #191970;  /* Changed text color to #191970 */
+    background-color: #191970 !important;  /* Changed background color */
+}
+
+/* Custom styling for sidebar */
+.css-1d391kg {
+    background-color: #009688;
+    color: #191970;  /* Changed text color to #191970 */
+}
+
+/* Custom styling for the menu items */
+.css-1n1n7f2 {
+    padding: 10px;
+    border-radius: 10px;
+    color: #191970 !important;  /* Changed text color */
+    background-color: #191970 !important;  /* Changed background color */
+}
+
+/* Styling for the header */
+.css-1d391kg h1 {
+    color: #191970;
+    background-color: #191970 !important;  /* Changed background color */
+}
+
+/* Change button and box active color */
+button:active, .stButton>button:focus {
+    background-color: #009688 !important;
+    color: #191970 !important;  /* Changed text color */
+}
+
+.css-1aumxhk:hover {
+    background-color: #3b8c88 !important;
+    color: #191970 !important;  /* Changed text color */
+}
+
+.st-expander-header:focus {
+    background-color: #3b8c88 !important;
+    color: #191970 !important;  /* Changed text color */
+}
+
+.stAlert {
+    background-color: #191970 !important;  /* Changed background color */
+    color: #191970 !important;  /* Changed text color */
+}
+</style>
     """, unsafe_allow_html=True)
 
     # Sidebar Menu with Enhanced Icons and Features

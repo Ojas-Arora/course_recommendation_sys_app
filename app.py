@@ -106,15 +106,15 @@ def main():
         color: white !important;
     }
     .css-1aumxhk:hover {
-        background-color: #009688 !important;
+        background-color: #3b8c88 !important;
         color: white !important;
     }
     .st-expander-header:focus {
-        background-color: #009688 !important;
+        background-color: #3b8c88 !important;
         color: white !important;
     }
     .stAlert {
-        background-color: #009688 !important;
+        background-color: #3b8c88 !important;
     }
     </style>
     """, unsafe_allow_html=True)

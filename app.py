@@ -81,7 +81,7 @@ def main():
 
     .css-1f3v6nr {
         background-position: center;
-          /* Changed text color to #191970 */
+        color: #191970;  /* Changed text color to #191970 */
         background-color: #191970 !important;  /* Changed background color */
         animation: fadeIn 2s ease-in; /* Added animation */
     }
@@ -89,7 +89,7 @@ def main():
     /* Custom styling for sidebar */
     .css-1d391kg {
         background-color: #009688;
-          /* Changed text color to #191970 */
+        color: #191970;  /* Changed text color to #191970 */
         animation: fadeIn 2s ease-in; /* Added animation */
     }
 
@@ -97,14 +97,14 @@ def main():
     .css-1n1n7f2 {
         padding: 10px;
         border-radius: 10px;
-          /* Changed text color */
+        color: #191970 !important;  /* Changed text color */
         background-color: #191970 !important;  /* Changed background color */
         animation: fadeIn 2s ease-in; /* Added animation */
     }
 
     /* Styling for the header */
     .css-1d391kg h1 {
-        
+        color: #191970;
         background-color: #191970 !important;  /* Changed background color */
         animation: fadeIn 3s ease-in; /* Added animation */
     }
@@ -117,7 +117,7 @@ def main():
 
     .css-1aumxhk:hover {
         background-color: #3b8c88 !important;
-         /* Changed text color */
+        color: #191970 !important;  /* Changed text color */
         animation: fadeIn 2s ease-in; /* Added animation */
     }
     .header h2 {
@@ -132,7 +132,7 @@ def main():
 
     .stAlert {
         background-color: #191970 !important;  /* Changed background color */
-         /* Changed text color */
+        color: #191970 !important;  /* Changed text color */
         animation: fadeIn 2s ease-in; /* Added animation */
     }
 </style>
@@ -234,6 +234,22 @@ def main():
         placeholder="🔍 Search for a course to get customized recommendations just for you! 🚀"
     )
     
+    st.markdown("""
+<style>
+.stButton > button {
+    background-color: #cf00a3; /* Button background color */
+    color: white; /* Button text color */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+.stButton > button:hover {
+    background-color: #a6007a; /* Hover color */
+}
+</style>
+""", unsafe_allow_html=True)
     # Button to toggle recommendations
     if st.button("Recommend"):
         if 'show_recommendations' not in st.session_state:

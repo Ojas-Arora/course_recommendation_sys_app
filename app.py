@@ -166,12 +166,11 @@ button:active, .stButton>button:focus {
     .choice{
         color: #191970 !important;           
     }
-    h2.custom-header {
-       color: #191970;
-    }
     </style>
     """, unsafe_allow_html=True)
-        st.markdown( """ <h2 class="custom-header">🌟 Explore Top Courses</h2>
+        st.markdown( """ 
+                    
+                    ### 🌟 **Explore Top Courses**
 
 🎓 Discover a **curated selection** of top courses from our extensive collection. With our handpicked recommendations, you can:
 

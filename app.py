@@ -215,17 +215,6 @@ def main():
         unsafe_allow_html=True
     )
         cosine_sim_mat = vectorize_text_to_cosine_mat(df['course_title'])
-        st.markdown("""
-    <style>
-    .stTextInput > div > input::placeholder {
-        color: #191970;
-        font-size: 16px;  /* Adjust font size if needed */
-    }
-    .stTextInput > div > input {
-        font-size: 16px;  /* Adjust font size to match placeholder */
-    }
-    </style>
-""", unsafe_allow_html=True)
         search_term = st.text_input("""### 📐 **Enter Course Title**
 
 🧠 **Discover courses that align with your interests**. Type in a course title to get personalized recommendations tailored just for you.
@@ -266,29 +255,39 @@ def main():
         unsafe_allow_html=True
     )
         st.markdown("""
-Welcome to the **Course Recommendation App**! 🚀
+    <style>
+    .custom-header {
+        color: #191970;
+    }
+    </style>
+    <h1>Welcome to the <strong>Course Recommendation App</strong>! 🚀</h1>
 
-### 🎯**Objective:**  
-This app is designed to help you discover the best courses that match your learning interests. With an extensive collection of courses, our goal is to provide personalized recommendations to guide your educational journey.
+    <h3 class="custom-header">🎯 <strong>Objective:</strong></h3>
+    <p>This app is designed to help you discover the best courses that match your learning interests. With an extensive collection of courses, our goal is to provide personalized recommendations to guide your educational journey.</p>
 
-### 🔍 **Features:**  
-- **📚 Course Recommendations**: Get personalized course suggestions based on the title you provide. Our system uses advanced text vectorization and similarity measures to find the most relevant courses for you.
-- **🌟 Top Rated Courses**: Explore the most popular courses based on student enrollment and price. We showcase top-rated options to help you make informed decisions.
-- **📊 Detailed Statistics**: Access in-depth statistics about course popularity, pricing, and student engagement to better understand market trends.
+    <h3 class="custom-header">🔍 <strong>Features:</strong></h3>
+    <ul>
+        <li><strong>📚 Course Recommendations</strong>: Get personalized course suggestions based on the title you provide. Our system uses advanced text vectorization and similarity measures to find the most relevant courses for you.</li>
+        <li><strong>🌟 Top Rated Courses</strong>: Explore the most popular courses based on student enrollment and price. We showcase top-rated options to help you make informed decisions.</li>
+        <li><strong>📊 Detailed Statistics</strong>: Access in-depth statistics about course popularity, pricing, and student engagement to better understand market trends.</li>
+    </ul>
 
-### 🛠️**Technology Stack:**  
-- **🔧 Backend**: Python with Streamlit for the web framework.
-- **🔢 Text Vectorization**: `CountVectorizer` from Scikit-learn to convert course titles into numerical data.
-- **🔍 Similarity Computation**: `cosine_similarity` from Scikit-learn to find similarity between courses.
-- **📈 Data Handling**: Pandas for data manipulation and analysis.
+    <h3 class="custom-header">🛠️ <strong>Technology Stack:</strong></h3>
+    <ul>
+        <li><strong>🔧 Backend</strong>: Python with Streamlit for the web framework.</li>
+        <li><strong>🔢 Text Vectorization</strong>: <code>CountVectorizer</code> from Scikit-learn to convert course titles into numerical data.</li>
+        <li><strong>🔍 Similarity Computation</strong>: <code>cosine_similarity</code> from Scikit-learn to find similarity between courses.</li>
+        <li><strong>📈 Data Handling</strong>: Pandas for data manipulation and analysis.</li>
+    </ul>
 
-### ⚙️**How It Works:**  
-1. **📥 Upload Data**: The app reads course data from a CSV file.
-2. **🔄 Vectorize Text**: It converts course titles into numerical vectors.
-3. **📐 Compute Similarity**: It calculates the cosine similarity between course titles.
-4. **🎯 Provide Recommendations**: Based on your search, it provides a list of recommended courses.
-        """)
-    
+    <h3 class="custom-header">⚙️ <strong>How It Works:</strong></h3>
+    <ol>
+        <li><strong>📥 Upload Data</strong>: The app reads course data from a CSV file.</li>
+        <li><strong>🔄 Vectorize Text</strong>: It converts course titles into numerical vectors.</li>
+        <li><strong>📐 Compute Similarity</strong>: It calculates the cosine similarity between course titles.</li>
+        <li><strong>🎯 Provide Recommendations</strong>: Based on your search, it provides a list of recommended courses.</li>
+    </ol>
+""", unsafe_allow_html=True)
     elif choice == "📈 Statistics":
         st.markdown(
         '<h3 style="color:#191970;">📈 Statistics</h3>',

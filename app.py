@@ -179,7 +179,7 @@ def main():
 
     if choice == "🏠 Home":
         st.subheader("🏠 Home")
-        st.subheader.markdown("""
+        st.markdown("""
     <style>
     .css-1vhystk p, .css-1vhystk ul, .css-1vhystk li, .css-1vhystk h3 {
         color: #191970 !important;

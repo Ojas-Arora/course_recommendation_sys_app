@@ -226,13 +226,13 @@ def main():
         </style>
         <h3 class="custom-header">📐 Enter Course Title</h3>
         <p class="custom-description">🧠 Discover courses that align with your interests.<br></br> 
-        Type in a course title to get personalized recommendations tailored just for you.</p>
+        📚 Type in a course title to get personalized recommendations tailored just for you</p>
     """, unsafe_allow_html=True)
     
     # Text input widget
     search_term = st.text_input(
         label="",
-        placeholder="🧠 Discover courses that align with your interests. Type in a course title to get personalized recommendations tailored just for you."
+        placeholder="📚 Enter a course title to receive personalized recommendations tailored just for you! 🎯"
     )
     
     # Button to toggle recommendations

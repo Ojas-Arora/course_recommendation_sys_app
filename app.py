@@ -125,7 +125,7 @@ def main():
     st.sidebar.title("🔍 Navigation")
     menu = ["🏠 Home", "🔍 Recommend", "📘 About", "📈 Statistics"]
     choice = st.sidebar.selectbox(" 📚 Menu", menu, index=0)
-    st.markdown("""
+    st.sidebar.markdown("""
     <style>
     .css-1n1n7f2, .css-1n1n7f2 * {
         color: #191970 !important;

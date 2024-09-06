@@ -237,7 +237,7 @@ def main():
     st.markdown("""
 <style>
 .stButton > button {
-    background-color: #cf00a3; /* Button background color */
+    background-color: #191970 ; /* Button background color */
     color: white; /* Button text color */
     border: none;
     padding: 10px 20px;

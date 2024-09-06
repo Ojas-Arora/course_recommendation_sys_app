@@ -33,11 +33,11 @@ def get_recommendation(title, cosine_sim_mat, df, num_of_rec=10):
 RESULT_TEMP = """
 <div style="width:100%;height:100%;margin:5px;padding:10px;position:relative;border-radius:10px;
 box-shadow:0 0 10px 2px #009688; background-color: #ffffff; border-left: 5px solid #009688; margin-bottom: 20px;">
-<h4 style="color:#191970;">{}</h4>
-<p style="color:darkturquoise;"><span style="color:#191970;">🔍 Similarity Score:</span> {}</p>
-<p style="color:darkturquoise;"><span style="color:#191970;">🔗</span> <a href="{}" target="_blank" style="color:#191970;">Course Link</a></p>
-<p style="color:darkturquoise;"><span style="color:#191970;">💰 Price:</span> {}</p>
-<p style="color:darkturquoise;"><span style="color:#191970;">👥 Students Enrolled:</span> {}</p>
+<h4 style="color:#009688;">{}</h4>
+<p style="color:darkturquoise;"><span style="color:#333;">🔍 Similarity Score:</span> {}</p>
+<p style="color:darkturquoise;"><span style="color:#333;">🔗</span> <a href="{}" target="_blank">Course Link</a></p>
+<p style="color:darkturquoise;"><span style="color:#333;">💰 Price:</span> {}</p>
+<p style="color:darkturquoise;"><span style="color:#333;">👥 Students Enrolled:</span> {}</p>
 </div>
 """
 
@@ -203,28 +203,61 @@ def main():
 Welcome to the **Course Recommendation App**! 🚀
 
 ### 🎯**Objective:**  
-This app is designed to help you find the most relevant and high-quality online courses. Whether you're looking for a specific topic or seeking recommendations, this app provides a personalized experience to help you discover courses tailored to your needs.
+This app is designed to help you discover the best courses that match your learning interests. With an extensive collection of courses, our goal is to provide personalized recommendations to guide your educational journey.
 
-#### 🔑**Key Features:**
-- **Course Search**: Find courses quickly and easily by typing the course title or topic of interest.
-- **Recommendations**: Get personalized recommendations based on course titles and similarities.
-- **Top Courses**: Explore the top-rated courses with the highest number of enrollments.
+### 🔍 **Features:**  
+- **📚 Course Recommendations**: Get personalized course suggestions based on the title you provide. Our system uses advanced text vectorization and similarity measures to find the most relevant courses for you.
+- **🌟 Top Rated Courses**: Explore the most popular courses based on student enrollment and price. We showcase top-rated options to help you make informed decisions.
+- **📊 Detailed Statistics**: Access in-depth statistics about course popularity, pricing, and student engagement to better understand market trends.
 
-We hope you enjoy using this app to enhance your learning experience. If you have any suggestions or feedback, feel free to reach out! 📧
-""")
+### 🛠️**Technology Stack:**  
+- **🔧 Backend**: Python with Streamlit for the web framework.
+- **🔢 Text Vectorization**: `CountVectorizer` from Scikit-learn to convert course titles into numerical data.
+- **🔍 Similarity Computation**: `cosine_similarity` from Scikit-learn to find similarity between courses.
+- **📈 Data Handling**: Pandas for data manipulation and analysis.
+
+### ⚙️**How It Works:**  
+1. **📥 Upload Data**: The app reads course data from a CSV file.
+2. **🔄 Vectorize Text**: It converts course titles into numerical vectors.
+3. **📐 Compute Similarity**: It calculates the cosine similarity between course titles.
+4. **🎯 Provide Recommendations**: Based on your search, it provides a list of recommended courses.
+        """)
+    
     elif choice == "📈 Statistics":
-        st.subheader("📊 Course Statistics")
-        st.write("Display relevant statistics here")
+        st.subheader("📈 Statistics")
+        st.markdown("""
+Explore detailed statistics and trends on course popularity, pricing, and student enrollment. 📊
 
+### 🔍**What You'll Find:**  
+
+- **📈 Course Popularity:** Discover which courses are trending based on student reviews and enrollment numbers.
+- **💰 Pricing Insights:** Analyze pricing patterns to find courses that offer the best value for your investment.
+- **👥 Student Enrollment:** Understand enrollment trends to gauge course demand and popularity.
+
+### 🛠️**How This Helps You:**  
+- **📈 Make Informed Choices**: Use popularity trends to select courses that are in demand.
+- **💵 Optimize Spending**: Evaluate pricing trends to budget effectively for your learning.
+- **📚 Enhance Learning Path**: Leverage student enrollment data to choose courses with high engagement and effectiveness.
+
+                    
+📥Use this data to make informed decisions about your learning path. Whether you're looking for the most popular courses or seeking the best deals, our statistics provide valuable insights to guide your choices.
+
+🔍 Dive into the data and enhance your educational journey with the knowledge you need to succeed!
+
+        """)
+        top_rated_df = get_top_rated_courses(df)
+        st.dataframe(top_rated_df)
+    
+    # Toggle for Top Rated Courses in Sidebar
     if st.session_state['show_top_rated']:
-        st.subheader("🎓 Top Rated Courses")
-        top_rated_courses = get_top_rated_courses(df, num_of_courses=10)
-        for _, row in top_rated_courses.iterrows():
+        top_rated_df = get_top_rated_courses(df)
+        st.sidebar.markdown("### 🎓 Top Rated Courses")
+        for _, row in top_rated_df.iterrows():
             rec_title = row['course_title']
             rec_url = row['url']
             rec_price = row['price']
             rec_num_sub = row['num_subscribers']
-            stc.html(RESULT_TEMP.format(rec_title, '-', rec_url, rec_price, rec_num_sub), height=250)
+            st.sidebar.markdown(f"**{rec_title}**\n💰 Price: {rec_price} | 👥 Students: {rec_num_sub}\n[Link]({rec_url})")
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

@@ -168,8 +168,7 @@ button:active, .stButton>button:focus {
     }
     </style>
     """, unsafe_allow_html=True)
-        st.markdown( """ 
-### 🌟 <span style="color:#191970;">**Explore Top Courses**</span>
+        st.markdown( """ <h2 style="color:#191970;">🌟 Explore Top Courses</h2>
 
 🎓 Discover a **curated selection** of top courses from our extensive collection. With our handpicked recommendations, you can:
 
@@ -178,8 +177,7 @@ button:active, .stButton>button:focus {
 - **🚀 Start Learning Today**: Begin your educational journey with courses that are designed to enhance your skills and knowledge.
 
 🔢Don’t miss out on the opportunity to learn from the best. Start exploring now and take the next step in your learning adventure! 🌐
-""", unsafe_allow_html=True)
-
+""")
     
         st.dataframe(df.head(10))
     

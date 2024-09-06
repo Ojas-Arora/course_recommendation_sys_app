@@ -196,7 +196,7 @@ def main():
 - **🚀 Start Learning Today**: Begin your educational journey with courses that are designed to enhance your skills and knowledge.
 
 🔢Don’t miss out on the opportunity to learn from the best. Start exploring now and take the next step in your learning adventure! 🌐
-        
+        </div>
         """, unsafe_allow_html=True)
     
         st.dataframe(df.head(10))
@@ -285,7 +285,6 @@ Explore detailed statistics and trends on course popularity, pricing, and studen
 
 🔍 Dive into the data and enhance your educational journey with the knowledge you need to succeed!
 
-        </div>
         """)
         top_rated_df = get_top_rated_courses(df)
         st.dataframe(top_rated_df)

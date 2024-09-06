@@ -183,8 +183,9 @@ def main():
     }
     </style>
     """, unsafe_allow_html=True)
-        st.markdown( """ ### 🌟 **Explore Top Courses**
-
+        st.markdown( """ 
+        <div class='header'>
+        <h2> ### 🌟 **Explore Top Courses**</h2>                        
 🎓 Discover a **curated selection** of top courses from our extensive collection. With our handpicked recommendations, you can:
 
 - **📚 Explore Quality Courses**: Access a variety of high-quality courses tailored to different interests and skill levels.
@@ -192,7 +193,8 @@ def main():
 - **🚀 Start Learning Today**: Begin your educational journey with courses that are designed to enhance your skills and knowledge.
 
 🔢Don’t miss out on the opportunity to learn from the best. Start exploring now and take the next step in your learning adventure! 🌐
-""")
+        </div>
+        """)
     
         st.dataframe(df.head(10))
     

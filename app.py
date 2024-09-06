@@ -68,7 +68,7 @@ def main():
     st.markdown("""
     <style>
     .main {
-        background-color: #47CACC;
+        background-color: brown;
     }
     /* Background image for the whole page */
     .css-1f3v6nr {

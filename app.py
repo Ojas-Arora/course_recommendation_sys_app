@@ -232,7 +232,7 @@ def main():
     # Text input widget
     search_term = st.text_input(
         label="",
-        placeholder="🔍 **Search for a course** to get customized recommendations just for you! 🚀"
+        placeholder="🔍 Search for a course to get customized recommendations just for you! 🚀"
     )
     
     # Button to toggle recommendations

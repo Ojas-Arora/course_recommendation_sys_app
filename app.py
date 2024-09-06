@@ -280,7 +280,7 @@ This app is designed to help you discover the best courses that match your learn
     
     elif choice == "📈 Statistics":
         st.markdown(
-        '<h3 style="color:#191970;">📈 Statistics"</h3>',
+        '<h3 style="color:#191970;">📈 Statistics</h3>',
         unsafe_allow_html=True
     )
         st.markdown("""

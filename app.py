@@ -168,7 +168,7 @@ button:active, .stButton>button:focus {
     }
     </style>
     """, unsafe_allow_html=True)
-        st.markdown( """ <h2 style="color:#191970;">🌟 Explore Top Courses</h2>
+        st.markdown( """ ### 🌟 **Explore Top Courses**
 
 🎓 Discover a **curated selection** of top courses from our extensive collection. With our handpicked recommendations, you can:
 

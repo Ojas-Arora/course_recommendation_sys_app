@@ -230,7 +230,7 @@ def main():
     
     # Text input widget
     search_term = st.text_input(
-        label="📐 **Enter Course Title**",
+        label="📐 Enter Course Title",
         placeholder="🧠 **Discover courses that align with your interests**. Type in a course title to get personalized recommendations tailored just for you."
     )
     

@@ -210,7 +210,10 @@ def main():
         st.dataframe(df.head(10))
     
     elif choice == "🔍 Recommend":
-        st.subheader("🔍 Recommend Courses")
+        st.markdown(
+        '<h3 style="color:#191970;">🔍 Recommend Courses</h3>',
+        unsafe_allow_html=True
+    )
         cosine_sim_mat = vectorize_text_to_cosine_mat(df['course_title'])
         search_term = st.text_input("""### 📐 **Enter Course Title**
 

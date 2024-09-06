@@ -76,6 +76,7 @@ def main():
     .main {
         background-color: rgb(250,235,215);
         color: #191970;  /* Changed text color to #191970 */
+        animation: fadeIn 2s ease-in; /* Added animation */
     }
 
     .css-1f3v6nr {

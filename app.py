@@ -194,7 +194,7 @@ def main():
 
 🔢Don’t miss out on the opportunity to learn from the best. Start exploring now and take the next step in your learning adventure! 🌐
         </div>
-        """)
+        """, unsafe_allow_html=True)
     
         st.dataframe(df.head(10))
     

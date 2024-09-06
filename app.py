@@ -279,7 +279,10 @@ This app is designed to help you discover the best courses that match your learn
         """)
     
     elif choice == "📈 Statistics":
-        st.subheader("📈 Statistics")
+        st.markdown(
+        '<h3 style="color:#191970;">📈 Statistics"</h3>',
+        unsafe_allow_html=True
+    )
         st.markdown("""
 Explore detailed statistics and trends on course popularity, pricing, and student enrollment. 📊
 

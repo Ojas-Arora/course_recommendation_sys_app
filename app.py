@@ -139,6 +139,10 @@ def main():
         color: #191970 !important;
         background-color: #191970 !important;                
     }
+    .menu{
+        color: #191970 !important;
+        background-color: #191970 !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 

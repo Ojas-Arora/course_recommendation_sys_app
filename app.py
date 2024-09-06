@@ -77,11 +77,12 @@ def main():
         background-size: cover;
         background-attachment: fixed;
         background-position: center;
+        color: #191970;        
     }
     /* Custom styling for sidebar */
     .css-1d391kg {
         background-color: #009688;
-        color: white;
+        color: #191970;
         border-radius: 10px;
         padding: 10px;
     }
@@ -92,14 +93,14 @@ def main():
     }
     /* Custom styling for the content */
     .css-1f3v6nr {
-        color: #333;
+        color: #191970;
     }
     .css-1r6slbq {
-        color: #0073e6;
+        color: #191970;
     }
     /* Styling for the header */
     .css-1d391kg h1 {
-        color: #fff;
+        color: #191970;
     }
     /* Change button and box active color to darkturquoise */
     button:active, .stButton>button:focus {

@@ -125,6 +125,13 @@ def main():
     st.sidebar.title("🔍 Navigation")
     menu = ["🏠 Home", "🔍 Recommend", "📘 About", "📈 Statistics"]
     choice = st.sidebar.selectbox(" 📚 Menu", menu, index=0)
+    st.markdown("""
+    <style>
+    .css-1n1n7f2, .css-1n1n7f2 * {
+        color: #191970 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
     # Quick Stats in Sidebar
     st.sidebar.header("📊 Quick Stats")

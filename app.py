@@ -262,9 +262,13 @@ def main():
     .h2 {
         color: #191970;
         animation: fadeIn 3s ease-in;
-    }               
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
     </style>
-    <h2>Welcome to the Course Recommendation App🚀</h2>
+    <h2 class="h2">Welcome to the <strong>Course Recommendation App 🚀</strong></h2>
 
     <h3 class="custom-header">🎯 <strong>Objective:</strong></h3>
     <p>This app is designed to help you discover the best courses that match your learning interests. With an extensive collection of courses, our goal is to provide personalized recommendations to guide your educational journey.</p>

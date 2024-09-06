@@ -66,59 +66,74 @@ def main():
 
     # Inject custom CSS
     st.markdown("""
- <style>
-.main {
-    background-color: rgb(250,235,215);
-    color: #191970;  /* Changed text color to #191970 */
-}
+<style>
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 
-.css-1f3v6nr {
-    background-position: center;
-    color: #191970;  /* Changed text color to #191970 */
-    background-color: #191970 !important;  /* Changed background color */
-}
+    /* Existing Styles */
+    .main {
+        background-color: rgb(250,235,215);
+        color: #191970;  /* Changed text color to #191970 */
+    }
 
-/* Custom styling for sidebar */
-.css-1d391kg {
-    background-color: #009688;
-    color: #191970;  /* Changed text color to #191970 */
-}
+    .css-1f3v6nr {
+        background-position: center;
+        color: #191970;  /* Changed text color to #191970 */
+        background-color: #191970 !important;  /* Changed background color */
+        animation: fadeIn 2s ease-in; /* Added animation */
+    }
 
-/* Custom styling for the menu items */
-.css-1n1n7f2 {
-    padding: 10px;
-    border-radius: 10px;
-    color: #191970 !important;  /* Changed text color */
-    background-color: #191970 !important;  /* Changed background color */
-}
+    /* Custom styling for sidebar */
+    .css-1d391kg {
+        background-color: #009688;
+        color: #191970;  /* Changed text color to #191970 */
+        animation: fadeIn 2s ease-in; /* Added animation */
+    }
 
-/* Styling for the header */
-.css-1d391kg h1 {
-    color: #191970;
-    background-color: #191970 !important;  /* Changed background color */
-}
+    /* Custom styling for the menu items */
+    .css-1n1n7f2 {
+        padding: 10px;
+        border-radius: 10px;
+        color: #191970 !important;  /* Changed text color */
+        background-color: #191970 !important;  /* Changed background color */
+        animation: fadeIn 2s ease-in; /* Added animation */
+    }
 
-/* Change button and box active color */
-button:active, .stButton>button:focus {
-    background-color: #009688 !important;
-    color: #191970 !important;  /* Changed text color */
-}
+    /* Styling for the header */
+    .css-1d391kg h1 {
+        color: #191970;
+        background-color: #191970 !important;  /* Changed background color */
+        animation: fadeIn 3s ease-in; /* Added animation */
+    }
 
-.css-1aumxhk:hover {
-    background-color: #3b8c88 !important;
-    color: #191970 !important;  /* Changed text color */
-}
+    /* Change button and box active color */
+    button:active, .stButton>button:focus {
+        background-color: #009688 !important;
+        color: #191970 !important;  /* Changed text color */
+        animation: fadeIn 2s ease-in; /* Added animation */
+    }
 
-.st-expander-header:focus {
-    background-color: #3b8c88 !important;
-    color: #191970 !important;  /* Changed text color */
-}
+    .css-1aumxhk:hover {
+        background-color: #3b8c88 !important;
+        color: #191970 !important;  /* Changed text color */
+        animation: fadeIn 2s ease-in; /* Added animation */
+    }
 
-.stAlert {
-    background-color: #191970 !important;  /* Changed background color */
-    color: #191970 !important;  /* Changed text color */
-}
+    .st-expander-header:focus {
+        background-color: #3b8c88 !important;
+        color: #191970 !important;  /* Changed text color */
+        animation: fadeIn 2s ease-in; /* Added animation */
+    }
+
+    .stAlert {
+        background-color: #191970 !important;  /* Changed background color */
+        color: #191970 !important;  /* Changed text color */
+        animation: fadeIn 2s ease-in; /* Added animation */
+    }
 </style>
+
     """, unsafe_allow_html=True)
 
     # Sidebar Menu with Enhanced Icons and Features
@@ -168,9 +183,7 @@ button:active, .stButton>button:focus {
     }
     </style>
     """, unsafe_allow_html=True)
-        st.markdown( """ 
-                    
-                    ### 🌟 **Explore Top Courses**
+        st.markdown( """ ### 🌟 **Explore Top Courses**
 
 🎓 Discover a **curated selection** of top courses from our extensive collection. With our handpicked recommendations, you can:
 

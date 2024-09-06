@@ -298,25 +298,31 @@ def main():
         unsafe_allow_html=True
     )
         st.markdown("""
-Explore detailed statistics and trends on course popularity, pricing, and student enrollment. 📊
+    <style>
+    .custom-header {
+        color: #191970;
+    }
+    </style>
+    <p>Explore detailed statistics and trends on course popularity, pricing, and student enrollment. 📊</p>
 
-### 🔍**What You'll Find:**  
+    <h3 class="custom-header">🔍 <strong>What You'll Find:</strong></h3>
+    <ul>
+        <li><strong>📈 Course Popularity:</strong> Discover which courses are trending based on student reviews and enrollment numbers.</li>
+        <li><strong>💰 Pricing Insights:</strong> Analyze pricing patterns to find courses that offer the best value for your investment.</li>
+        <li><strong>👥 Student Enrollment:</strong> Understand enrollment trends to gauge course demand and popularity.</li>
+    </ul>
 
-- **📈 Course Popularity:** Discover which courses are trending based on student reviews and enrollment numbers.
-- **💰 Pricing Insights:** Analyze pricing patterns to find courses that offer the best value for your investment.
-- **👥 Student Enrollment:** Understand enrollment trends to gauge course demand and popularity.
+    <h3 class="custom-header">🛠️ <strong>How This Helps You:</strong></h3>
+    <ul>
+        <li><strong>📈 Make Informed Choices:</strong> Use popularity trends to select courses that are in demand.</li>
+        <li><strong>💵 Optimize Spending:</strong> Evaluate pricing trends to budget effectively for your learning.</li>
+        <li><strong>📚 Enhance Learning Path:</strong> Leverage student enrollment data to choose courses with high engagement and effectiveness.</li>
+    </ul>
 
-### 🛠️**How This Helps You:**  
-- **📈 Make Informed Choices**: Use popularity trends to select courses that are in demand.
-- **💵 Optimize Spending**: Evaluate pricing trends to budget effectively for your learning.
-- **📚 Enhance Learning Path**: Leverage student enrollment data to choose courses with high engagement and effectiveness.
+    <p>📥 Use this data to make informed decisions about your learning path. Whether you're looking for the most popular courses or seeking the best deals, our statistics provide valuable insights to guide your choices.</p>
 
-                    
-📥Use this data to make informed decisions about your learning path. Whether you're looking for the most popular courses or seeking the best deals, our statistics provide valuable insights to guide your choices.
-
-🔍 Dive into the data and enhance your educational journey with the knowledge you need to succeed!
-
-        """)
+    <p>🔍 Dive into the data and enhance your educational journey with the knowledge you need to succeed!</p>
+""", unsafe_allow_html=True)
         top_rated_df = get_top_rated_courses(df)
         st.dataframe(top_rated_df)
     

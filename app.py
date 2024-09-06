@@ -55,7 +55,7 @@ def get_top_rated_courses(df, num_of_courses=10):
 
 # Function to search term if not found
 @st.cache_data
-def search_term_if_not_found(term, df):
+def search_term1_if_not_found(term, df):
     result_df = df[df['course_title'].str.contains(term, case=False)]
     return result_df
 
@@ -230,7 +230,7 @@ def main():
     """, unsafe_allow_html=True)
     
     # Text input widget
-    search_term = st.text_input(
+    search_term1 = st.text_input(
         label="",
         placeholder="🔍 Search for a course to get customized recommendations just for you! 🚀"
     )
@@ -243,11 +243,11 @@ def main():
     
     # Handle recommendations display
     if 'show_recommendations' in st.session_state and st.session_state['show_recommendations']:
-        if search_term:
+        if search_term1:
             try:
                 cosine_sim_mat = vectorize_text_to_cosine_mat(df['course_title'])
                 num_of_rec = 10  # Default number of recommendations
-                results = get_recommendation(search_term, cosine_sim_mat, df, num_of_rec)
+                results = get_recommendation(search_term1, cosine_sim_mat, df, num_of_rec)
                 st.markdown("### 🎯 Recommendations")
                 
                 with st.expander("Results as JSON"):
@@ -266,7 +266,7 @@ def main():
             
             except KeyError:
                 # Handle the case where the key is not found
-                result_df = search_term_if_not_found(search_term, df)
+                result_df = search_term1_if_not_found(search_term1, df)
                 if not result_df.empty:
                     st.dataframe(result_df)
                 else:

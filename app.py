@@ -246,7 +246,7 @@ def main():
     transition: background-color 0.3s ease;
 }
 .stButton > button:hover {
-    background-color: #a6007a; /* Hover color */
+    background-color: #191970; /* Hover color */
 }
 </style>
 """, unsafe_allow_html=True)

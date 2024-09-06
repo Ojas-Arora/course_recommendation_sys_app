@@ -120,7 +120,10 @@ def main():
         color: #191970 !important;  /* Changed text color */
         animation: fadeIn 2s ease-in; /* Added animation */
     }
-
+    .header h2 {
+        color: #191970;
+        animation: fadeIn 3s ease-in;
+    }
     .st-expander-header:focus {
         background-color: #3b8c88 !important;
         color: #191970 !important;  /* Changed text color */

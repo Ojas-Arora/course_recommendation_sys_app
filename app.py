@@ -178,7 +178,10 @@ def main():
         st.session_state['show_top_rated'] = not st.session_state['show_top_rated']
 
     if choice == "🏠 Home":
-        st.subheader("🏠 Home")
+        st.markdown(
+        '<h3 style="color:#191970;">🏠 Home</h3>',
+        unsafe_allow_html=True
+    )
         st.markdown("""
     <style>
     .css-1vhystk p, .css-1vhystk ul, .css-1vhystk li, .css-1vhystk h3 {

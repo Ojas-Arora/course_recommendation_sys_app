@@ -168,7 +168,7 @@ button:active, .stButton>button:focus {
     }
     </style>
     """, unsafe_allow_html=True)
-        st.markdown( """ ### 🌟 **Explore Top Courses**
+        st.markdown( """ ### 🌟 <span style="color:#191970;">**Explore Top Courses**</span>
 
 🎓 Discover a **curated selection** of top courses from our extensive collection. With our handpicked recommendations, you can:
 

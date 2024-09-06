@@ -214,40 +214,61 @@ def main():
         '<h3 style="color:#191970;">🔍 Recommend Courses</h3>',
         unsafe_allow_html=True
     )
-        cosine_sim_mat = vectorize_text_to_cosine_mat(df['course_title'])
-        search_term = st.text_input("""### 📐 **Enter Course Title**
-
-🧠 **Discover courses that align with your interests**. Type in a course title to get personalized recommendations tailored just for you.
-""")
-        
-        if st.button("Recommend"):
-            st.session_state['show_recommendations'] = not st.session_state['show_recommendations']
-        
-        if st.session_state['show_recommendations']:
-            if search_term:
-                try:
-                    num_of_rec = 10  # Default number of recommendations
-                    results = get_recommendation(search_term, cosine_sim_mat, df, num_of_rec)
-                    st.markdown("### 🎯 Recommendations")
-                    with st.expander("Results as JSON"):
-                        results_json = results.to_dict('index')
-                        st.json(results_json)  # Removed color argument
-                    
-                    for _, row in results.iterrows():
-                        rec_title = row['course_title']
-                        rec_score = row['similarity_score']
-                        rec_url = row['url']
-                        rec_price = row['price']
-                        rec_num_sub = row['num_subscribers']
-                        stc.html(RESULT_TEMP.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub), height=250)
+    st.markdown("""
+        <style>
+        .custom-header {
+            color: #191970;
+        }
+        .custom-description {
+            color: #191970;
+            font-size: 18px; /* Adjust font size as needed */
+        }
+        </style>
+        <h3 class="custom-header">📐 **Enter Course Title**</h3>
+        <p class="custom-description">🧠 **Discover courses that align with your interests**. Type in a course title to get personalized recommendations tailored just for you.</p>
+    """, unsafe_allow_html=True)
+    
+    # Text input widget
+    search_term = st.text_input(
+        placeholder="Type in a course title to get personalized recommendations tailored just for you."
+    )
+    
+    # Button to toggle recommendations
+    if st.button("Recommend"):
+        if 'show_recommendations' not in st.session_state:
+            st.session_state['show_recommendations'] = False
+        st.session_state['show_recommendations'] = not st.session_state['show_recommendations']
+    
+    # Handle recommendations display
+    if 'show_recommendations' in st.session_state and st.session_state['show_recommendations']:
+        if search_term:
+            try:
+                cosine_sim_mat = vectorize_text_to_cosine_mat(df['course_title'])
+                num_of_rec = 10  # Default number of recommendations
+                results = get_recommendation(search_term, cosine_sim_mat, df, num_of_rec)
+                st.markdown("### 🎯 Recommendations")
                 
-                except KeyError:
-                    # Search for similar courses only if exact match is not found
-                    result_df = search_term_if_not_found(search_term, df)
-                    if not result_df.empty:
-                        st.dataframe(result_df)
-                    else:
-                        st.warning("Course not found. Please try a different search term.")
+                with st.expander("Results as JSON"):
+                    results_json = results.to_dict('index')
+                    st.json(results_json)  # Display results as JSON
+                    
+                # Display recommendations
+                for _, row in results.iterrows():
+                    rec_title = row['course_title']
+                    rec_score = row['similarity_score']
+                    rec_url = row['url']
+                    rec_price = row['price']
+                    rec_num_sub = row['num_subscribers']
+                    # Assuming RESULT_TEMP is defined elsewhere in your code
+                    stc.html(RESULT_TEMP.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub), height=250)
+            
+            except KeyError:
+                # Handle the case where the key is not found
+                result_df = search_term_if_not_found(search_term, df)
+                if not result_df.empty:
+                    st.dataframe(result_df)
+                else:
+                    st.warning("Course not found. Please try a different search term.")
     
     elif choice == "📘 About":
         st.markdown(

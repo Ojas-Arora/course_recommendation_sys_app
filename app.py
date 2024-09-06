@@ -118,6 +118,7 @@ def main():
     }
     .stAlert {
         background-color: #191970 !important;
+        color: #191970 !important;
     }
     st.sidebar{
         color: #191970 !important;

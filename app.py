@@ -267,6 +267,7 @@ This app is designed to help you discover the best courses that match your learn
     elif choice == "📈 Statistics":
         st.subheader("📈 Statistics")
         st.markdown("""
+        <div class='header'>
 Explore detailed statistics and trends on course popularity, pricing, and student enrollment. 📊
 
 ### 🔍**What You'll Find:**  
@@ -285,6 +286,7 @@ Explore detailed statistics and trends on course popularity, pricing, and studen
 
 🔍 Dive into the data and enhance your educational journey with the knowledge you need to succeed!
 
+      </div>              
         """)
         top_rated_df = get_top_rated_courses(df)
         st.dataframe(top_rated_df)

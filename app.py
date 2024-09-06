@@ -148,11 +148,13 @@ def main():
     <style>
     .css-1n1n7f2, .css-1n1n7f2 * {
         color: #191970 !important;
-        background-color: #191970 !important;                
+        background-color: #191970 !important;   
+        animation: fadeIn 2s ease-in; /* Added animation */             
     }
     .menu{
         color: #191970 !important;
         background-color: #191970 !important;
+         animation: fadeIn 2s ease-in; /* Added animation */
     }
     </style>
     """, unsafe_allow_html=True)
@@ -181,9 +183,11 @@ def main():
     <style>
     .css-1vhystk p, .css-1vhystk ul, .css-1vhystk li, .css-1vhystk h3 {
         color: #191970 !important;
+        animation: fadeIn 2s ease-in; /* Added animation */
     }
     .choice{
-        color: #191970 !important;           
+        color: #191970 !important;    
+        animation: fadeIn 2s ease-in; /* Added animation */       
     }
     </style>
     """, unsafe_allow_html=True)

@@ -250,7 +250,10 @@ def main():
                         st.warning("Course not found. Please try a different search term.")
     
     elif choice == "📘 About":
-        st.subheader("📘 About This App")
+        st.markdown(
+        '<h3 style="color:#191970;">📘 About This App</h3>',
+        unsafe_allow_html=True
+    )
         st.markdown("""
 Welcome to the **Course Recommendation App**! 🚀
 

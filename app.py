@@ -69,6 +69,7 @@ def main():
     <style>
     .main {
         background-color: rgb(250,235,215);
+        color: lightblue;        
     }
     /* Background image for the whole page */
     .css-1f3v6nr {

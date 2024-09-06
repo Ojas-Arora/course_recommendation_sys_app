@@ -204,7 +204,6 @@ def main():
                     # Search for similar courses only if exact match is not found
                     result_df = search_term_if_not_found(search_term, df)
                     if not result_df.empty:
-                        st.info("Suggested Options:")
                         st.dataframe(result_df)
                     else:
                         st.warning("Course not found. Please try a different search term.")

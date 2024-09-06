@@ -81,7 +81,7 @@ def main():
 
     .css-1f3v6nr {
         background-position: center;
-        color: #191970;  /* Changed text color to #191970 */
+          /* Changed text color to #191970 */
         background-color: #191970 !important;  /* Changed background color */
         animation: fadeIn 2s ease-in; /* Added animation */
     }
@@ -89,7 +89,7 @@ def main():
     /* Custom styling for sidebar */
     .css-1d391kg {
         background-color: #009688;
-        color: #191970;  /* Changed text color to #191970 */
+          /* Changed text color to #191970 */
         animation: fadeIn 2s ease-in; /* Added animation */
     }
 
@@ -97,14 +97,14 @@ def main():
     .css-1n1n7f2 {
         padding: 10px;
         border-radius: 10px;
-        color: #191970 !important;  /* Changed text color */
+          /* Changed text color */
         background-color: #191970 !important;  /* Changed background color */
         animation: fadeIn 2s ease-in; /* Added animation */
     }
 
     /* Styling for the header */
     .css-1d391kg h1 {
-        color: #191970;
+        
         background-color: #191970 !important;  /* Changed background color */
         animation: fadeIn 3s ease-in; /* Added animation */
     }
@@ -117,7 +117,7 @@ def main():
 
     .css-1aumxhk:hover {
         background-color: #3b8c88 !important;
-        color: #191970 !important;  /* Changed text color */
+         /* Changed text color */
         animation: fadeIn 2s ease-in; /* Added animation */
     }
     .header h2 {
@@ -132,7 +132,7 @@ def main():
 
     .stAlert {
         background-color: #191970 !important;  /* Changed background color */
-        color: #191970 !important;  /* Changed text color */
+         /* Changed text color */
         animation: fadeIn 2s ease-in; /* Added animation */
     }
 </style>

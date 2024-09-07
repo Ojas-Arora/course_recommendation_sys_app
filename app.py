@@ -219,7 +219,20 @@ def main():
         label="",
         placeholder="🔍 Search for a course to get customized recommendations just for you! 🚀"
     )
-    
+    st.markdown("""
+        <style>
+        .custom-header {
+            color: #191970;
+        }
+        .custom-description {
+            color: #191970;
+            font-size: 18px; /* Adjust font size as needed */
+        }
+        </style>
+        <h3 class="custom-header">📐 Enter Course Title</h3>
+        <p class="custom-description">🧠 Discover courses that align with your interests.<br></br> 
+        📚 Type in a course title to get personalized recommendations tailored just for you</p>
+    """, unsafe_allow_html=True)
     st.markdown("""
 <style>
 .stButton > button {

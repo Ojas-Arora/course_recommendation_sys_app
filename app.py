@@ -211,6 +211,10 @@ def main():
     elif choice == "🔍 Recommend":
         st.subheader("🔍 Recommend Courses")
         cosine_sim_mat = vectorize_text_to_cosine_mat(df['course_title'])
+        st.markdown(
+        '<h3 style="color:#191970;">🔍 Recommend Courses</h3>',
+        unsafe_allow_html=True
+    )
         search_term = st.text_input("""### 📐 **Enter Course Title**
 
 🧠 **Discover courses that align with your interests**. Type in a course title to get personalized recommendations tailored just for you.

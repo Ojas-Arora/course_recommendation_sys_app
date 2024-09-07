@@ -209,7 +209,7 @@ def main():
         st.dataframe(df.head(10))
     
     elif choice == "🔍 Recommend":
-     st.markdown(
+        st.markdown(
         '<h3 style="color:#191970;">🔍 Recommend Courses</h3>',
         unsafe_allow_html=True
     )

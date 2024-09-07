@@ -270,7 +270,7 @@ def main():
                     else:
                         st.error(f"No results found for '{search_term}'. Try another title.")
             else:
-                st.error("Please enter a course title.")
+                st.error("")
     
     elif choice == "📘 About":
         st.markdown(

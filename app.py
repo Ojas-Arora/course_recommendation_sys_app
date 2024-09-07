@@ -265,7 +265,10 @@ def main():
                 try:
                     num_of_rec = 10  # Default number of recommendations
                     results = get_recommendation(search_term, cosine_sim_mat, df, num_of_rec)
-                    st.markdown("### 🎯 Recommendations")
+                    st.markdown(
+                    f"<h3 style='color:#191970;'>🎯 Recommendations</h3>",
+                    unsafe_allow_html=True
+                )
                     with st.expander("Results as JSON"):
                         results_json = results.to_dict('index')
                         st.json(results_json)

@@ -209,48 +209,49 @@ def main():
         st.dataframe(df.head(10))
     
     elif choice == "🔍 Recommend":
-        st.markdown(
+     st.markdown(
         '<h3 style="color:#191970;">🔍 Recommend Courses</h3>',
         unsafe_allow_html=True
     )
     
-        st.markdown("""
-        <style>
-        .custom-header {
-            color: #191970;
-        }
-        .custom-description {
-            color: #191970;
-            font-size: 18px; /* Adjust font size as needed */
-        }
-        </style>
-        <h3 class="custom-header">📐 Enter Course Title</h3>
-        <p class="custom-description">🧠 Discover courses that align with your interests.<br></br> 
-        📚 Type in a course title to get personalized recommendations tailored just for you</p>
+    st.markdown("""
+    <style>
+    .custom-header {
+        color: #191970;
+    }
+    .custom-description {
+        color: #191970;
+        font-size: 18px; /* Adjust font size as needed */
+    }
+    </style>
+    <h3 class="custom-header">📐 Enter Course Title</h3>
+    <p class="custom-description">🧠 Discover courses that align with your interests.<br></br> 
+    📚 Type in a course title to get personalized recommendations tailored just for you</p>
     """, unsafe_allow_html=True)
-    
-    # Text input widget
+
+    # Move the text input widget here so it only appears in this block
     search_term = st.text_input(
         label="",
         placeholder="🔍 Search for a course to get customized recommendations just for you! 🚀"
     )
     
     st.markdown("""
-<style>
-.stButton > button {
-    background-color: #191970 ; /* Button background color */
-    color: white; /* Button text color */
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-.stButton > button:hover {
-    background-color: #191970; /* Hover color */
-}
-</style>
-""", unsafe_allow_html=True)
+    <style>
+    .stButton > button {
+        background-color: #191970 ; /* Button background color */
+        color: white; /* Button text color */
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+    .stButton > button:hover {
+        background-color: #191970; /* Hover color */
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
     # Button to toggle recommendations
     if st.button("Recommend"):
         if 'show_recommendations' not in st.session_state:
@@ -287,6 +288,7 @@ def main():
                     st.dataframe(result_df)
                 else:
                     st.warning("Course not found. Please try a different search term.")
+
     
     elif choice == "📘 About":
         st.markdown(

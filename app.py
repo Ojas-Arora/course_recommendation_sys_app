@@ -108,6 +108,18 @@ def main():
         background-color: #191970 !important;  /* Changed background color */
         animation: fadeIn 3s ease-in; /* Added animation */
     }
+    .stButton > button {
+    background-color: #191970 ; /* Button background color */
+    color: white; /* Button text color */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+.stButton > button:hover {
+    background-color: #191970; /* Hover color */
+}           
 
     /* Change button and box active color */
     button:active, .stButton>button:focus {

@@ -230,7 +230,22 @@ def main():
     """, unsafe_allow_html=True)
         search_term = st.text_input("""
 """)
-        
+        st.markdown("""
+<style>
+.stButton > button {
+    background-color: #191970 ; /* Button background color */
+    color: white; /* Button text color */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+.stButton > button:hover {
+    background-color: #191970; /* Hover color */
+}
+</style>
+""", unsafe_allow_html=True)
         if st.button("Recommend"):
             st.session_state['show_recommendations'] = not st.session_state['show_recommendations']
         

@@ -267,9 +267,15 @@ def main():
                     if not result_df.empty:
                         st.dataframe(result_df)
                     else:
-                        st.error(f"No results found for '{search_term}'. Try another title.")
+                       st.markdown(
+                    f"<p style='color:#191970;'>No results found for '{search_term}'. Try another title.</p>",
+                    unsafe_allow_html=True
+                )
             else:
-                st.error("Please enter a course title.")
+                st.markdown(
+            "<p style='color:#191970;'>Please enter a course title.</p>",
+            unsafe_allow_html=True
+        )
     
     elif choice == "📘 About":
         st.markdown(

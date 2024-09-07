@@ -209,55 +209,58 @@ def main():
         st.dataframe(df.head(10))
     
     elif choice == "🔍 Recommend":
-        st.markdown(
+    # Custom header and description
+     st.markdown(
         '<h3 style="color:#191970;">🔍 Recommend Courses</h3>',
         unsafe_allow_html=True
     )
     
-        st.markdown("""
+    st.markdown("""
         <style>
         .custom-header {
             color: #191970;
         }
         .custom-description {
             color: #191970;
-            font-size: 18px; /* Adjust font size as needed */
+            font-size: 18px;
         }
         </style>
         <h3 class="custom-header">📐 Enter Course Title</h3>
         <p class="custom-description">🧠 Discover courses that align with your interests.<br></br> 
-        📚 Type in a course title to get personalized recommendations tailored just for you</p>
+        📚 Type in a course title to get personalized recommendations tailored just for you.</p>
     """, unsafe_allow_html=True)
     
-    # Text input widget
+    # Search term input with placeholder
     search_term = st.text_input(
         label="",
         placeholder="🔍 Search for a course to get customized recommendations just for you! 🚀"
     )
     
+    # Button styling
     st.markdown("""
-<style>
-.stButton > button {
-    background-color: #191970 ; /* Button background color */
-    color: white; /* Button text color */
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-.stButton > button:hover {
-    background-color: #191970; /* Hover color */
-}
-</style>
-""", unsafe_allow_html=True)
+        <style>
+        .stButton > button {
+            background-color: #191970;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .stButton > button:hover {
+            background-color: #4169e1;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+    
     # Button to toggle recommendations
     if st.button("Recommend"):
         if 'show_recommendations' not in st.session_state:
             st.session_state['show_recommendations'] = False
         st.session_state['show_recommendations'] = not st.session_state['show_recommendations']
     
-    # Handle recommendations display
+    # Display recommendations if the button is pressed and search term is provided
     if 'show_recommendations' in st.session_state and st.session_state['show_recommendations']:
         if search_term:
             try:
@@ -270,7 +273,8 @@ def main():
                     results_json = results.to_dict('index')
                     st.json(results_json)  # Display results as JSON
                     
-                # Display recommendations
+                # Display recommended courses
+                st.markdown("### 📘 Recommended Courses")
                 for _, row in results.iterrows():
                     rec_title = row['course_title']
                     rec_score = row['similarity_score']
@@ -281,12 +285,15 @@ def main():
                     stc.html(RESULT_TEMP.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub), height=250)
             
             except KeyError:
-                # Handle the case where the key is not found
+                st.warning(f"Course '{search_term}' not found. Searching for similar courses...")
                 result_df = search_term_if_not_found(search_term, df)
                 if not result_df.empty:
                     st.dataframe(result_df)
                 else:
-                    st.warning("Course not found. Please try a different search term.")
+                    st.error(f"No results found for '{search_term}'. Try another title.")
+        else:
+            st.error("Please enter a course title.")
+
     
     elif choice == "📘 About":
         st.markdown(

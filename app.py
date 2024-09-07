@@ -270,7 +270,10 @@ def main():
                         results_json = results.to_dict('index')
                         st.json(results_json)
                     
-                    st.markdown("### 📘 Recommended Courses")
+                    st.markdown(
+                    f"<h3 style='color:#191970;'>📘 Recommended Courses</h3>",
+                    unsafe_allow_html=True
+                )
                     for _, row in results.iterrows():
                         stc.html(RESULT_TEMP.format(row['course_title'], row['similarity_score'], row['url'], row['price'], row['num_subscribers']), height=250)
                 

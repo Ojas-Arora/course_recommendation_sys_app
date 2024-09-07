@@ -209,91 +209,39 @@ def main():
         st.dataframe(df.head(10))
     
     elif choice == "🔍 Recommend":
-    # Custom header and description
-     st.markdown(
-        '<h3 style="color:#191970;">🔍 Recommend Courses</h3>',
-        unsafe_allow_html=True
-    )
-    
-    st.markdown("""
-        <style>
-        .custom-header {
-            color: #191970;
-        }
-        .custom-description {
-            color: #191970;
-            font-size: 18px;
-        }
-        </style>
-        <h3 class="custom-header">📐 Enter Course Title</h3>
-        <p class="custom-description">🧠 Discover courses that align with your interests.<br></br> 
-        📚 Type in a course title to get personalized recommendations tailored just for you.</p>
-    """, unsafe_allow_html=True)
-    
-    # Search term input with placeholder
-    search_term = st.text_input(
-        label="",
-        placeholder="🔍 Search for a course to get customized recommendations just for you! 🚀"
-    )
-    
-    # Button styling
-    st.markdown("""
-        <style>
-        .stButton > button {
-            background-color: #191970;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        .stButton > button:hover {
-            background-color: #4169e1;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-    
-    # Button to toggle recommendations
-    if st.button("Recommend"):
-        if 'show_recommendations' not in st.session_state:
-            st.session_state['show_recommendations'] = False
-        st.session_state['show_recommendations'] = not st.session_state['show_recommendations']
-    
-    # Display recommendations if the button is pressed and search term is provided
-    if 'show_recommendations' in st.session_state and st.session_state['show_recommendations']:
-        if search_term:
-            try:
-                cosine_sim_mat = vectorize_text_to_cosine_mat(df['course_title'])
-                num_of_rec = 10  # Default number of recommendations
-                results = get_recommendation(search_term, cosine_sim_mat, df, num_of_rec)
-                st.markdown("### 🎯 Recommendations")
-                
-                with st.expander("Results as JSON"):
-                    results_json = results.to_dict('index')
-                    st.json(results_json)  # Display results as JSON
-                    
-                # Display recommended courses
-                st.markdown("### 📘 Recommended Courses")
-                for _, row in results.iterrows():
-                    rec_title = row['course_title']
-                    rec_score = row['similarity_score']
-                    rec_url = row['url']
-                    rec_price = row['price']
-                    rec_num_sub = row['num_subscribers']
-                    # Assuming RESULT_TEMP is defined elsewhere in your code
-                    stc.html(RESULT_TEMP.format(rec_title, rec_score, rec_url, rec_price, rec_num_sub), height=250)
-            
-            except KeyError:
-                st.warning(f"Course '{search_term}' not found. Searching for similar courses...")
-                result_df = search_term_if_not_found(search_term, df)
-                if not result_df.empty:
-                    st.dataframe(result_df)
-                else:
-                    st.error(f"No results found for '{search_term}'. Try another title.")
-        else:
-            st.error("Please enter a course title.")
+        st.subheader("🔍 Recommend Courses")
+        cosine_sim_mat = vectorize_text_to_cosine_mat(df['course_title'])
+        search_term = st.text_input("""### 📐 **Enter Course Title**
 
+🧠 **Discover courses that align with your interests**. Type in a course title to get personalized recommendations tailored just for you.
+""")
+        
+        if st.button("Recommend"):
+            st.session_state['show_recommendations'] = not st.session_state['show_recommendations']
+        
+        if st.session_state['show_recommendations']:
+            if search_term:
+                try:
+                    num_of_rec = 10  # Default number of recommendations
+                    results = get_recommendation(search_term, cosine_sim_mat, df, num_of_rec)
+                    st.markdown("### 🎯 Recommendations")
+                    with st.expander("Results as JSON"):
+                        results_json = results.to_dict('index')
+                        st.json(results_json)
+                    
+                    st.markdown("### 📘 Recommended Courses")
+                    for _, row in results.iterrows():
+                        stc.html(RESULT_TEMP.format(row['course_title'], row['similarity_score'], row['url'], row['price'], row['num_subscribers']), height=250)
+                
+                except KeyError:
+                    st.warning(f"Course '{search_term}' not found. Searching for similar courses...")
+                    result_df = search_term_if_not_found(search_term, df)
+                    if not result_df.empty:
+                        st.dataframe(result_df)
+                    else:
+                        st.error(f"No results found for '{search_term}'. Try another title.")
+            else:
+                st.error("Please enter a course title.")
     
     elif choice == "📘 About":
         st.markdown(

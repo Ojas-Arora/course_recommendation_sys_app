@@ -213,7 +213,13 @@ def main():
         '<h3 style="color:#191970;">🔍 Recommend Courses</h3>',
         unsafe_allow_html=True
     )
-        st.markdown("""
+           
+    # Text input widget
+    search_term = st.text_input(
+        label="",
+        placeholder="🔍 Search for a course to get customized recommendations just for you! 🚀"
+    )
+    st.markdown("""
         <style>
         .custom-header {
             color: #191970;
@@ -227,13 +233,7 @@ def main():
         <p class="custom-description">🧠 Discover courses that align with your interests.<br></br> 
         📚 Type in a course title to get personalized recommendations tailored just for you</p>
     """, unsafe_allow_html=True)
-    
-    # Text input widget
-    search_term = st.text_input(
-        label="",
-        placeholder="🔍 Search for a course to get customized recommendations just for you! 🚀"
-    )
-    
+
     st.markdown("""
 <style>
 .stButton > button {

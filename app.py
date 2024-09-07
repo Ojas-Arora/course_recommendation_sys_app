@@ -209,7 +209,6 @@ def main():
         st.dataframe(df.head(10))
     
     elif choice == "🔍 Recommend":
-        st.subheader("🔍 Recommend Courses")
         cosine_sim_mat = vectorize_text_to_cosine_mat(df['course_title'])
         st.markdown(
         '<h3 style="color:#191970;">🔍 Recommend Courses</h3>',

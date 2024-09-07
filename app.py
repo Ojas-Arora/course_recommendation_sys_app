@@ -131,8 +131,7 @@ def main():
     }
 
     .stAlert {
-        background-color: #191970 !important;  /* Changed background color */
-        color: black !important;  /* Changed text color */
+        color: #191970 !important;  /* Changed text color */
         animation: fadeIn 2s ease-in; /* Added animation */
     }
 </style>

@@ -234,7 +234,6 @@ def main():
                         stc.html(RESULT_TEMP.format(row['course_title'], row['similarity_score'], row['url'], row['price'], row['num_subscribers']), height=250)
                 
                 except KeyError:
-                    st.warning(f"Course '{search_term}' not found. Searching for similar courses...")
                     result_df = search_term_if_not_found(search_term, df)
                     if not result_df.empty:
                         st.dataframe(result_df)

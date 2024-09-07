@@ -228,10 +228,7 @@ def main():
         <p class="custom-description">🧠 Discover courses that align with your interests.<br></br> 
         📚 Type in a course title to get personalized recommendations tailored just for you</p>
     """, unsafe_allow_html=True)
-        search_term = st.text_input("""### 📐 **Enter Course Title**
-
-🧠 **Discover courses that align with your interests**. Type in a course title to get personalized recommendations tailored just for you.
-""")
+        search_term = st.text_input()
         
         if st.button("Recommend"):
             st.session_state['show_recommendations'] = not st.session_state['show_recommendations']

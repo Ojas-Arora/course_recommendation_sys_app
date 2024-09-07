@@ -130,7 +130,11 @@ def main():
         animation: fadeIn 2s ease-in; /* Added animation */
     }
 
-  
+    .stAlert {
+        background-color: #191970 !important;  /* Changed background color */
+        color: #191970 !important;  /* Changed text color */
+        animation: fadeIn 2s ease-in; /* Added animation */
+    }
 </style>
 
     """, unsafe_allow_html=True)
@@ -265,8 +269,7 @@ def main():
                         st.dataframe(result_df)
                     else:
                         st.error(f"No results found for '{search_term}'. Try another title.")
-            else:
-                st.error("Please enter a course title.")
+           
     
     elif choice == "📘 About":
         st.markdown(
